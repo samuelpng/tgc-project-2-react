@@ -18,7 +18,7 @@ export default class App extends React.Component {
 
   homeIcon = () => {
     this.setState({
-      home: false, explore: false, add: false, map: false, profile: false
+      home: true, explore: false, add: false, map: false, profile: false
     })
   }
 
@@ -54,39 +54,43 @@ export default class App extends React.Component {
           <img src={logo} alt="logo" height="90px"/>
         </div>
 
+       <div>
+        
+       </div>
 
+        
 
         <div className="container">
           <div className="navigation">
             <ul>
               <li onClick={this.homeIcon}>
                 <div className="icon-container">
-                  <span className="icon"><IoHomeOutline /></span>
-                  <span className="text">Home</span>
+                  <span className={this.state.home ? "iconActive" : "iconInactive"}><IoHomeOutline /></span>
+                  <span className={this.state.home ? "textActive" : "textInactive"}>Home</span>
                 </div>
               </li>
               <li onClick={this.exploreIcon}>
                 <div className="icon-container">
-                  <span className="icon"><BiSearchAlt /></span>
-                  <span className="text">Explore</span>
+                  <span className={this.state.explore ? "iconActive" : "iconInactive"}><BiSearchAlt /></span>
+                  <span className={this.state.explore ? "textActive" : "textInactive"}>Explore</span>
                 </div>
               </li>
               <li onClick={this.addIcon}>
                 <div className="icon-container">
-                  <span className="icon"><BiPlusCircle /></span>
-                  <span className="text">Add</span>
+                  <span className={this.state.add ? "iconActive" : "iconInactive"}><BiPlusCircle /></span>
+                  <span className={this.state.add ? "textActive" : "textInactive"}>Add</span>
                 </div>
               </li>
               <li onClick={this.mapIcon}>
                 <div className="icon-container">
-                  <span className="icon"><BiMap /></span>
-                  <span className="text">Map</span>
+                  <span className={this.state.map ? "iconActive" : "iconInactive"}><BiMap /></span>
+                  <span className={this.state.map ? "textActive" : "textInactive"}>Map</span>
                 </div>
               </li>
               <li onClick={this.profileIcon}>
                 <div className="icon-container">
-                  <span className="icon"><IoPersonOutline /></span>
-                  <span className="text">Profile</span>
+                  <span className={this.state.profile ? "iconActive" : "iconInactive"}><IoPersonOutline /></span>
+                  <span className={this.state.profile ? "textActive" : "textInactive"}>Profile</span>
                 </div>
               </li>
               {/* {this.state.indicator ? <div className="indicator"></div> : <div></div>} */}

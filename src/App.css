@@ -29,7 +29,7 @@ body {
 
 .navigation {
   width: 100vw;
-  height: 70px;
+  height: 65px;
   position: fixed;
   bottom: 0px;
   background: #fff2dd;
@@ -64,33 +64,34 @@ body {
   font-weight: 500;
 }
 
-.icon-container .icon {
+.icon-container .iconInactive {
   position: relative;
   display: block;
   line-height: 75px;
-  font-size: 1.5em;
+  font-size: 1.7em;
   text-align: center;
   transition: 0.5s;
   color: #282c34;
 }
 
-.navigation ul li:hover .icon-container .icon {
-  /* transform: translateY(-32px); */
+.icon-container .iconActive {
+  transform: translateY(12px);
   font-size: 2.5em;
+  transition: 0.2s;
   color: #642d3c
 }
 
-.icon-container .text {
+.icon-container .textInactive {
   position: absolute;
   color: #282c34;
   font-weight: 400;
-  font-size: 0.75em;
+  font-size: 0.85em;
   letter-spacing: 0.05em;
   opacity: 1;
   transform: translateY(20px)
 }
 
-.navigation ul li:hover .icon-container .text {
+.icon-container .textActive {
   opacity: 0;
   transform: translateY(10px)
 }
