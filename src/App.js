@@ -2,8 +2,9 @@ import React from 'react'
 import './App.css';
 import { BiSearchAlt, BiPlusCircle, BiMap } from "react-icons/bi";
 import { IoHomeOutline, IoPersonOutline } from "react-icons/io5";
-import logo from './pictures/sgbirds-logo.png';
-
+import Home from './pages/Home';
+import "bootstrap/dist/css/bootstrap.min.css"
+import Add from './pages/Add';
 // import NavBar from './pages/NavBar';
 
 export default class App extends React.Component {
@@ -48,18 +49,11 @@ export default class App extends React.Component {
 
   pageToRender = () => {
     if (this.state.home) {
-      return (
-        <React.Fragment>
-          <div className="header">
-            <img src={logo} alt="logo" height="90px" />
-          </div>
-          <div style={{height:"90px"}}></div>
-          <div><h1>Home Page</h1></div>
-        </React.Fragment>)
+      return (<Home />)
     } else if (this.state.explore) {
       return (<h1>explore</h1>)
     } else if (this.state.add) {
-      return (<h1>add</h1>)
+      return (<Add />)
     } else if (this.state.map) {
       return (<h1>Map</h1>)
     } else {
@@ -75,7 +69,7 @@ export default class App extends React.Component {
             {this.pageToRender()}
           </div>
 
-          <div className="container">
+        
             <div className="navigation">
               <ul>
                 <li onClick={this.homeIcon}>
@@ -108,10 +102,8 @@ export default class App extends React.Component {
                     <span className={this.state.profile ? "textActive" : "textInactive"}>Profile</span>
                   </div>
                 </li>
-                {/* {this.state.indicator ? <div className="indicator"></div> : <div></div>} */}
               </ul>
             </div>
-          </div>
         </body>
       </React.Fragment>
     )
