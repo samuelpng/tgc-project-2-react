@@ -64,8 +64,8 @@ export default class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <body>
-          <div className="main">
+        <div className="main">
+          <div>
             {this.pageToRender()}
           </div>
 
@@ -104,7 +104,7 @@ export default class App extends React.Component {
                 </li>
               </ul>
             </div>
-        </body>
+        </div>
       </React.Fragment>
     )
   }

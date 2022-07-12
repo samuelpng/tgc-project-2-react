@@ -4,8 +4,15 @@
   box-sizing: border-box;
 }
 
+:root {
+  background: #c8ccd9
+}
 
 body {
+  background: #c8ccd9
+} 
+
+.home {
   background: #c8ccd9
 }
 
@@ -19,9 +26,9 @@ body {
   justify-content:center
 }
 
-/* .main {
-  top: 90px
-} */
+.main {
+  background: #c8ccd9
+}
 
 /* .container {
   display: flex;
@@ -33,7 +40,7 @@ body {
 
 .navigation {
   width: 100vw;
-  height: 65px;
+  height: 60px;
   position: fixed;
   bottom: 0px;
   background: #fff2dd;
@@ -41,12 +48,13 @@ body {
   justify-content: space-around;
   /* align-items: center; */
   /* border-radius: 10px; */
-  z-index:1
+  z-index:1;
 }
 
 .navigation ul {
   display: flex;
-  width: 350px
+  width: 350px;
+  padding-left: 0rem
 }
 
 .navigation ul li {
@@ -66,6 +74,7 @@ body {
   width: 100%;
   text-align: center;
   font-weight: 500;
+  bottom: 17px
 }
 
 .icon-container .iconInactive {
@@ -79,7 +88,7 @@ body {
 }
 
 .icon-container .iconActive {
-  transform: translateY(12px);
+  transform: translateY(10px);
   font-size: 2.5em;
   transition: 0.2s;
   color: #642d3c
@@ -92,7 +101,8 @@ body {
   font-size: 0.85em;
   letter-spacing: 0.05em;
   opacity: 1;
-  transform: translateY(20px)
+  transform: translateY(20px);
+  padding-top: 5px
 }
 
 .icon-container .textActive {

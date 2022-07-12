@@ -21,10 +21,11 @@ export default class Home extends React.Component {
   render() {
     return (
       <React.Fragment>
+       
         <div className="header">
           <img src={logo} alt="logo" height="90px" />
         </div>
-        <div style={{ height: "90px" }}></div>
+        <div style={{ height: "90px"}}></div>
         <div>
           {
             this.state.data.map( b => (
@@ -41,6 +42,7 @@ export default class Home extends React.Component {
             ))
           }
         </div>
+        
       </React.Fragment>)
   }
 }
