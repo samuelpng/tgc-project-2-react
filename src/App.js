@@ -10,9 +10,9 @@ import Add from './pages/Add';
 export default class App extends React.Component {
 
   state = {
-    home: true,
+    home: false,
     explore: false,
-    add: false,
+    add: true,
     map: false,
     profile: false
   }
