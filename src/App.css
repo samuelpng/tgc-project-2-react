@@ -27,7 +27,8 @@ body {
   position: fixed;
   background: #fff2dd;
   display: flex;
-  justify-content:center
+  justify-content:center;
+  z-index: 1
 }
 
 .main {
