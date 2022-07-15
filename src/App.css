@@ -31,6 +31,16 @@ body {
   z-index: 1
 }
 
+.nonFixedHeader {
+  height:90px;
+  width: 100%;
+  top: 0px;
+  background: #fff2dd;
+  display: flex;
+  justify-content:center;
+  z-index: 1
+}
+
 .main {
   background: #c8ccd9
 }
@@ -115,6 +125,25 @@ body {
   transform: translateY(10px)
 }
 
+.accordion-button {
+  background-color: #fff2dd !important;
+}
+
+.accordion-body {
+  background-color: #fff2dd !important;
+}
+
+.accordion-button:focus {
+  border-color: #642d3c !important; 
+}
+
+/* .accordion-button:not(.collapsed) {
+  color: #642d3c !important
+
+} */
+
+/* .accordion-button::after
+.accordion-button:not(.collapsed)::after */
 
 @media only screen and (min-width: 768px) {
   /* For desktop: */
@@ -139,5 +168,11 @@ body {
   .addHeader {
     padding-left: 320px;
     padding-right: 320px
+  }
+
+  .addImg {
+    padding-left: 320px;
+    padding-right: 320px;
+    height: 30vw
   }
 }

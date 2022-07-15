@@ -5,16 +5,17 @@ import { IoHomeOutline, IoPersonOutline } from "react-icons/io5";
 import Home from './pages/Home';
 import "bootstrap/dist/css/bootstrap.min.css"
 import Add from './pages/Add';
+import Explore from './pages/Explore';
 // import NavBar from './pages/NavBar';
 
 export default class App extends React.Component {
 
   state = {
     home: false,
-    explore: false,
-    add: true,
+    explore: true,
+    add: false,
     map: false,
-    profile: false
+    profile: false,
   }
 
   homeIcon = () => {
@@ -51,7 +52,7 @@ export default class App extends React.Component {
     if (this.state.home) {
       return (<Home />)
     } else if (this.state.explore) {
-      return (<h1>explore</h1>)
+      return (<Explore />)
     } else if (this.state.add) {
       return (<Add />)
     } else if (this.state.map) {
