@@ -7,7 +7,6 @@ import sparrow from '../pictures/sparrow.png';
 import blackbird from '../pictures/blackbird.png';
 import crow from '../pictures/crow.png';
 import goose from '../pictures/goose.png'
-import AccordionBody from 'react-bootstrap/esm/AccordionBody';
 // import eagle from '../pictures/exploreImg.jpeg';
 export default class Explore extends React.Component {
 
@@ -20,7 +19,7 @@ export default class Explore extends React.Component {
         searchFamily: [],
         searchNeighbourhood: [],
         searchColours: [],
-        searchResults: ''
+        // searchResults: this.state.data
     }
 
     birdSize = {

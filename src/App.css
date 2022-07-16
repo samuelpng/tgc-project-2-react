@@ -151,6 +151,18 @@ body {
   border-color: #642d3c !important
 }
 
+.modal-header {
+  background-color: #e8c6a2 !important;
+}
+
+.modal-body {
+  background-color: #fff2dd !important;
+}
+
+.modal-footer {
+  background-color: #fff2dd !important;
+}
+
 /* .accordion-button:not(.collapsed) {
   color: #642d3c !important
 
