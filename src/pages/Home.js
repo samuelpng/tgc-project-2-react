@@ -23,7 +23,6 @@ export default class Home extends React.Component {
     })
   }
 
-  // not working properly
   changeBirdSize = (s) => {
     if (s === 1) {
       return "Sparrow size"
@@ -85,25 +84,11 @@ export default class Home extends React.Component {
             ))
           }
         </div>
-        {/* <>
-          {values.map((v, idx) => (
-            <Button key={idx} className="me-2 mb-2" onClick={() => handleShow(v)}>
-              Full screen
-              {typeof v === 'string' && `below ${v.split('-')[0]}`}
-            </Button>
-          ))}
-          <Modal show={show} fullscreen={fullscreen} onHide={() => setShow(false)}>
-            <Modal.Header closeButton>
-              <Modal.Title>Modal</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>Modal body content</Modal.Body>
-          </Modal>
-        </> */}
-
-        <Modal show={this.state.modal !== null} onHide={() => { this.closeModal() }}>
+        
+        <Modal show={this.state.modal !== null} onHide={() => { this.closeModal() }} centered>
         
             {this.state.data.map(b => {
-              {
+              
                 if (this.state.modal === b._id) {
                   return(
                   <React.Fragment key={b._id}>
@@ -114,12 +99,19 @@ export default class Home extends React.Component {
                           <h5>Bird Size: {this.changeBirdSize(b.birdSize)}</h5>
                           <h5>Neightbourhood Spotted: {b.neighbourhoodSpotted}</h5>
                           <h5>Bird Colours: {b.birdColours.map(c => (<span>{c},&nbsp;</span>))}</h5>
+                          <hr></hr>
+                          <h6 style={{ color: "#642d3c"}} >Comments</h6>
+                          <hr></hr>
+                          <label style={{ color: "#642d3c"}} >Display Name</label>
+                         <input type="text" className="form-control"></input>
+                         <label style={{ color: "#642d3c"}} >Comment</label>
+                         <textarea className="form-control"></textarea>
                         </Modal.Body>
                  
 
                   </React.Fragment>)
                 }
-              }
+              
             })
             }
          

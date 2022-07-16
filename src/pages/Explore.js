@@ -19,7 +19,7 @@ export default class Explore extends React.Component {
         searchFamily: [],
         searchNeighbourhood: [],
         searchColours: [],
-        // searchResults: this.state.data
+        searchResults: []
     }
 
     birdSize = {
@@ -58,25 +58,62 @@ export default class Explore extends React.Component {
         }
     }
 
-    searchResults = async () => {
-        let response = await axios.get(this.url + '/bird_sightings', {
+    // updateSearch = async (e) => {
+    //     try{
+    //         let response = await axios.get(this.url + '/bird_sightings', {
+    //             params: {
+    //                 searchQuery: this.state.searchInput,
+    //                 birdSize: parseInt(this.state.searchSize),
+    //                 birdColours: this.state.searchColours,
+    //             }
+    //         })
+    //         this.setState({
+    //             searchResults: response.data
+    //         })
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // }
+
+    // updateSearch = async (e) => {
+    //     try{
+    //         let response = await axios.get(this.url + 'bird_sightings', {
+    //             params: {
+    //                 searchQuery: this.state.searchInput,
+    //                 birdSize: parseInt(this.state.searchSize),
+    //                 birdColours: this.state.searchColours,
+    //             }
+    //         })
+    //         this.setState({
+    //             searchResults: response.data
+    //         })
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // }
+
+    updateSearch = async () => {
+        let response = await axios.get(this.url + 'bird_sightings',{
             params: {
                 searchQuery: this.state.searchInput,
-                birdSize: this.state.birdSize,
-                birdColours: this.state.birdColours,
+                birdSize: parseInt(this.state.searchSize),
+                birdColours: this.state.searchColours,
             }
         })
-        this.setState({
-            searchResults: response.data
-        })
+    this.setState({
+      searchResults: response.data
+    })
     }
 
-    async componentDidMount() {
-        let response = await axios.get(this.url + 'bird_sightings')
-        this.setState({
-            data: response.data
-        })
-    }
+    
+
+
+    // async componentDidMount() {
+    //     let response = await axios.get(this.url + 'bird_sightings/>')
+    //     this.setState({
+    //         searchResults: response.data,
+    //     })
+    // }
 
 
 
@@ -157,7 +194,7 @@ export default class Explore extends React.Component {
                                     </div>
                                     <div>
                                         <button className="btn mt-3" style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600", borderColor: "#282c34" }}
-                                            onClick={this.searchResults}>Search</button>
+                                            onClick={this.updateSearch}>Search</button>
                                     </div>
                                 </form>
                             </Accordion.Body>
@@ -169,7 +206,7 @@ export default class Explore extends React.Component {
 
                 <div className="p-3 mx-3 my-4 col-sm col-md col-lg">
                     {
-                        this.state.data.map(b => (
+                        this.state.searchResults.map(b => (
                             <React.Fragment key={b._id}>
                                 <div className="card p-2 my-1">
                                     <h3 className="title"> {b.birdSpecies} </h3>

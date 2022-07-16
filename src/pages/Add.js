@@ -139,29 +139,6 @@ export default class Add extends React.Component {
             this.setState({ behaviourInput: "" })
         }
     }
-    // MapSimple = () => {
-    //     const [location, setLocation] = useState({
-    //         lat: 51.505,
-    //         lng: -0.09,
-    //         zoom: 13,
-    //     });
-
-    //     const position = [location.lat, location.lng];
-
-    //     const setMarkerPosition = e => {
-    //         setLocation({ ...e.latlng, zoom: 19 });
-    //         console.log(`My location is: ${JSON.stringify(e.latlng, null, 3)}`)
-    //     };
-
-    //     return (
-
-    //         <TileLayer
-    //             attribution='© OpenStreetMap contributors'
-    //             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    //         />           
-    // )
-
-    // }
 
     newSighting = async () => {
         this.setState({
