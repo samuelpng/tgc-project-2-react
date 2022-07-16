@@ -137,6 +137,20 @@ body {
   border-color: #642d3c !important; 
 }
 
+.card-header {
+  background-color: #e8c6a2 !important;
+}
+
+.card-body {
+  background-color: #fff2dd !important;
+}
+
+.btn-primary {
+  background-color: #e8c6a2 !important;
+  color: #642d3c !important;
+  border-color: #642d3c !important
+}
+
 /* .accordion-button:not(.collapsed) {
   color: #642d3c !important
 

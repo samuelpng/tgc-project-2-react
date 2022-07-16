@@ -14,6 +14,7 @@ export default class Explore extends React.Component {
     url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/";
 
     state = {
+        data: [],
         searchInput: "",
         searchSize: [],
         searchFamily: [],
@@ -31,29 +32,9 @@ export default class Explore extends React.Component {
             'blue', 'green', 'yellow', 'orange'],
     }
 
-    // updateCheckboxField = (e) => {
-    //     if (this.state.searchSize.includes(e.target.value)) {
-    //         let indexToRemove = this.state[e.target.name].indexOf(e.target.value);
-
-    //         let cloned = this.state[e.target.name].slice();
-
-    //         cloned.splice(indexToRemove, 1);
-
-    //         this.setState({
-    //             [e.target.name]: cloned
-    //         })
-    //     } else {
-    //         let cloned = this.state[e.target.name].slice();
-    //         cloned.push(e.target.value)
-    //         this.setState({
-    //             [e.target.name]: cloned
-    //         })
-    //     }
-    // }
-
     updateFormField = (e) => {
         if (e.target.type === 'checkbox') {
-            if (this.state.searchSize.includes(e.target.value)) {
+            if (this.state[e.target.name].includes(e.target.value)) {
                 let indexToRemove = this.state[e.target.name].indexOf(e.target.value);
 
                 let cloned = this.state[e.target.name].slice();
@@ -78,31 +59,12 @@ export default class Explore extends React.Component {
         }
     }
 
-
-    // updateBirdColours = (e) => {
-    //     if (this.state.birdColours.includes(e.target.value)) {
-    //         let indexToRemove = this.state.birdColours.indexOf(e.target.value);
-
-    //         let cloned = this.state.birdColours.slice();
-
-    //         cloned.splice(indexToRemove, 1);
-
-    //         this.setState({
-    //             birdColours: cloned
-    //         })
-    //     } else {
-    //         let cloned = this.state.birdColours.slice();
-    //         cloned.push(e.target.value)
-    //         this.setState({
-    //             birdColours: cloned
-    //         })
-    //     }
-    // }
-
     searchResults = async () => {
-        let response = await axios.get(this.url + '/bird_sightings/search', {
+        let response = await axios.get(this.url + '/bird_sightings', {
             params: {
-                searchQuery: this.state.searchInput
+                searchQuery: this.state.searchInput,
+                birdSize: this.state.birdSize,
+                birdColours: this.state.birdColours,
             }
         })
         this.setState({
@@ -110,7 +72,12 @@ export default class Explore extends React.Component {
         })
     }
 
-
+    async componentDidMount() {
+        let response = await axios.get(this.url + 'bird_sightings')
+        this.setState({
+            data: response.data
+        })
+    }
 
 
 
@@ -190,22 +157,34 @@ export default class Explore extends React.Component {
                                         </Accordion>
                                     </div>
                                     <div>
-                                        {/* <div>
-                                            <h6>Tags</h6>
-                                            {this.birdColours.myArray.map(t => (
-                                                <React.Fragment>
-                                                    <input name="birdColours" type="checkbox" className="form-check-input" value={t} checked={this.state.birdColours.includes(`${t}`)} onChange={this.updatebirdColours} />
-                                                    <label for="tags" className="form-check-label">{t}</label>
-                                                </React.Fragment>
-
-                                            ))}
-                                        </div> */}
+                                        <button className="btn mt-3" style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600", borderColor: "#282c34" }}
+                                            onClick={this.searchResults}>Search</button>
                                     </div>
                                 </form>
                             </Accordion.Body>
                         </Accordion.Item>
                     </Accordion>
                 </div>
+
+                {/* Show Search Results */}
+
+                <div className="p-3 mx-3 my-4 col-sm col-md col-lg">
+                    {
+                        this.state.data.map(b => (
+                            <React.Fragment key={b._id}>
+                                <div className="card p-2 my-1">
+                                    <h3 className="title"> {b.birdSpecies} </h3>
+                                    <div className="body">
+                                        <h5>Bird Size: {b.birdSize}</h5>
+                                        <h5>Neightbourhood Spotted: {b.neighbourhoodSpotted}</h5>
+                                        <h5>Bird Colours: {b.birdColours.map(c => (<span>{c},&nbsp;</span>))}</h5>
+                                    </div>
+                                </div>
+                            </React.Fragment>
+                        ))
+                    }
+                </div>
+                <div style={{ height: "90px"}}></div>
             </React.Fragment>
         )
     }
