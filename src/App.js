@@ -6,6 +6,9 @@ import Home from './pages/Home';
 import "bootstrap/dist/css/bootstrap.min.css"
 import Add from './pages/Add';
 import Explore from './pages/Explore';
+import Profile from './pages/Profile';
+import Update from './pages/Update';
+
 // import NavBar from './pages/NavBar';
 
 export default class App extends React.Component {
@@ -16,37 +19,44 @@ export default class App extends React.Component {
     add: false,
     map: false,
     profile: false,
+    update: false
   }
 
   homeIcon = () => {
     this.setState({
-      home: true, explore: false, add: false, map: false, profile: false
+      home: true, explore: false, add: false, map: false, profile: false, update: false
     })
   }
 
   exploreIcon = () => {
     this.setState({
-      home: false, explore: true, add: false, map: false, profile: false
+      home: false, explore: true, add: false, map: false, profile: false, update: false
     })
   }
 
   addIcon = () => {
     this.setState({
-      home: false, explore: false, add: true, map: false, profile: false
+      home: false, explore: false, add: true, map: false, profile: false, update: false
     })
   }
 
   mapIcon = () => {
     this.setState({
-      home: false, explore: false, add: false, map: true, profile: false
+      home: false, explore: false, add: false, map: true, profile: false, update: false
     })
   }
 
   profileIcon = () => {
     this.setState({
-      home: false, explore: false, add: false, map: false, profile: true
+      home: false, explore: false, add: false, map: false, profile: true, update: false
     })
   }
+
+  updateSighting = () => {
+    this.setState({
+      home: false, explore: false, add: false, map: false, profile: false, update: true
+    })
+}
 
   pageToRender = () => {
     if (this.state.home) {
@@ -57,8 +67,10 @@ export default class App extends React.Component {
       return (<Add />)
     } else if (this.state.map) {
       return (<h1>Map</h1>)
-    } else {
-      return (<h1>Profile</h1>)
+    } else if (this.state.profile){
+      return (<Profile updateSighting={this.updateSighting}/>)
+    } else if (this.state.update) {
+      return (<Update />)
     }
   }
 

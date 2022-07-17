@@ -151,16 +151,20 @@ export default class Add extends React.Component {
             birdSize: parseInt(this.state.birdSize),
             birdFamily: this.state.birdFamily,
             birdSpecies: this.state.birdSpecies,
+            birdColours: newColors,
             dateSpotted: this.state.dateSpotted,
             neighbourhoodSpotted: this.state.neighbourhoodSpotted,
-            dateSpotted: this.state.dateSpotted,
-            // lat: this.state.lat,
-            // lng: this.state.lng,
-            // imageUrl: this.state.imageUrl,
-            // eatingHabits: this.state.eatingHabits,
-            // behaviour: this.state.behaviour,
-            // description: this.state.description,
-            birdColours: newColors
+            locationSpotted: {
+                lat: this.state.lat,
+                lng: this.state.lng
+            },
+            imageUrl: this.state.imageUrl,
+            character: {
+                eatingHabits: this.state.eatingHabits,
+                behaviour: this.state.behaviour,
+            },
+            displayName: this.state.displayName,
+            email: this.state.email
         })
 
     }

@@ -13,7 +13,8 @@ export default class Home extends React.Component {
 
   state = {
     data: [],
-    modal: null
+    modal: null,
+    size: 1
   }
 
   async componentDidMount() {
@@ -22,6 +23,23 @@ export default class Home extends React.Component {
       data: response.data
     })
   }
+
+  // async componentDidMount() {
+  //   let response = await axios.get(this.url + 'bird_sightings?sort=sortByDate&limit=3')
+  //   this.setState({
+  //     data: response.data
+  //   })
+  // }
+
+  // async componentDidMount() {
+	// 	let response = await axios.get(
+	// 		this.url + 'bird_sightings?sort=sortByDate&limit=3' 
+	// 	);
+		
+	// 	this.setState({
+	// 		data: response.data
+	// 	});
+	// }
 
   changeBirdSize = (s) => {
     if (s === 1) {

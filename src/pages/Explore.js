@@ -1,5 +1,5 @@
 import React from 'react';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import '../App.css';
 import logo from '../pictures/sgbirds-logo.png';
 import Accordion from 'react-bootstrap/Accordion';
