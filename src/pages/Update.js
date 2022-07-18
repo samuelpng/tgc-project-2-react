@@ -3,6 +3,7 @@ import axios from 'axios';
 // import DatePicker from "react-datepicker";
 import '../App.css';
 import Select from 'react-select';
+import { Modal } from 'react-bootstrap';
 import sparrow from '../pictures/sparrow.png';
 import blackbird from '../pictures/blackbird.png';
 import crow from '../pictures/crow.png';
@@ -11,17 +12,17 @@ import kingFisher from '../pictures/addPageImg.jpeg'
 import logo from '../pictures/sgbirds-logo.png';
 import { IoCloseOutline } from "react-icons/io5";
 
-const options = [
-    { value: 'black', label: 'Black', color: 'black' },
-    { value: 'grey', label: 'Grey', color: 'grey' },
-    { value: 'white', label: 'White', color: 'lightgrey' },
-    { value: 'brown', label: 'Brown', color: 'brown' },
-    { value: 'red', label: 'Red', color: 'crimson' },
-    { value: 'blue', label: 'Blue', color: 'blue' },
-    { value: 'green', label: 'Green', color: 'green' },
-    { value: 'yellow', label: 'Yellow', color: 'goldenrod' },
-    { value: 'orange', label: 'Orange', color: 'orange' }
-];
+// const options = [
+//     { value: 'black', label: 'Black', color: 'black' },
+//     { value: 'grey', label: 'Grey', color: 'grey' },
+//     { value: 'white', label: 'White', color: 'lightgrey' },
+//     { value: 'brown', label: 'Brown', color: 'brown' },
+//     { value: 'red', label: 'Red', color: 'crimson' },
+//     { value: 'blue', label: 'Blue', color: 'blue' },
+//     { value: 'green', label: 'Green', color: 'green' },
+//     { value: 'yellow', label: 'Yellow', color: 'goldenrod' },
+//     { value: 'orange', label: 'Orange', color: 'orange' }
+// ];
 
 const colorStyles = {
     control: (styles) => ({ ...styles, backgroundColor: "white" }),
@@ -69,6 +70,18 @@ export default class Update extends React.Component {
         submit: false
     }
 
+    options = [
+        { value: 'black', label: 'Black', color: 'black' },
+        { value: 'grey', label: 'Grey', color: 'grey' },
+        { value: 'white', label: 'White', color: 'lightgrey' },
+        { value: 'brown', label: 'Brown', color: 'brown' },
+        { value: 'red', label: 'Red', color: 'crimson' },
+        { value: 'blue', label: 'Blue', color: 'blue' },
+        { value: 'green', label: 'Green', color: 'green' },
+        { value: 'yellow', label: 'Yellow', color: 'goldenrod' },
+        { value: 'orange', label: 'Orange', color: 'orange' }
+    ];
+
     birdFamily = {
         myArray: ["sparrow", "eagle", "raven"]
     }
@@ -92,10 +105,42 @@ export default class Update extends React.Component {
     //     myArray: [1, 2, 3, 4, 5]
     // }
 
-    updateFormField = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
+    // updateFormField = (event) => {
+    //     this.setState({
+    //         [event.target.name]: event.target.value
+    //     })
+    // }
+
+    birdColours = {
+        myArray: ['black', 'grey', 'white', 'brown', 'red',
+            'blue', 'green', 'yellow', 'orange'],
+    }
+
+    updateFormField = (e) => {
+        if (e.target.type === 'checkbox') {
+            if (this.state[e.target.name].includes(e.target.value)) {
+                let indexToRemove = this.state[e.target.name].indexOf(e.target.value);
+
+                let cloned = this.state[e.target.name].slice();
+
+                cloned.splice(indexToRemove, 1);
+
+                this.setState({
+                    [e.target.name]: cloned
+                })
+            } else {
+                let cloned = this.state[e.target.name].slice();
+                cloned.push(e.target.value)
+                this.setState({
+                    [e.target.name]: cloned
+                })
+            }
+        } else {
+            this.setState({
+                [e.target.name]: e.target.value
+            })
+
+        }
     }
 
     handleChange = birdColours => {
@@ -141,13 +186,14 @@ export default class Update extends React.Component {
             submit: true
         })
 
-        let newColors = this.state.birdColours.map(c => c.value)
+        // let newColors = this.state.birdColours.map(c => c.value)
 
         await axios.put(this.url + `bird_sightings/${this.props.modal}`, {
             birdSize: parseInt(this.state.birdSize),
             birdFamily: this.state.birdFamily,
             birdSpecies: this.state.birdSpecies,
-            birdColours: newColors,
+            // birdColours: newColors,
+            birdColours: this.state.birdColours,
             dateSpotted: this.state.dateSpotted,
             neighbourhoodSpotted: this.state.neighbourhoodSpotted,
             locationSpotted: {
@@ -165,33 +211,34 @@ export default class Update extends React.Component {
 
     }
 
+
     async componentDidMount() {
         let response = await axios.get(this.url + `bird_sightings/${this.props.modal}`)
         this.setState({
-          data: response.data,
-          birdFamily: response.data.birdFamily,
-          birdSize: response.data.birdSize,
-          birdSpecies: response.data.birdSpecies,
-          dateSpotted: response.data.dateSpotted,
-          neighbourhoodSpotted: response.data.neighbourhoodSpotted,
-          lat: response.data.locationSpotted.lattitude,
-          lng: response.data.locationSpotted.longitude,
-          imageUrl: response.data.imageUrl,
-          eatingHabits: response.data.character.eatingHabits,
-          behaviour: response.data.character.behaviour,
-          birdColours: response.data.birdColours,
-          displayName: response.data.displayName,
-          email: response.data.email
+            data: response.data,
+            birdFamily: response.data.birdFamily,
+            birdSize: response.data.birdSize.toString(),
+            birdSpecies: response.data.birdSpecies,
+            dateSpotted: response.data.dateSpotted,
+            neighbourhoodSpotted: response.data.neighbourhoodSpotted,
+            lat: response.data.locationSpotted.lattitude,
+            lng: response.data.locationSpotted.longitude,
+            imageUrl: response.data.imageUrl,
+            eatingHabits: response.data.character.eatingHabits,
+            behaviour: response.data.character.behaviour,
+            birdColours: response.data.birdColours,
+            displayName: response.data.displayName,
+            email: response.data.email
         })
-      }
-    
+    }
 
-    render(){
 
-        const { birdColours } = this.state;
+    render() {
 
-        return(
-         
+        // const { birdColours } = this.state;
+
+        return (
+
             <React.Fragment>
                 <div className="nonFixedHeader">
                     <img src={logo} alt="logo" height="90px" />
@@ -201,11 +248,11 @@ export default class Update extends React.Component {
                 </div> */}
                 <div className="p-3 mx-3 my-4 col-sm col-md col-lg">
                     <div className="addHeader">
-                        <h2 style={{ color: "#642d3c"}}>Update Sighting</h2>
+                        <h2 style={{ color: "#642d3c" }}>Update Sighting</h2>
                     </div>
                     <div className="row">
                         <div>
-                            <div className="label mt-3" style={{ color: "#642d3c"}}>Bird Size</div>
+                            <div className="label mt-3" style={{ color: "#642d3c" }}>Bird Size</div>
                             <div style={{ height: '52px' }}></div>
                             <div style={{ position: 'relative' }}>
                                 <label for="1" style={{ position: 'absolute', bottom: '0', left: '5px' }}><img src={sparrow} alt="sparrow" height="15px" /></label>
@@ -242,13 +289,23 @@ export default class Update extends React.Component {
                         <div>
                             <div className="App mt-3" >
                                 <label style={{ color: "#642d3c" }}>Bird Colours</label>
-                                <Select
+                                {/* <Select
                                     isMulti={true}
-                                    value={birdColours}
+                                    value={this.state.birdColours}
                                     onChange={this.handleChange}
-                                    options={options}
+                                    options={this.options}
                                     styles={colorStyles}
-                                />
+                                /> */}
+                                <div>
+                                {this.birdColours.myArray.map(c =>
+                                    <span>
+                                        <label for={c} className="me-1" style={{color:`${c}`}}>{c[0].toUpperCase() + c.substring(1)}</label>
+                                        <input type="checkbox" value={c} key={c} id={c}
+                                            onChange={this.updateFormField} className="me-4" name="birdColours"
+                                            checked={this.state.birdColours.includes(`${c}`)} />
+                                    </span>
+                                )}
+                                </div>
                             </div>
                         </div>
                         <div>
@@ -262,15 +319,15 @@ export default class Update extends React.Component {
                             </select>
                         </div>
                         <div>
-                        <div>
-                            <div className="label mt-3" style={{ color: "#642d3c" }}>Location Spotted</div>
-                            <input type="text" className="form-control" placeholder="Latitude"
-                                name="lat" value={this.state.lat}
-                                onChange={this.updateFormField} />
-                            <input type="text" className="form-control mt-2" placeholder="Longitude"
-                                name="lng" value={this.state.lng}
-                                onChange={this.updateFormField} />
-                        </div>
+                            <div>
+                                <div className="label mt-3" style={{ color: "#642d3c" }}>Location Spotted</div>
+                                <input type="text" className="form-control" placeholder="Latitude"
+                                    name="lat" value={this.state.lat}
+                                    onChange={this.updateFormField} />
+                                <input type="text" className="form-control mt-2" placeholder="Longitude"
+                                    name="lng" value={this.state.lng}
+                                    onChange={this.updateFormField} />
+                            </div>
                         </div>
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Date Spotted</div>
@@ -279,7 +336,7 @@ export default class Update extends React.Component {
                                 onChange={this.updateFormField} />
                         </div>
                         <div>
-                            <label style={{ color: "#642d3c"}} className="mt-3">Eating Habits</label>
+                            <label style={{ color: "#642d3c" }} className="mt-3">Eating Habits</label>
                             <div className="mb-2">
                                 {
                                     this.state.eatingHabits.map((newE, e) =>
@@ -293,7 +350,7 @@ export default class Update extends React.Component {
                             </input>
                         </div>
                         <div>
-                            <label style={{ color: "#642d3c"}} className="mt-3">Behaviour</label>
+                            <label style={{ color: "#642d3c" }} className="mt-3">Behaviour</label>
                             <div className="mb-2">
                                 {
                                     this.state.behaviour.map((newB, b) =>
@@ -319,18 +376,28 @@ export default class Update extends React.Component {
                                 onChange={this.updateFormField} />
                         </div>
                         <div>
-                            description
-                        </div>
-                        <div>
-                            <button className="btn mt-3" style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600" }}
-                                onClick={this.updateSighting}>Update Sighting</button>
+                            <button className="btn mt-4" style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600", borderColor: "green" }}
+                                onClick={this.updateSighting}>Update</button>
+                            <button className="btn mt-4 ms-3" style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600", borderColor: "crimson" }}
+                                onClick={this.props.backToProfile}>Cancel</button>
                         </div>
                     </div>
                 </div>
                 <div className="addFooter"></div>
 
+                <Modal show={this.state.submit} centered>
+                    <Modal.Body>
+                    <div style={{color: "#642d3c", display:"flex", justifyContent:"center"}}>
+                    <h3>Update Successful</h3>
+                    </div>
+                    <div style={{display:"flex", justifyContent:"center"}} className="mt-3">
+                    <button className="btn btn-primary" onClick={this.props.backToProfile}>Back</button>
+                    </div>
+                    </Modal.Body>
+                </Modal>
+
             </React.Fragment>
-            
+
         )
     }
 }
