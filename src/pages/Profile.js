@@ -4,6 +4,7 @@ import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Card } from 'react-bootstrap';
+import Update from './Update.js'
 import logo from '../pictures/sgbirds-logo.png';
 
 export default class Profile extends React.Component {
@@ -18,7 +19,7 @@ export default class Profile extends React.Component {
         submit: false,
         commentDisplayName: "",
         commentDescription:"",
-        update: false
+        update: false,
     }
 
     updateFormField = (e) => {
@@ -46,11 +47,11 @@ export default class Profile extends React.Component {
         })
       }
 
-    // updateSighting = () => {
-    //     this.setState({
-    //         update: true
-    //     })
-    // }
+    updateSighting = () => {
+        this.setState({
+            update: true
+        })
+    }
 
 
     changeBirdSize = (s) => {
@@ -84,7 +85,10 @@ export default class Profile extends React.Component {
 
     render() {
         return (
+            
             <React.Fragment>
+                {this.state.update === false ?
+                <div>
                 <div className="header">
                     <img src={logo} alt="logo" height="90px" />
                 </div>
@@ -163,13 +167,18 @@ export default class Profile extends React.Component {
                         onClick={() => { this.closeModal() }}>
                         Close</button>
                         <button className="btn btn-primary"
-                        onClick= { this.props.updateSighting }>
+                        onClick= { this.updateSighting }>
                         Update</button>
                         </Modal.Footer>
                 </Modal>
 
                 <div style={{ height: "90px" }}></div>
+                </div>
+                :
+                <Update modal={this.state.modal}/>
+                }
             </React.Fragment>
+            
         )
     }
 

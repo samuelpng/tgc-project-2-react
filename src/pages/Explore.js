@@ -92,20 +92,48 @@ export default class Explore extends React.Component {
     //     }
     // }
 
+    // async componentDidMount() {
+    //     let response = await axios.get(this.url + 'bird_sightings', {
+    //         params: {
+    //             searchQuery : this.state.searchInput
+    //         }
+    //     })
+    // this.setState({
+    //   searchResults: response.data
+    // })
+    // }
+
     updateSearch = async () => {
-        let response = await axios.get(this.url + 'bird_sightings',{
+        let response = await axios.get(this.url + 'bird_sightings', {
             params: {
                 searchQuery: this.state.searchInput,
-                birdSize: parseInt(this.state.searchSize),
-                birdColours: this.state.searchColours,
+                birdSize: this.state.searchSize,
+                birdColours: this.state.searchColours
             }
+
         })
-    this.setState({
-      searchResults: response.data
-    })
+        console.log('call')
+        this.setState({
+            searchResults: response.data
+        })
     }
 
-    
+
+    // async componentDidMount() {
+    //     let response = await axios.get(this.url + 'bird_sightings',{
+    //         params: {
+    //             searchQuery: this.state.searchInput,
+    //             birdSize: this.state.searchSize,
+    //             birdColours: this.state.searchColours
+    //         }
+
+    //     })
+    //     console.log('call')
+    // this.setState({
+    //   searchResults: response.data
+    // })
+    // }
+
 
 
     // async componentDidMount() {
@@ -134,7 +162,7 @@ export default class Explore extends React.Component {
                         <Accordion.Item eventKey="0">
                             <Accordion.Header><span style={{ color: "#642d3c" }}>Search</span></Accordion.Header>
                             <Accordion.Body>
-                                <form className="row search-form">
+                                <div className="row search-form">
                                     <div>
                                         <label style={{ color: "#642d3c" }}> Search based on Keywords </label>
                                         <input className="form-control" type="text"
@@ -194,9 +222,13 @@ export default class Explore extends React.Component {
                                     </div>
                                     <div>
                                         <button className="btn mt-3" style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600", borderColor: "#282c34" }}
-                                            onClick={this.updateSearch}>Search</button>
+                                            onClick={
+                                                () => {
+                                                    this.updateSearch()
+                                                }
+                                            }>Search</button>
                                     </div>
-                                </form>
+                                </div>
                             </Accordion.Body>
                         </Accordion.Item>
                     </Accordion>
@@ -220,7 +252,7 @@ export default class Explore extends React.Component {
                         ))
                     }
                 </div>
-                <div style={{ height: "90px"}}></div>
+                <div style={{ height: "90px" }}></div>
             </React.Fragment>
         )
     }

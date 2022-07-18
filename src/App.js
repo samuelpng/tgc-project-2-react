@@ -15,11 +15,12 @@ export default class App extends React.Component {
 
   state = {
     home: false,
-    explore: true,
+    explore: false,
     add: false,
     map: false,
-    profile: false,
-    update: false
+    profile: true,
+    update: false,
+    modal: null
   }
 
   homeIcon = () => {
@@ -68,10 +69,12 @@ export default class App extends React.Component {
     } else if (this.state.map) {
       return (<h1>Map</h1>)
     } else if (this.state.profile){
-      return (<Profile updateSighting={this.updateSighting}/>)
-    } else if (this.state.update) {
-      return (<Update />)
-    }
+      return (<Profile />)
+        // updateSighting={this.updateSighting} />)
+    } 
+    // else if (this.state.update) {
+    //   return (<Update />)
+    // }
   }
 
   render() {
