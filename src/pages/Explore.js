@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import '../App.css';
+import { Card, Button, Modal} from 'react-bootstrap';
 import logo from '../pictures/sgbirds-logo.png';
 import Accordion from 'react-bootstrap/Accordion';
 import sparrow from '../pictures/sparrow.png';
@@ -19,7 +20,10 @@ export default class Explore extends React.Component {
         searchFamily: [],
         searchNeighbourhood: [],
         searchColours: [],
-        searchResults: []
+        searchResults: [],
+        modal: null,
+        commentDisplayName: "",
+        commentDescription: ""
     }
 
     birdSize = {
@@ -29,6 +33,35 @@ export default class Explore extends React.Component {
     birdColours = {
         myArray: ['black', 'grey', 'white', 'brown', 'red',
             'blue', 'green', 'yellow', 'orange'],
+    }
+
+    changeBirdSize = (s) => {
+        if (s === 1) {
+            return "Sparrow size"
+        } else if (s === 2) {
+            return "Between Sparrow and Blackbird size"
+        } else if (s === 3) {
+            return "Blackbird size"
+        } else if (s === 4) {
+            return "Between Blackbird and Crow Size"
+        } else if (s === 5) {
+            return "Crow Size"
+        } else if (s === 6) {
+            return "Between Crow and Goose size"
+        } else {
+            return "Goose size"
+        }
+    }
+
+    postComment = async () => {
+        this.setState({
+            submit: true
+        })
+
+        await axios.post(this.url + `bird_sightings/comments/${this.state.modal}`, {
+            displayName: this.state.commentDisplayName,
+            commentDescription: this.state.commentDescription
+        })
     }
 
     updateFormField = (e) => {
@@ -58,50 +91,17 @@ export default class Explore extends React.Component {
         }
     }
 
-    // updateSearch = async (e) => {
-    //     try{
-    //         let response = await axios.get(this.url + '/bird_sightings', {
-    //             params: {
-    //                 searchQuery: this.state.searchInput,
-    //                 birdSize: parseInt(this.state.searchSize),
-    //                 birdColours: this.state.searchColours,
-    //             }
-    //         })
-    //         this.setState({
-    //             searchResults: response.data
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
+    handleModal = (birdId) => {
+        this.setState({
+            modal: birdId
+        })
+    }
 
-    // updateSearch = async (e) => {
-    //     try{
-    //         let response = await axios.get(this.url + 'bird_sightings', {
-    //             params: {
-    //                 searchQuery: this.state.searchInput,
-    //                 birdSize: parseInt(this.state.searchSize),
-    //                 birdColours: this.state.searchColours,
-    //             }
-    //         })
-    //         this.setState({
-    //             searchResults: response.data
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-
-    // async componentDidMount() {
-    //     let response = await axios.get(this.url + 'bird_sightings', {
-    //         params: {
-    //             searchQuery : this.state.searchInput
-    //         }
-    //     })
-    // this.setState({
-    //   searchResults: response.data
-    // })
-    // }
+    closeModal = () => {
+        this.setState({
+            modal: null
+        })
+    }
 
     updateSearch = async () => {
         let response = await axios.get(this.url + 'bird_sightings', {
@@ -112,37 +112,11 @@ export default class Explore extends React.Component {
             }
 
         })
-        console.log('call')
+
         this.setState({
             searchResults: response.data
         })
     }
-
-
-    // async componentDidMount() {
-    //     let response = await axios.get(this.url + 'bird_sightings',{
-    //         params: {
-    //             searchQuery: this.state.searchInput,
-    //             birdSize: this.state.searchSize,
-    //             birdColours: this.state.searchColours
-    //         }
-
-    //     })
-    //     console.log('call')
-    // this.setState({
-    //   searchResults: response.data
-    // })
-    // }
-
-
-
-    // async componentDidMount() {
-    //     let response = await axios.get(this.url + 'bird_sightings/>')
-    //     this.setState({
-    //         searchResults: response.data,
-    //     })
-    // }
-
 
 
     render() {
@@ -240,18 +214,78 @@ export default class Explore extends React.Component {
                     {
                         this.state.searchResults.map(b => (
                             <React.Fragment key={b._id}>
-                                <div className="card p-2 my-1">
-                                    <h3 className="title"> {b.birdSpecies} </h3>
-                                    <div className="body">
-                                        <h5>Bird Size: {b.birdSize}</h5>
-                                        <h5>Neightbourhood Spotted: {b.neighbourhoodSpotted}</h5>
-                                        <h5>Bird Colours: {b.birdColours.map(c => (<span>{c},&nbsp;</span>))}</h5>
-                                    </div>
-                                </div>
+
+                                <Card className="mb-3">
+                                    <Card.Header as="h5">{b.birdSpecies}</Card.Header>
+                                    <Card.Body>
+                                        <Card.Title>Image</Card.Title>
+                                        <Card.Text>
+                                            <h5>Bird Size: {this.changeBirdSize(b.birdSize)}</h5>
+                                            <h5>Neightbourhood Spotted: {b.neighbourhoodSpotted}</h5>
+                                            <h5>Bird Colours: {b.birdColours.map(c => (<span>{c},&nbsp;</span>))}</h5>
+                                        </Card.Text>
+                                        <Button variant="primary" onClick={() => { this.handleModal(b._id) }}>More</Button>
+                                    </Card.Body>
+                                </Card>
+
                             </React.Fragment>
                         ))
                     }
                 </div>
+
+                <Modal show={this.state.modal !== null} onHide={() => { this.closeModal() }} centered>
+                    {this.state.searchResults.map(b => {
+
+                        if (this.state.modal === b._id) {
+                            return (
+                                <React.Fragment key={b._id}>
+
+
+                                    <Modal.Header closeButton >{b.birdSpecies}</Modal.Header>
+                                    <Modal.Body>
+                                        <h5>Bird Size: {this.changeBirdSize(b.birdSize)}</h5>
+                                        <h5>Neightbourhood Spotted: {b.neighbourhoodSpotted}</h5>
+                                        <h5>Bird Colours: {b.birdColours.map(c => (<span>{c},&nbsp;</span>))}</h5>
+
+                                        <hr></hr>
+                                        <h5 style={{ color: "#642d3c" }} >Comments</h5>
+                                        <br />
+                                        {b.comments !== undefined ? b.comments.map(c =>
+                                            <span>
+
+                                                <h6>{c.displayName}</h6>
+                                                <p>{c.commentDescription}</p>
+                                                <p>{c.datePosted.slice(0, 9)}</p>
+                                                <hr></hr>
+                                            </span>
+                                        )
+                                            : <></>}
+
+
+                                        <h5 style={{ color: "#642d3c" }}>New Comment</h5>
+                                        <label style={{ color: "#642d3c" }} >Display Name</label>
+                                        <input type="text" className="form-control" name="commentDisplayName"
+                                            onChange={this.updateFormField} value={this.state.commentDisplayName}></input>
+                                        <label style={{ color: "#642d3c" }} >Comment</label>
+                                        <textarea className="form-control" onChange={this.updateFormField}
+                                            name="commentDescription" value={this.state.commentDescription}></textarea>
+                                        <button className="btn btn-primary mt-3" onClick={this.postComment}>Post</button>
+                                    </Modal.Body>
+
+                                </React.Fragment>)
+                        }
+
+                    })
+                    }
+
+                    <Modal.Footer><button className="btn btn-primary"
+                        onClick={() => { this.closeModal() }}>
+                        Close</button>
+                    </Modal.Footer>
+
+                </Modal>
+
+
                 <div style={{ height: "90px" }}></div>
             </React.Fragment>
         )

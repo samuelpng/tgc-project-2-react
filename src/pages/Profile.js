@@ -30,12 +30,18 @@ export default class Profile extends React.Component {
         })
     }
 
-    async componentDidMount() {
-        let response = await axios.get(this.url + `bird_sightings`)
+    retrieveSightings = async() => {
+        let response = await axios.get(this.url + `bird_sightings`,{
+            params: {
+                email: this.state.email
+            }
+        }     
+        )
         this.setState({
             loginData: response.data
         })
     }
+    //havent done express for this
 
     handleModal = (birdId) => {
         this.setState({
@@ -116,7 +122,22 @@ export default class Profile extends React.Component {
                             <img src={logo} alt="logo" height="90px" />
                         </div>
                         <div style={{ height: "90px" }}></div>
+
                         <div className="p-3 mx-3 my-4 col-sm col-md col-lg">
+                            {/* login validation */}
+                            <div>
+                                <h5 style={{color: "#642d3c"}}>View My Sightings</h5>
+                                <input type="text" className="form-control mt-2"
+                                    name="email" value={this.state.email}
+                                    onChange={this.updateFormField} 
+                                    placeholder="Retrieve by email..."/>
+                                <button className="btn mt-2 mb-3" onClick = {this.retrieveSightings}
+                                style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600" }}
+                                >Retrieve</button>
+                            </div>
+                            
+
+                            {/* Reult Cards */}
                             {
                                 this.state.loginData.map(b => (
                                     <React.Fragment key={b._id}>
@@ -176,6 +197,7 @@ export default class Profile extends React.Component {
                                                 <label style={{ color: "#642d3c" }} >Comment</label>
                                                 <textarea className="form-control" onChange={this.updateFormField}
                                                     name="commentDescription" value={this.state.commentDescription}></textarea>
+                                                    
                                                 <button className="btn btn-primary mt-3" onClick={this.postComment}>Post</button>
                                             </Modal.Body>
 
@@ -193,10 +215,10 @@ export default class Profile extends React.Component {
                                             <Alert variant="danger" show={this.state.delete}>
                                                 <Alert.Heading>Are you sure you want to Delete {b.birdSpecies}?</Alert.Heading>
                                                 <button className="btn" onClick={this.deleteSighting}
-                                                style={{ backgroundColor: "crimson", color: "#e8c6a2", fontWeight: "600", borderColor: "#642d3c" }}
+                                                    style={{ backgroundColor: "crimson", color: "#e8c6a2", fontWeight: "600", borderColor: "#642d3c" }}
                                                 >Delete</button>
                                                 <button className="btn btn-success ms-3" onClick={this.cancelDelete}
-                                                style={{ backgroundColor: "39ff14", color: "#e8c6a2", fontWeight: "600", borderColor: "green" }}
+                                                    style={{ backgroundColor: "39ff14", color: "#e8c6a2", fontWeight: "600", borderColor: "green" }}
                                                 >Cancel</button>
                                             </Alert>
 

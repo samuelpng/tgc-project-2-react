@@ -163,6 +163,10 @@ body {
   background-color: #fff2dd !important;
 }
 
+.alert {
+  margin-bottom: 0rem !important
+}
+
 /* .accordion-button:not(.collapsed) {
   color: #642d3c !important
 
