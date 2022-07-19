@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import Add from './pages/Add';
 import Explore from './pages/Explore';
 import Profile from './pages/Profile';
+import Map from './pages/Map';
 import Update from './pages/Update';
 
 // import NavBar from './pages/NavBar';
@@ -67,7 +68,7 @@ export default class App extends React.Component {
     } else if (this.state.add) {
       return (<Add />)
     } else if (this.state.map) {
-      return (<h1>Map</h1>)
+      return (<h1><Map /></h1>)
     } else if (this.state.profile){
       return (<Profile />)
         // updateSighting={this.updateSighting} />)

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import '../App.css';
-import { Card, Button, Modal} from 'react-bootstrap';
+import { Card, Button, Modal, Dropdown } from 'react-bootstrap';
 import logo from '../pictures/sgbirds-logo.png';
 import Accordion from 'react-bootstrap/Accordion';
 import sparrow from '../pictures/sparrow.png';
@@ -21,6 +21,7 @@ export default class Explore extends React.Component {
         searchNeighbourhood: [],
         searchColours: [],
         searchResults: [],
+        sortBy: "latest",
         modal: null,
         commentDisplayName: "",
         commentDescription: ""
@@ -34,6 +35,21 @@ export default class Explore extends React.Component {
         myArray: ['black', 'grey', 'white', 'brown', 'red',
             'blue', 'green', 'yellow', 'orange'],
     }
+
+    neighbourhoodSpotted = [
+        {
+            display: "Ang Mo Kio",
+            value: "angmokio"
+        },
+        {
+            display: "Tampines",
+            value: "tampines"
+        },
+        {
+            display: "Punggol",
+            value: "punggol"
+        }
+    ]
 
     changeBirdSize = (s) => {
         if (s === 1) {
@@ -108,7 +124,9 @@ export default class Explore extends React.Component {
             params: {
                 searchQuery: this.state.searchInput,
                 birdSize: this.state.searchSize,
-                birdColours: this.state.searchColours
+                birdColours: this.state.searchColours,
+                neighbourhoodSpotted: this.state.searchNeighbourhood,
+                sort: this.state.sortBy
             }
 
         })
@@ -194,6 +212,26 @@ export default class Explore extends React.Component {
                                             </Accordion.Item>
                                         </Accordion>
                                     </div>
+                                    <div className="label mt-3" style={{ color: "#642d3c" }}>Neighbourhood Spotted</div>
+                                    <select className="form-select form-control ms-2" name="searchNeighbourhood"
+                                        value={this.state.searchNeighbourhood} onChange={this.updateFormField}
+                                        style={{ width: "80%" }}>
+                                        <option value="" key="placeHolder">--Select One--</option>
+                                        {this.neighbourhoodSpotted.map(n =>
+                                            <option className="form-control" key={n.value} value={n.value}>{n.display}</option>
+                                        )}
+                                    </select>
+                                    <div><label className="mt-3" style={{ color: "#642d3c" }}>Sort By:</label></div>
+                                    <select className="form-select form-control ms-2" name="sortBy"
+                                        value={this.state.sortBy} onChange={this.updateFormField}
+                                        style={{ width: "50%" }}>
+                                        {/* <option value="" key="placeHolder">--Select One--</option> */}
+                                        <option className="form-control" key="latest" value="latest">Latest</option>
+                                        <option className="form-control" key="alphebatically" value="alphebatically">Alphabetically</option>
+                                        <option className="form-control" key="birdFamily" value="birdFamily">Bird Family</option>
+                                        
+                                    </select>
+
                                     <div>
                                         <button className="btn mt-3" style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600", borderColor: "#282c34" }}
                                             onClick={

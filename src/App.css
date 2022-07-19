@@ -8,9 +8,17 @@
   background: #c8ccd9
 }
 
-body {
+/* body {
   background: #c8ccd9
-} 
+}  */
+
+.leaflet-container {
+
+  width: 100vw;
+  height: 90vh;
+  z-index: 1
+
+}
 
 .home {
   background: #c8ccd9
@@ -28,7 +36,17 @@ body {
   background: #fff2dd;
   display: flex;
   justify-content:center;
-  z-index: 1
+  z-index: 2
+}
+
+.mapFilter {
+  height: 75px;
+  width: 250px;
+  top: 100px;
+  right:5px;
+  position: fixed;
+  background: #fff2dd;
+  z-index: 2
 }
 
 .nonFixedHeader {
