@@ -10,9 +10,11 @@ import goose from '../pictures/goose.png'
 import kingFisher from '../pictures/addPageImg.jpeg'
 import logo from '../pictures/sgbirds-logo.png';
 import { IoCloseOutline } from "react-icons/io5";
+import { render } from "react-dom";
 
 // import { AccordionCollapse } from 'react-bootstrap';
 // import LocationPicker from "react-leaflet-location-picker";
+const ONEMAP_BASE_API_URL = 'https://developers.onemap.sg/'
 
 const options = [
     { value: 'black', label: 'Black', color: 'black' },
@@ -61,6 +63,8 @@ export default class Add extends React.Component {
         neighbourhoodSpotted: "",
         lat: "",
         lng: "",
+        address: "",
+        addressResults: null,
         imageUrl: null,
         eatingHabits: [],
         eatingTags: "",
@@ -70,7 +74,9 @@ export default class Add extends React.Component {
         birdColours: [],
         displayName: "",
         email: "",
-        submit: false
+        locate: "geoLocate",
+        submit: false,
+        addressDiv: false
     }
 
     birdFamily = {
@@ -91,6 +97,23 @@ export default class Add extends React.Component {
             value: "punggol"
         }
     ]
+
+    addressSearch = async (searchQuery) => {
+        let response = await axios.get(ONEMAP_BASE_API_URL + `commonapi/search?searchVal=${searchQuery}&returnGeom=Y&getAddrDetails=Y&pageNum=1`)
+        this.setState({
+            addressResults: response.data.results,
+            addressDiv: true
+        })
+    }
+
+    chooseAddress = (lat, lng, address) => {
+        this.setState({
+            address: address,
+            lat: lat,
+            lng: lng,
+            addressDiv: false
+        })
+    }
 
     // birdSize = {
     //     myArray: [1, 2, 3, 4, 5]
@@ -169,6 +192,45 @@ export default class Add extends React.Component {
 
     }
 
+    // componentDidMount() {
+    //     navigator.geolocation.getCurrentPosition(function (position) {
+    //         console.log(position.coords.latitude)
+    //     });
+    //     this.setState({
+    //         lat: position.coords.latitude,
+    //         lng: position.coords.longitude
+    //     })
+    // }
+
+    // componentDidMount() {
+    //     navigator.geolocation.getCurrentPosition(
+    //       (position) => {
+    //         let lat = position.coords.latitude
+    //         let lng = position.coords.longitude
+    //         console.log("getCurrentPosition Success " + lat + lng) // logs position correctly
+    //         this.setState({
+             
+    //             lat: lat,
+    //             lng: lng
+              
+    //         })
+    //       })}
+
+
+    userLocation = () => {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+              let lat = position.coords.latitude
+              let lng = position.coords.longitude
+              
+              this.setState({
+               
+                  lat: lat,
+                  lng: lng
+                
+              })
+            })   
+    }
 
     render() {
 
@@ -184,11 +246,11 @@ export default class Add extends React.Component {
                 </div>
                 <div className="p-3 mx-3 my-4 col-sm col-md col-lg">
                     <div className="addHeader">
-                        <h2 style={{ color: "#642d3c"}}>Add New Sighting</h2>
+                        <h2 style={{ color: "#642d3c" }}>Add New Sighting</h2>
                     </div>
                     <div className="row">
                         <div>
-                            <div className="label mt-3" style={{ color: "#642d3c"}}>Bird Size</div>
+                            <div className="label mt-3" style={{ color: "#642d3c" }}>Bird Size</div>
                             <div style={{ height: '52px' }}></div>
                             <div style={{ position: 'relative' }}>
                                 <label for="1" style={{ position: 'absolute', bottom: '0', left: '5px' }}><img src={sparrow} alt="sparrow" height="15px" /></label>
@@ -245,15 +307,50 @@ export default class Add extends React.Component {
                             </select>
                         </div>
                         <div>
-                        <div>
-                            <div className="label mt-3" style={{ color: "#642d3c" }}>Location Spotted</div>
-                            <input type="text" className="form-control" placeholder="Latitude"
-                                name="lat" value={this.state.lat}
-                                onChange={this.updateFormField} />
-                            <input type="text" className="form-control mt-2" placeholder="Longitude"
-                                name="lng" value={this.state.lng}
-                                onChange={this.updateFormField} />
-                        </div>
+                            <div>
+                                <div className="label mt-3" style={{ color: "#642d3c" }}>Location Spotted</div>
+                                <input type="text" className="form-control" placeholder="Latitude"
+                                    name="lat" value={this.state.lat}
+                                    onChange={this.updateFormField} />
+                                <input type="text" className="form-control mt-2" placeholder="Longitude"
+                                    name="lng" value={this.state.lng}
+                                    onChange={this.updateFormField} />
+                                
+                                <label className="mt-2" style={{ color: "#642d3c" }}>Retrieve latitude and longitude by :</label>
+                                <div><input type="radio" id="geoLocate" name="locate" value="geoLocate" onChange={this.updateFormField} checked={this.state.locate === "geoLocate"}/>
+                                <label for="geoLocate" className="ms-1 me-2">Current Location</label>
+                                <input type="radio" id="addressLocate" name="locate" value="addressLocate" onChange={this.updateFormField} checked={this.state.locate === "addressLocate"}/>
+                                <label for="addressLocate" className="ms-1 me-2">Address</label></div>
+
+                            {this.state.locate === "addressLocate" ? 
+                            <div>
+                                <input type="text" className="form-control" placeholder="Address"
+                                    name="address" value={this.state.address}
+                                    onChange={this.updateFormField} onInput={() => { this.addressSearch(this.state.address) }}
+                                />
+                                
+                                <div style={{ backgroundColor: "white", opacity: "0.8", overflowY: "scroll", maxHeight: "200px", position: "relative" }}>
+                                    {
+                                        this.state.addressResults != null & this.state.address !== "" && this.state.addressDiv === true
+                                            ?
+                                            this.state.addressResults.map(a =>
+                                                <div syle={{ padding: "5px", position: "absolute" }}
+                                                    onClick={() => { this.chooseAddress(a.LATITUDE, a.LONGITUDE, a.SEARCHVAL) }}>
+                                                    {a.SEARCHVAL}</div>
+                                            )
+                                            :
+                                            null
+                                    }
+
+                                </div>
+                                </div>
+                                :
+                                <div>
+                                    <button className="btn" style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600", padding: "5px", borderColor: "#642d3c" }}
+                                    onClick={this.userLocation}>Get My Location</button>
+                                </div>
+                                }       
+                            </div>
                         </div>
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Date Spotted</div>
@@ -262,7 +359,7 @@ export default class Add extends React.Component {
                                 onChange={this.updateFormField} />
                         </div>
                         <div>
-                            <label style={{ color: "#642d3c"}} className="mt-3">Eating Habits</label>
+                            <label style={{ color: "#642d3c" }} className="mt-3">Eating Habits</label>
                             <div className="mb-2">
                                 {
                                     this.state.eatingHabits.map((newE, e) =>
@@ -276,7 +373,7 @@ export default class Add extends React.Component {
                             </input>
                         </div>
                         <div>
-                            <label style={{ color: "#642d3c"}} className="mt-3">Behaviour</label>
+                            <label style={{ color: "#642d3c" }} className="mt-3">Behaviour</label>
                             <div className="mb-2">
                                 {
                                     this.state.behaviour.map((newB, b) =>
@@ -301,9 +398,7 @@ export default class Add extends React.Component {
                                 name="email" value={this.state.email}
                                 onChange={this.updateFormField} />
                         </div>
-                        <div>
-                            description
-                        </div>
+                        
                         <div>
                             <button className="btn mt-3" style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600" }}
                                 onClick={this.newSighting}>Add New Sighting</button>

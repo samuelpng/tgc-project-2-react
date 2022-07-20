@@ -4,6 +4,8 @@ import '../App.css';
 import logo from '../pictures/sgbirds-logo.png';
 import axios from "axios";
 
+
+
 export default class Map extends React.Component {
 
     url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/";
@@ -50,9 +52,10 @@ export default class Map extends React.Component {
                 <div className="header">
                     <img src={logo} alt="logo" height="90px" />
                 </div>
-
+                
                 <div className="mapFilter">
-                    <div className="label ms-3" style={{ color: "#642d3c" }}><h6>Bird Family</h6></div>
+                <div className="label ms-3" style={{ color: "#642d3c" }}><h6>Bird Family</h6></div>
+                <div style={{display: "flex"}}>
                     <select className="form-select form-control ms-3" name="birdFamily"
                         value={this.state.birdFamily} onChange={this.updateFormField}
                         style={{ width: "60%" }}>
@@ -64,13 +67,14 @@ export default class Map extends React.Component {
                         )}
                     </select>
                     <button className="btn btn-primary ms-3" onClick={this.mapSearch}>Go</button>
+                    </div>
                 </div>
 
                 <div style={{ height: "90px" }}></div>
-                <MapContainer center={[1.3521, 103.8198]} zoom={13} scrollWheelZoom={true}>
+                <MapContainer center={[1.3521, 103.8198]} zoom={12} scrollWheelZoom={true}>
                     <TileLayer
-                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        // attribution='&copy; <a href="https://maps-{s}.onemap.sg/v3/Default/{z}/{x}/{y}.png">OpenStreetMap</a> contributors'
+                        url='https://maps-{s}.onemap.sg/v3/Default/{z}/{x}/{y}.png'
                     />
 
                     

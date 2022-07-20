@@ -15,7 +15,7 @@
 .leaflet-container {
 
   width: 100vw;
-  height: 90vh;
+  height: 85vh;
   z-index: 1
 
 }
@@ -46,7 +46,7 @@
   right:5px;
   position: fixed;
   background: #fff2dd;
-  z-index: 2
+  z-index: 2;
 }
 
 .nonFixedHeader {

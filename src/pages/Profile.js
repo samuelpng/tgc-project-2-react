@@ -51,7 +51,8 @@ export default class Profile extends React.Component {
 
     closeModal = () => {
         this.setState({
-            modal: null
+            modal: null,
+            delete: false
         })
     }
 
@@ -169,7 +170,7 @@ export default class Profile extends React.Component {
                                         <React.Fragment key={b._id}>
 
 
-                                            <Modal.Header closeButton >{b.birdSpecies}</Modal.Header>
+                                            <Modal.Header closeButton>{b.birdSpecies}</Modal.Header>
                                             <Modal.Body>
                                                 <h5>Bird Size: {this.changeBirdSize(b.birdSize)}</h5>
                                                 <h5>Neightbourhood Spotted: {b.neighbourhoodSpotted}</h5>
@@ -228,9 +229,10 @@ export default class Profile extends React.Component {
                             })
                             }
 
-                            <Modal.Footer><button className="btn btn-primary"
+                            <Modal.Footer>
+                                {/* <button className="btn btn-primary"
                                 onClick={() => { this.closeModal() }}>
-                                Close</button>
+                                Close</button> */}
                                 <button className="btn"
                                     onClick={this.deleteAlert}
                                     style={{ backgroundColor: "#e8c6a2", color: "#642d3c", fontWeight: "600", borderColor: "crimson" }}>
