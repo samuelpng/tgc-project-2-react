@@ -12,8 +12,6 @@ import logo from '../pictures/sgbirds-logo.png';
 import { IoCloseOutline } from "react-icons/io5";
 import { render } from "react-dom";
 
-// import { AccordionCollapse } from 'react-bootstrap';
-// import LocationPicker from "react-leaflet-location-picker";
 const ONEMAP_BASE_API_URL = 'https://developers.onemap.sg/'
 
 const options = [
@@ -65,7 +63,7 @@ export default class Add extends React.Component {
         lng: "",
         address: "",
         addressResults: null,
-        imageUrl: null,
+        imageUrl: "",
         eatingHabits: [],
         eatingTags: "",
         behaviour: [],
@@ -80,23 +78,42 @@ export default class Add extends React.Component {
     }
 
     birdFamily = {
-        myArray: ["sparrow", "eagle", "raven"]
+        myArray: ["chicken", "eagle", "falcon", "hawk", "hornbills", "hummingbird", "kingfisher","owl", "pigeons", "sparrow", 
+        "storks", "waterfowl", "woodpeckers", "others"]
     }
 
-    neighbourhoodSpotted = [
-        {
-            display: "Ang Mo Kio",
-            value: "angmokio"
-        },
-        {
-            display: "Tampines",
-            value: "tampines"
-        },
-        {
-            display: "Punggol",
-            value: "punggol"
-        }
-    ]
+    neighbourhoodSpotted = {
+        myArray : ["Aljunied", "Ang Mo Kio", "Balestier", "Bartley", "Bayfront", "Beach Road", "Beauty World", "Bedok", "Bishan", "Botanic Gardens", "Braddell", "Bras Basah", "Buangkok", "Bugis", "Bukit Batok", "Bukit Giombak", "Buki Timah",
+    "Buona Vista", "Changi", "Changi", "Choa Chu Kang", "City Hall", "Clementi", "Commonwealth", "Dhoby Ghaut", "Dover", "Downtown",
+    "East Coast", "Eunos", "Farrer Park", "Fort Canning", "Geylang", "Great World", "Harbourfront", "Holland Village", "Hougang",
+    "Jalan Besar", "Jalan Kayu", "Joo Chiat", "Jurong East", "Kallang", "Katong", "Kembangan", "Kent Ridge", "Khatib", "Kovan",
+    "Lavender", "Little India", "Macpherson", "Marina Bay", "Marine Parade", "Mountbatten", "Newton", "Novena", "Orchard", "Outram Park",
+    "Pasir Panjang", "Pasir Ris", "Paya Lebar", "Potong Pasir", "Punggol", "Queenstown", "Raffles Place", "Redhill", "Seletar", "Sembawang", 
+    "Sengkang", "Serangoon", "Siglap", "Simei",  "Somerset", "Tai Seng", "Tampines", "Tanah Mearh", "Tanjong Katong", "Tanjong Pagar",
+    "Thomson", "Tiong Bahru", "Toa Payoh", "Tuas", "West Coast", "Woodlands", "Yio Chu Kang", "Yishun"]}
+
+    // neighbourhoodSpotted = [
+    //     {
+    //         display: "Ang Mo Kio",
+    //         value: "angmokio"
+    //     },
+        
+    //     {
+    //         display: "Punggol",
+    //         value: "punggol"
+    //     },
+    //     {
+    //         display: "Tanah Merah",
+    //         value: "tanahmerah"
+    //     },
+    //     {
+    //         display: "Tampines",
+    //         value: "tampines"
+    //     },
+    //     {
+
+    //     }
+    // ]
 
     addressSearch = async (searchQuery) => {
         let response = await axios.get(ONEMAP_BASE_API_URL + `commonapi/search?searchVal=${searchQuery}&returnGeom=Y&getAddrDetails=Y&pageNum=1`)
@@ -295,14 +312,21 @@ export default class Add extends React.Component {
                                     styles={colorStyles}
                                 />
                             </div>
-                        </div>
+                        
                         <div>
+                            <div className="label mt-3" style={{ color: "#642d3c" }}>Image Upload</div>
+                            <input type="text" className="form-control"
+                                name="imageUrl" value={this.state.imageUrl}
+                                placeholder="Insert Image URL..."
+                                onChange={this.updateFormField} />
+                        </div>
+
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Neighbourhood Spotted</div>
                             <select className="form-select form-control" name="neighbourhoodSpotted"
                                 value={this.state.neighbourhoodSpotted} onChange={this.updateFormField}>
                                 <option value="placeHolder" key="placeHolder">--Select One--</option>
-                                {this.neighbourhoodSpotted.map(n =>
-                                    <option key={n.value} value={n.value}>{n.display}</option>
+                                {this.neighbourhoodSpotted.myArray.map(n =>
+                                    <option key={n} value={n}>{n}</option>
                                 )}
                             </select>
                         </div>
@@ -334,7 +358,7 @@ export default class Add extends React.Component {
                                         this.state.addressResults != null & this.state.address !== "" && this.state.addressDiv === true
                                             ?
                                             this.state.addressResults.map(a =>
-                                                <div syle={{ padding: "5px", position: "absolute" }}
+                                                <div syle={{ padding: "5px", position: "absolute" }} key={a.SEARCHVAL}
                                                     onClick={() => { this.chooseAddress(a.LATITUDE, a.LONGITUDE, a.SEARCHVAL) }}>
                                                     {a.SEARCHVAL}</div>
                                             )

@@ -10,8 +10,8 @@ import logo from '../pictures/sgbirds-logo.png';
 
 export default class Profile extends React.Component {
 
-    url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/";
-
+    // url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/";
+    url = "https://sgbirds.herokuapp.com/"
     state = {
         loginData: [],
         modal: null,
@@ -144,13 +144,26 @@ export default class Profile extends React.Component {
                                     <React.Fragment key={b._id}>
 
                                         <Card className="mb-3">
-                                            <Card.Header as="h5">{b.birdSpecies}</Card.Header>
+                                            <Card.Header >{b.birdSpecies}</Card.Header>
                                             <Card.Body>
-                                                <Card.Title>Image</Card.Title>
+                                                <Card.Title>
+                                                    
+                                                    {/* {b.birdSpecies} */}
+                                                    <img src={b.imageUrl} style={{width:"100%"}}/>
+                                                </Card.Title>
                                                 <Card.Text>
-                                                    <h5>Bird Size: {this.changeBirdSize(b.birdSize)}</h5>
-                                                    <h5>Neightbourhood Spotted: {b.neighbourhoodSpotted}</h5>
-                                                    <h5>Bird Colours: {b.birdColours.map(c => (<span>{c},&nbsp;</span>))}</h5>
+                                                    {/* <h5>Bird Size: {this.changeBirdSize(b.birdSize)}</h5> */}
+                                                    
+                                                    <div>The {b.birdSpecies} was spotted at {b.neighbourhoodSpotted} on {b.dateSpotted} .</div>
+                                                    <div>Family: {b.birdFamily} </div>
+                                                    <br/>
+                                                    <div>Bird Colours:</div>
+                                                    <div>{b.birdColours.map(c => (<span>{c},&nbsp;</span>))}</div>
+                                                    <br />
+                                                    <div>Posted by:</div>
+                                                    <div>{b.displayName}</div>
+                                                    <div>{b.datePosted.slice(0,10)}</div>
+                                                    
                                                 </Card.Text>
                                                 <Button variant="primary" onClick={() => { this.handleModal(b._id) }}>More</Button>
                                             </Card.Body>

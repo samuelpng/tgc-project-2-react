@@ -20,6 +20,11 @@
 
 }
 
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out {
+  background-color: #fff2dd;
+  color: #642d3c
+}
+
 .home {
   background: #c8ccd9
 }
