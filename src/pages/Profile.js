@@ -3,8 +3,7 @@ import '../App.css';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { Card } from 'react-bootstrap';
-import { Alert } from 'react-bootstrap';
+import { Card, Badge, Alert } from 'react-bootstrap';
 import Update from './Update.js'
 import logo from '../pictures/sgbirds-logo.png';
 
@@ -30,12 +29,12 @@ export default class Profile extends React.Component {
         })
     }
 
-    retrieveSightings = async() => {
-        let response = await axios.get(this.url + `bird_sightings`,{
+    retrieveSightings = async () => {
+        let response = await axios.get(this.url + `bird_sightings`, {
             params: {
                 email: this.state.email
             }
-        }     
+        }
         )
         this.setState({
             loginData: response.data
@@ -127,16 +126,16 @@ export default class Profile extends React.Component {
                         <div className="p-3 mx-3 my-4 col-sm col-md col-lg">
                             {/* login validation */}
                             <div>
-                                <h5 style={{color: "#642d3c"}}>View My Sightings</h5>
+                                <h5 style={{ color: "#642d3c" }}>View My Sightings</h5>
                                 <input type="text" className="form-control mt-2"
                                     name="email" value={this.state.email}
-                                    onChange={this.updateFormField} 
-                                    placeholder="Retrieve by email..."/>
-                                <button className="btn mt-2 mb-3" onClick = {this.retrieveSightings}
-                                style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600" }}
+                                    onChange={this.updateFormField}
+                                    placeholder="Retrieve by email..." />
+                                <button className="btn mt-2 mb-3" onClick={this.retrieveSightings}
+                                    style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600" }}
                                 >Retrieve</button>
                             </div>
-                            
+
 
                             {/* Reult Cards */}
                             {
@@ -147,23 +146,26 @@ export default class Profile extends React.Component {
                                             <Card.Header >{b.birdSpecies}</Card.Header>
                                             <Card.Body>
                                                 <Card.Title>
-                                                    
+
                                                     {/* {b.birdSpecies} */}
-                                                    <img src={b.imageUrl} style={{width:"100%"}}/>
+                                                    <img src={b.imageUrl} style={{ width: "100%" }} />
                                                 </Card.Title>
                                                 <Card.Text>
                                                     {/* <h5>Bird Size: {this.changeBirdSize(b.birdSize)}</h5> */}
-                                                    
+
                                                     <div>The {b.birdSpecies} was spotted at {b.neighbourhoodSpotted} on {b.dateSpotted} .</div>
-                                                    <div>Family: {b.birdFamily} </div>
-                                                    <br/>
-                                                    <div>Bird Colours:</div>
-                                                    <div>{b.birdColours.map(c => (<span>{c},&nbsp;</span>))}</div>
                                                     <br />
+                                                    <div style={{display: 'flex'}}><h6>Family:&nbsp;</h6>{b.birdFamily[0].toUpperCase() + b.birdFamily.substring(1)}</div>
+                                                    <div><h6>Bird Colours:</h6></div>
+                                                    <div>{b.birdColours.map(c => (<span className="badge badge-pill me-2 mt-2"
+                                                        style={{ backgroundColor: `${c}`, color: "#e8c6a2", height: "25px", fontSize: "15px" }}>{c}&nbsp;</span>))}</div>
+                                                    <br />
+                                                    
+                                                    <div>Behaviour: </div>
                                                     <div>Posted by:</div>
                                                     <div>{b.displayName}</div>
-                                                    <div>{b.datePosted.slice(0,10)}</div>
-                                                    
+                                                    <div>{b.datePosted.slice(0, 10)}</div>
+
                                                 </Card.Text>
                                                 <Button variant="primary" onClick={() => { this.handleModal(b._id) }}>More</Button>
                                             </Card.Body>
@@ -185,12 +187,27 @@ export default class Profile extends React.Component {
 
                                             <Modal.Header closeButton>{b.birdSpecies}</Modal.Header>
                                             <Modal.Body>
-                                                <h5>Bird Size: {this.changeBirdSize(b.birdSize)}</h5>
+                                                {/* <h5>Bird Size: {this.changeBirdSize(b.birdSize)}</h5>
                                                 <h5>Neightbourhood Spotted: {b.neighbourhoodSpotted}</h5>
                                                 <h5>Bird Colours: {b.birdColours.map(c => (<span>{c},&nbsp;</span>))}</h5>
 
                                                 <hr></hr>
-                                                <h5 style={{ color: "#642d3c" }} >Comments</h5>
+                                                <h5 style={{ color: "#642d3c" }} >Comments</h5> */}
+                                                <img src={b.imageUrl} style={{ width: "100%" }} />
+                                                <div className="mt-3">The {b.birdSpecies} was spotted at {b.neighbourhoodSpotted} on {b.dateSpotted} .</div>
+                                                <br />
+                                                <div><h6>Family:</h6>{b.birdFamily}</div>
+                                                <div><h6>Bird Colours:</h6></div>
+                                                <div>{b.birdColours.map(c => (<span className="badge badge-pill me-2 mt-2"
+                                                    style={{ backgroundColor: `${c}`, color: "#e8c6a2", height: "25px", fontSize: "15px" }}>{c}&nbsp;</span>))}</div>
+                                                <div>Eating Habits: {b.character.eatingHabits.map(e => (<span className="badge badge-pill me-2 mt-2"
+                                                        style={{ backgroundColor: `#e8c6a2`, color: "#642d3c", height: "25px", fontSize: "15px" }}>{e}&nbsp;</span>))}</div>
+                                                <br />
+                                                <div>Behaviour: {b.character.behaviour.map(b => (<span className="badge badge-pill me-2 mt-2"
+                                                        style={{ backgroundColor: `#e8c6a2`, color: "#642d3c", height: "25px", fontSize: "15px" }}>{b}&nbsp;</span>))}</div>
+                                                <div>Posted by:</div>
+                                                <div>{b.displayName}</div>
+                                                <div>{b.datePosted.slice(0, 10)}</div>
                                                 <br />
                                                 {b.comments !== undefined ? b.comments.map(c =>
                                                     <span>
@@ -211,21 +228,12 @@ export default class Profile extends React.Component {
                                                 <label style={{ color: "#642d3c" }} >Comment</label>
                                                 <textarea className="form-control" onChange={this.updateFormField}
                                                     name="commentDescription" value={this.state.commentDescription}></textarea>
-                                                    
+
                                                 <button className="btn btn-primary mt-3" onClick={this.postComment}>Post</button>
                                             </Modal.Body>
 
                                             {/* Delete Alert */}
-                                            {/* <Modal show={this.state.delete} centered >
-                                                <Modal.Body>
-                                                    <div style={{ color: "#642d3c", display: "flex", justifyContent: "center" }}>
-                                                        <h3>Are you sure you want to Delete {b.birdSpecies}</h3>
-                                                    </div>
-                                                    <div style={{ display: "flex", justifyContent: "center" }} className="mt-3">
-                                                        <button className="btn btn-primary" onClick={this.deleteSighting}>Delete</button>
-                                                    </div>
-                                                </Modal.Body>
-                                            </Modal> */}
+
                                             <Alert variant="danger" show={this.state.delete}>
                                                 <Alert.Heading>Are you sure you want to Delete {b.birdSpecies}?</Alert.Heading>
                                                 <button className="btn" onClick={this.deleteSighting}

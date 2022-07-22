@@ -19,9 +19,9 @@ export default class App extends React.Component {
     explore: false,
     add: false,
     map: false,
-    profile: true,
-    update: false,
-    modal: null
+    profile: true
+    // update: false,
+    // modal: null
   }
 
   homeIcon = () => {

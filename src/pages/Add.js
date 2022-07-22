@@ -92,32 +92,13 @@ export default class Add extends React.Component {
     "Sengkang", "Serangoon", "Siglap", "Simei",  "Somerset", "Tai Seng", "Tampines", "Tanah Mearh", "Tanjong Katong", "Tanjong Pagar",
     "Thomson", "Tiong Bahru", "Toa Payoh", "Tuas", "West Coast", "Woodlands", "Yio Chu Kang", "Yishun"]}
 
-    // neighbourhoodSpotted = [
-    //     {
-    //         display: "Ang Mo Kio",
-    //         value: "angmokio"
-    //     },
-        
-    //     {
-    //         display: "Punggol",
-    //         value: "punggol"
-    //     },
-    //     {
-    //         display: "Tanah Merah",
-    //         value: "tanahmerah"
-    //     },
-    //     {
-    //         display: "Tampines",
-    //         value: "tampines"
-    //     },
-    //     {
-
-    //     }
-    // ]
-
     addressSearch = async (searchQuery) => {
         let response = await axios.get(ONEMAP_BASE_API_URL + `commonapi/search?searchVal=${searchQuery}&returnGeom=Y&getAddrDetails=Y&pageNum=1`)
+        // this.setState({
+        //     addressDiv: false
+        // })
         this.setState({
+            addressResults: "",
             addressResults: response.data.results,
             addressDiv: true
         })
@@ -131,10 +112,6 @@ export default class Add extends React.Component {
             addressDiv: false
         })
     }
-
-    // birdSize = {
-    //     myArray: [1, 2, 3, 4, 5]
-    // }
 
     updateFormField = (event) => {
         this.setState({
@@ -166,8 +143,10 @@ export default class Add extends React.Component {
         if ((e.key === 'Enter' || e.code === 'Enter') && e.target.value.trim() !== "") {
             const newArray = [...this.state.eatingHabits]
             newArray.push(e.target.value.trim())
-            this.setState({ eatingHabits: newArray })
-            // this.setState({ eatingInput: "" })
+            this.setState({ 
+                eatingHabits: newArray,
+                eatingTags: ""
+             })
         }
     }
 
@@ -175,8 +154,10 @@ export default class Add extends React.Component {
         if ((b.key === 'Enter' || b.code === 'Enter') && b.target.value.trim() !== "") {
             const newArray = [...this.state.behaviour]
             newArray.push(b.target.value.trim())
-            this.setState({ behaviour: newArray })
-            this.setState({ behaviourInput: "" })
+            this.setState({ 
+                behaviour: newArray,
+                behaviourTags: "" 
+            })
         }
     }
 
@@ -208,30 +189,6 @@ export default class Add extends React.Component {
         })
 
     }
-
-    // componentDidMount() {
-    //     navigator.geolocation.getCurrentPosition(function (position) {
-    //         console.log(position.coords.latitude)
-    //     });
-    //     this.setState({
-    //         lat: position.coords.latitude,
-    //         lng: position.coords.longitude
-    //     })
-    // }
-
-    // componentDidMount() {
-    //     navigator.geolocation.getCurrentPosition(
-    //       (position) => {
-    //         let lat = position.coords.latitude
-    //         let lng = position.coords.longitude
-    //         console.log("getCurrentPosition Success " + lat + lng) // logs position correctly
-    //         this.setState({
-             
-    //             lat: lat,
-    //             lng: lng
-              
-    //         })
-    //       })}
 
 
     userLocation = () => {
@@ -355,10 +312,10 @@ export default class Add extends React.Component {
                                 
                                 <div style={{ backgroundColor: "white", opacity: "0.8", overflowY: "scroll", maxHeight: "200px", position: "relative" }}>
                                     {
-                                        this.state.addressResults != null & this.state.address !== "" && this.state.addressDiv === true
+                                        this.state.addressResults != null && this.state.address !== "" && this.state.addressDiv === true
                                             ?
                                             this.state.addressResults.map(a =>
-                                                <div syle={{ padding: "5px", position: "absolute" }} key={a.SEARCHVAL}
+                                                <div syle={{ padding: "5px", position: "absolute" }} key={a.X}
                                                     onClick={() => { this.chooseAddress(a.LATITUDE, a.LONGITUDE, a.SEARCHVAL) }}>
                                                     {a.SEARCHVAL}</div>
                                             )
