@@ -2,13 +2,23 @@ import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import '../App.css';
 import logo from '../pictures/sgbirds-logo.png';
+import marker from '../pictures/marker.png';
 import axios from "axios";
+import L from 'leaflet';
 
 
+const markerIcon = new L.Icon({
+    iconUrl: marker,
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [40, 40],
+    iconAnchor: [22, 94],
+    popupAnchor: [-3, -76]
+});
 
 export default class Map extends React.Component {
 
-    url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/";
+    // url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/";
+    url = "https://sgbirds.herokuapp.com/"
 
     state = {
         birdMarkers: [],
@@ -47,6 +57,7 @@ export default class Map extends React.Component {
 
 
     render() {
+
         return (
             <React.Fragment>
                 <div className="header">
@@ -81,7 +92,10 @@ export default class Map extends React.Component {
                     {this.state.birdMarkers.map(b => {
                         if (b.locationSpotted.lat !== null && b.locationSpotted.lat !== "") {
                             return(
-                                <Marker position={[parseFloat(b.locationSpotted.lat), parseFloat(b.locationSpotted.lng)]}>
+                                <Marker position={[parseFloat(b.locationSpotted.lat), parseFloat(b.locationSpotted.lng)] } 
+                                key={b.id}
+                                icon={markerIcon}
+                                >
                                 <Popup>
                                     <h5>{b.birdSpecies}</h5>
                                     <h6>{b.birdSize}</h6>

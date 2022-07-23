@@ -3,7 +3,7 @@ import '../App.css';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { Card, Badge, Alert } from 'react-bootstrap';
+import { Card, Badge, Alert, Container, Row, Col } from 'react-bootstrap';
 import Update from './Update.js'
 import logo from '../pictures/sgbirds-logo.png';
 
@@ -117,15 +117,23 @@ export default class Profile extends React.Component {
 
             <React.Fragment>
                 {this.state.update === false ?
+                
+                
+                // Render normal Profile Page
+                
                     <div>
                         <div className="header">
                             <img src={logo} alt="logo" height="90px" />
                         </div>
                         <div style={{ height: "90px" }}></div>
-
-                        <div className="p-3 mx-3 my-4 col-sm col-md col-lg">
-                            {/* login validation */}
-                            <div>
+                    
+                 
+                        
+                        <div className="container p-4">
+                         <div className="row">
+                        {/* p-3 mx-3 my-4 col-sm col-md col-lg */}
+                            {/* email validation */}
+                            <div className="profileBar">
                                 <h5 style={{ color: "#642d3c" }}>View My Sightings</h5>
                                 <input type="text" className="form-control mt-2"
                                     name="email" value={this.state.email}
@@ -137,13 +145,15 @@ export default class Profile extends React.Component {
                             </div>
 
 
-                            {/* Reult Cards */}
+                            {/* Result Cards */}
+                            <div className="row">
                             {
                                 this.state.loginData.map(b => (
                                     <React.Fragment key={b._id}>
 
-                                        <Card className="mb-3">
+                                        <Card className="col-lg-4 ">
                                             <Card.Header >{b.birdSpecies}</Card.Header>
+                                            {/* <img src={b.imageUrl} style={{ width: "100%" }} /> */}
                                             <Card.Body>
                                                 <Card.Title>
 
@@ -174,7 +184,11 @@ export default class Profile extends React.Component {
                                     </React.Fragment>
                                 ))
                             }
+                            </div>
                         </div>
+                     
+
+                        {/* Modal or each result */}
 
                         <Modal show={this.state.modal !== null} onHide={() => { this.closeModal() }} centered>
 
@@ -266,7 +280,10 @@ export default class Profile extends React.Component {
                         </Modal>
 
                         <div style={{ height: "90px" }}></div>
+                    
                     </div>
+                    </div>
+               
                     :
                     <Update modal={this.state.modal} backToProfile={this.backToProfile} />
                 }

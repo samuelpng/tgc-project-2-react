@@ -20,6 +20,16 @@
 
 }
 
+.card {
+  background-color: #c8ccd9 !important;
+  border: 0px !important
+}
+
+.row>* {
+  padding-bottom: 12px!important;
+  padding-top: 12px
+}
+
 .leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out {
   background-color: #fff2dd;
   color: #642d3c
@@ -190,6 +200,16 @@
   margin-bottom: 0rem !important
 }
 
+
+/* .container-fluid {
+  padding: 0px  !important
+} */
+
+.row {
+  padding:0px !important;
+  margin: 0px !important
+}
+
 /* .accordion-button:not(.collapsed) {
   color: #642d3c !important
 
@@ -223,9 +243,34 @@
     padding-right: 320px
   }
 
+  .formPadding {
+    padding-left: 20vw;
+    padding-right: 20vw;
+
+  }
+
   .addImg {
-    padding-left: 320px;
-    padding-right: 320px;
+    padding-left: 20vw;
+    padding-right: 20vw;
     height: 30vw
   }
+
+  .container-fluid {
+    padding: 12px  
+  }
+
+  .profileBar  {
+    padding-left: 10vw !important;
+    padding-right: 10vw !important;
+  }
+
+  .leaflet-container {
+
+    width: 100vw;
+    height: 95vh;
+    z-index: 1
+  
+  }
+
+
 }

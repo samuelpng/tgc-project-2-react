@@ -212,6 +212,7 @@ export default class Add extends React.Component {
 
         return (
             <React.Fragment>
+               
                 <div className="nonFixedHeader">
                     <img src={logo} alt="logo" height="90px" />
                 </div>
@@ -219,10 +220,10 @@ export default class Add extends React.Component {
                     <img src={kingFisher} className="addImg" alt="kingfisher" width="100%" height="225px" />
                 </div>
                 <div className="p-3 mx-3 my-4 col-sm col-md col-lg">
-                    <div className="addHeader">
+                    <div className="formPadding addHeader">
                         <h2 style={{ color: "#642d3c" }}>Add New Sighting</h2>
                     </div>
-                    <div className="row">
+                    <div className="formPadding">
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Bird Size</div>
                             <div style={{ height: '52px' }}></div>
@@ -387,7 +388,7 @@ export default class Add extends React.Component {
                     </div>
                 </div>
                 <div className="addFooter"></div>
-
+                
             </React.Fragment>
         )
     }
