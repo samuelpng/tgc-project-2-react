@@ -20,6 +20,8 @@
     "react-scripts": "5.0.1",
     "react-select": "^5.4.0",
     "sass": "^1.53.0",
+    "sweetalert2": "^11.4.24",
+    "sweetalert2-react-content": "^5.0.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

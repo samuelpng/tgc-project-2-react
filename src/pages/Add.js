@@ -10,6 +10,7 @@ import goose from '../pictures/goose.png'
 import kingFisher from '../pictures/addPageImg.jpeg'
 import logo from '../pictures/sgbirds-logo.png';
 import { IoCloseOutline } from "react-icons/io5";
+import Swal from "sweetalert2";  
 import { render } from "react-dom";
 
 const ONEMAP_BASE_API_URL = 'https://developers.onemap.sg/'
@@ -161,7 +162,47 @@ export default class Add extends React.Component {
         }
     }
 
+
     newSighting = async () => {
+        
+        Swal.fire({  
+            text: 'Bird Sighting Successfully Added',  
+            title: 'SUCCESS',  
+            imageUrl: `${this.state.imageUrl}` ,
+            imageWidth: 300,
+            imageHeight: 200,
+            icon: 'success',   
+            confirmButtonColor: '#3085d6',    
+            confirmButtonText: 'Back',
+            allowOutsideClick: false  
+          }).then((result)=>{
+            if (result.isConfirmed) {
+                this.setState({
+                    birdSize: "",
+                    birdFamily: "",
+                    birdSpecies: "",
+                    dateSpotted: "",
+                    neighbourhoodSpotted: "",
+                    lat: "",
+                    lng: "",
+                    address: "",
+                    addressResults: null,
+                    imageUrl: "",
+                    eatingHabits: [],
+                    eatingTags: "",
+                    behaviour: [],
+                    behaviourTags: "",
+                    description: "",
+                    birdColours: [],
+                    displayName: "",
+                    email: "",
+                    locate: "geoLocate",
+                    submit: false,
+                    addressDiv: false
+                })
+            }
+          }) 
+
         this.setState({
             submit: true
         })
@@ -187,6 +228,8 @@ export default class Add extends React.Component {
             displayName: this.state.displayName,
             email: this.state.email
         })
+
+        
 
     }
 
@@ -216,6 +259,7 @@ export default class Add extends React.Component {
                 <div className="nonFixedHeader">
                     <img src={logo} alt="logo" height="90px" />
                 </div>
+                <div className="desktopPadding"></div>
                 <div>
                     <img src={kingFisher} className="addImg" alt="kingfisher" width="100%" height="225px" />
                 </div>

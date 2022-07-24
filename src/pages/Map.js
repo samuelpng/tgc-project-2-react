@@ -82,7 +82,7 @@ export default class Map extends React.Component {
                 </div>
 
                 <div style={{ height: "90px" }}></div>
-                <MapContainer center={[1.3521, 103.8198]} zoom={12} scrollWheelZoom={true}>
+                <MapContainer center={[1.3521, 103.8198]} zoom={13} scrollWheelZoom={true}>
                     <TileLayer
                         // attribution='&copy; <a href="https://maps-{s}.onemap.sg/v3/Default/{z}/{x}/{y}.png">OpenStreetMap</a> contributors'
                         url='https://maps-{s}.onemap.sg/v3/Default/{z}/{x}/{y}.png'

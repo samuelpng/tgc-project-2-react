@@ -8,6 +8,8 @@ import Add from './pages/Add';
 import Explore from './pages/Explore';
 import Profile from './pages/Profile';
 import Map from './pages/Map';
+import logo from './pictures/sgbirds-logo.png';
+import { Nav, Navbar, Container } from 'react-bootstrap';
 import Update from './pages/Update';
 
 // import NavBar from './pages/NavBar';
@@ -15,11 +17,11 @@ import Update from './pages/Update';
 export default class App extends React.Component {
 
   state = {
-    home: false,
+    home: true,
     explore: false,
     add: false,
     map: false,
-    profile: true
+    profile: false
     // update: false,
     // modal: null
   }
@@ -58,7 +60,7 @@ export default class App extends React.Component {
     this.setState({
       home: false, explore: false, add: false, map: false, profile: false, update: true
     })
-}
+  }
 
   pageToRender = () => {
     if (this.state.home) {
@@ -69,10 +71,10 @@ export default class App extends React.Component {
       return (<Add />)
     } else if (this.state.map) {
       return (<h1><Map /></h1>)
-    } else if (this.state.profile){
+    } else if (this.state.profile) {
       return (<Profile />)
-        // updateSighting={this.updateSighting} />)
-    } 
+      // updateSighting={this.updateSighting} />)
+    }
     // else if (this.state.update) {
     //   return (<Update />)
     // }
@@ -86,41 +88,56 @@ export default class App extends React.Component {
             {this.pageToRender()}
           </div>
 
-        
-            <div className="navigation">
-              <ul>
-                <li onClick={this.homeIcon}>
-                  <div className="icon-container">
-                    <span className={this.state.home ? "iconActive" : "iconInactive"}><IoHomeOutline /></span>
-                    <span className={this.state.home ? "textActive" : "textInactive"}>Home</span>
-                  </div>
-                </li>
-                <li onClick={this.exploreIcon}>
-                  <div className="icon-container">
-                    <span className={this.state.explore ? "iconActive" : "iconInactive"}><BiSearchAlt /></span>
-                    <span className={this.state.explore ? "textActive" : "textInactive"}>Explore</span>
-                  </div>
-                </li>
-                <li onClick={this.addIcon}>
-                  <div className="icon-container">
-                    <span className={this.state.add ? "iconActive" : "iconInactive"}><BiPlusCircle /></span>
-                    <span className={this.state.add ? "textActive" : "textInactive"}>Add</span>
-                  </div>
-                </li>
-                <li onClick={this.mapIcon}>
-                  <div className="icon-container">
-                    <span className={this.state.map ? "iconActive" : "iconInactive"}><BiMap /></span>
-                    <span className={this.state.map ? "textActive" : "textInactive"}>Map</span>
-                  </div>
-                </li>
-                <li onClick={this.profileIcon}>
-                  <div className="icon-container">
-                    <span className={this.state.profile ? "iconActive" : "iconInactive"}><IoPersonOutline /></span>
-                    <span className={this.state.profile ? "textActive" : "textInactive"}>Profile</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
+
+          <div className="navigation">
+            <ul>
+              <li onClick={this.homeIcon}>
+                <div className="icon-container">
+                  <span className={this.state.home ? "iconActive" : "iconInactive"}><IoHomeOutline /></span>
+                  <span className={this.state.home ? "textActive" : "textInactive"}>Home</span>
+                </div>
+              </li>
+              <li onClick={this.exploreIcon}>
+                <div className="icon-container">
+                  <span className={this.state.explore ? "iconActive" : "iconInactive"}><BiSearchAlt /></span>
+                  <span className={this.state.explore ? "textActive" : "textInactive"}>Explore</span>
+                </div>
+              </li>
+              <li onClick={this.addIcon}>
+                <div className="icon-container">
+                  <span className={this.state.add ? "iconActive" : "iconInactive"}><BiPlusCircle /></span>
+                  <span className={this.state.add ? "textActive" : "textInactive"}>Add</span>
+                </div>
+              </li>
+              <li onClick={this.mapIcon}>
+                <div className="icon-container">
+                  <span className={this.state.map ? "iconActive" : "iconInactive"}><BiMap /></span>
+                  <span className={this.state.map ? "textActive" : "textInactive"}>Map</span>
+                </div>
+              </li>
+              <li onClick={this.profileIcon}>
+                <div className="icon-container">
+                  <span className={this.state.profile ? "iconActive" : "iconInactive"}><IoPersonOutline /></span>
+                  <span className={this.state.profile ? "textActive" : "textInactive"}>Profile</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="desktopNavbar">
+          <Navbar fixed="top">
+            <Container>
+              <Navbar.Brand onClick={this.homeIcon}><img src={logo} alt="logo" height="65px" /></Navbar.Brand>
+              <Nav className="me-auto">
+                <Nav.Link onClick={this.homeIcon} className={this.state.home ? "pageActive" : ""}>Home</Nav.Link>
+                <Nav.Link onClick={this.exploreIcon} className={this.state.explore ? "pageActive" : ""}>Explore</Nav.Link>
+                <Nav.Link onClick={this.addIcon} className={this.state.add ? "pageActive" : ""}>Add</Nav.Link>
+                <Nav.Link onClick={this.mapIcon} className={this.state.map ? "pageActive" : ""}>Map</Nav.Link>
+                <Nav.Link onClick={this.profileIcon} className={this.state.profile ? "pageActive" : ""}>Profile</Nav.Link>
+              </Nav>
+            </Container>
+          </Navbar>
         </div>
       </React.Fragment>
     )

@@ -47,8 +47,8 @@ const colorStyles = {
 
 export default class Update extends React.Component {
 
-    // url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/"
-    url = "https://sgbirds.herokuapp.com/"
+    url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/"
+    // url = "https://sgbirds.herokuapp.com/"
 
     state = {
         data: [],
@@ -84,23 +84,19 @@ export default class Update extends React.Component {
     ];
 
     birdFamily = {
-        myArray: ["sparrow", "eagle", "raven"]
+        myArray: ["chicken", "eagle", "falcon", "hawk", "hornbills", "hummingbird", "kingfisher","owl", "pigeons", "sparrow", 
+        "storks", "waterfowl", "woodpeckers", "others"]
     }
 
-    neighbourhoodSpotted = [
-        {
-            display: "Ang Mo Kio",
-            value: "angmokio"
-        },
-        {
-            display: "Tampines",
-            value: "tampines"
-        },
-        {
-            display: "Punggol",
-            value: "punggol"
-        }
-    ]
+    neighbourhoodSpotted = {
+        myArray : ["Aljunied", "Ang Mo Kio", "Balestier", "Bartley", "Bayfront", "Beach Road", "Beauty World", "Bedok", "Bishan", "Botanic Gardens", "Braddell", "Bras Basah", "Buangkok", "Bugis", "Bukit Batok", "Bukit Giombak", "Buki Timah",
+    "Buona Vista", "Changi", "Changi", "Choa Chu Kang", "City Hall", "Clementi", "Commonwealth", "Dhoby Ghaut", "Dover", "Downtown",
+    "East Coast", "Eunos", "Farrer Park", "Fort Canning", "Geylang", "Great World", "Harbourfront", "Holland Village", "Hougang",
+    "Jalan Besar", "Jalan Kayu", "Joo Chiat", "Jurong East", "Kallang", "Katong", "Kembangan", "Kent Ridge", "Khatib", "Kovan",
+    "Lavender", "Little India", "Macpherson", "Marina Bay", "Marine Parade", "Mountbatten", "Newton", "Novena", "Orchard", "Outram Park",
+    "Pasir Panjang", "Pasir Ris", "Paya Lebar", "Potong Pasir", "Punggol", "Queenstown", "Raffles Place", "Redhill", "Seletar", "Sembawang", 
+    "Sengkang", "Serangoon", "Siglap", "Simei",  "Somerset", "Tai Seng", "Tampines", "Tanah Mearh", "Tanjong Katong", "Tanjong Pagar",
+    "Thomson", "Tiong Bahru", "Toa Payoh", "Tuas", "West Coast", "Woodlands", "Yio Chu Kang", "Yishun"]}
 
     // birdSize = {
     //     myArray: [1, 2, 3, 4, 5]
@@ -314,8 +310,8 @@ export default class Update extends React.Component {
                             <select className="form-select form-control" name="neighbourhoodSpotted"
                                 value={this.state.neighbourhoodSpotted} onChange={this.updateFormField}>
                                 <option value="placeHolder" key="placeHolder">--Select One--</option>
-                                {this.neighbourhoodSpotted.map(n =>
-                                    <option key={n.value} value={n.value}>{n.display}</option>
+                                {this.neighbourhoodSpotted.myArray.map(n =>
+                                    <option key={n} value={n}>{n}</option>
                                 )}
                             </select>
                         </div>

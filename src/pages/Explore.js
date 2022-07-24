@@ -144,44 +144,50 @@ export default class Explore extends React.Component {
                 <div className="nonFixedHeader">
                     <img src={logo} alt="logo" height="90px" />
                 </div>
-                {/* <div>
+                <div className="desktopPadding"></div>
+
+                <div className="container-fluid p-3">
+                    <div className="row">
+                        {/* <div>
                     <img src={eagle} className="addImg" alt="eagle" width="100%" height="225px" />
                 </div> */}
-                <div className="p-3 mx-3 my-4 col-sm col-md col-lg">
-                    <div className="addHeader">
-                        <h2 style={{ color: "#642d3c" }} className="mb-3">Explore</h2>
-                    </div>
-                    <Accordion>
-                        <Accordion.Item eventKey="0">
-                            <Accordion.Header><span style={{ color: "#642d3c" }}>Search</span></Accordion.Header>
-                            <Accordion.Body>
-                                <div className="row search-form">
-                                    <div>
-                                        <label style={{ color: "#642d3c" }}> Search based on Keywords </label>
-                                        <input className="form-control" type="text"
-                                            name="searchInput"
-                                            value={this.state.searchInput}
-                                            onChange={this.updateFormField} />
-                                    </div>
-                                    <div>
-                                        <div>
-                                            <label className="mt-2" style={{ color: "#642d3c" }}>Bird Size</label>
-                                        </div>
-                                        <div style={{ height: '52px' }}></div>
-                                        <div>
-                                            <div style={{ position: 'relative' }}>
-                                                <label for="1" style={{ position: 'absolute', bottom: '0', left: '5px' }}><img src={sparrow} alt="sparrow" height="15px" /></label>
-                                                <label for="3" style={{ position: 'absolute', bottom: '0', left: '75px' }}><img src={blackbird} alt="blackbird" height="25px" /></label>
-                                                <label for="5" style={{ position: 'absolute', bottom: '0', left: '143px' }}><img src={crow} alt="crow" height="35px" /></label>
-                                                <label for="7" style={{ position: 'absolute', bottom: '0', left: '220px' }}><img src={goose} alt="goose" height="50px" /></label>
+                        <div className="col-lg-3">
+
+                            {/* p-3 mx-3 my-4 col-sm col-md col-lg */}
+                            <div >
+                                <h2 style={{ color: "#642d3c" }} className="mb-3">Explore</h2>
+                            </div>
+                            <Accordion>
+                                <Accordion.Item eventKey="0">
+                                    <Accordion.Header><span style={{ color: "#642d3c", fontWeight: "500" }}>Search</span></Accordion.Header>
+                                    <Accordion.Body>
+                                        <div className="row search-form">
+                                            <div>
+                                                <label style={{ color: "#642d3c" }}> Search based on Keywords </label>
+                                                <input className="form-control" type="text"
+                                                    name="searchInput"
+                                                    value={this.state.searchInput}
+                                                    onChange={this.updateFormField} />
                                             </div>
-                                        </div>
-                                        {this.birdSize.myArray.map(s =>
-                                            <input type="checkbox" value={s} key={s} id={s}
-                                                onChange={this.updateFormField} className="me-4" name="searchSize"
-                                                checked={this.state.searchSize.includes(`${s}`)} />)}
-                                    </div>
-                                    {/* <div>
+                                            <div>
+                                                <div>
+                                                    <label className="mt-2" style={{ color: "#642d3c" }}>Bird Size</label>
+                                                </div>
+                                                <div style={{ height: '52px' }}></div>
+                                                <div>
+                                                    <div style={{ position: 'relative' }}>
+                                                        <label for="1" style={{ position: 'absolute', bottom: '0', left: '5px' }}><img src={sparrow} alt="sparrow" height="15px" /></label>
+                                                        <label for="3" style={{ position: 'absolute', bottom: '0', left: '75px' }}><img src={blackbird} alt="blackbird" height="25px" /></label>
+                                                        <label for="5" style={{ position: 'absolute', bottom: '0', left: '143px' }}><img src={crow} alt="crow" height="35px" /></label>
+                                                        <label for="7" style={{ position: 'absolute', bottom: '0', left: '220px' }}><img src={goose} alt="goose" height="50px" /></label>
+                                                    </div>
+                                                </div>
+                                                {this.birdSize.myArray.map(s =>
+                                                    <input type="checkbox" value={s} key={s} id={s}
+                                                        onChange={this.updateFormField} className="me-4" name="searchSize"
+                                                        checked={this.state.searchSize.includes(`${s}`)} />)}
+                                            </div>
+                                            {/* <div>
                                         <label className="mt-2" style={{ color: "#642d3c" }}>Bird Colours</label>
                                         <div>
                                             {this.birdColours.myArray.map(c =>
@@ -194,84 +200,91 @@ export default class Explore extends React.Component {
                                             )}
                                         </div>
                                     </div> */}
-                                    <div>
-                                        <Accordion defaultActiveKey="0" flush>
-                                            <Accordion.Item eventKey="0">
-                                                <Accordion.Header><span className="mt-2" style={{ color: "#642d3c" }}>Bird Colours</span></Accordion.Header>
-                                                <Accordion.Body>
-                                                    <div>
-                                                        {this.birdColours.myArray.map(c =>
-                                                            <span>
-                                                                <label for={c} className="me-1">{c[0].toUpperCase() + c.substring(1)}</label>
-                                                                <input type="checkbox" value={c} key={c} id={c}
-                                                                    onChange={this.updateFormField} className="me-3" name="searchColours"
-                                                                    checked={this.state.searchColours.includes(`${c}`)} />
-                                                            </span>
-                                                        )}
-                                                    </div>
-                                                </Accordion.Body>
-                                            </Accordion.Item>
-                                        </Accordion>
-                                    </div>
-                                    <div className="label mt-3" style={{ color: "#642d3c" }}>Neighbourhood Spotted</div>
-                                    <select className="form-select form-control ms-2" name="searchNeighbourhood"
-                                        value={this.state.searchNeighbourhood} onChange={this.updateFormField}
-                                        style={{ width: "80%" }}>
-                                        <option value="" key="placeHolder">--Select One--</option>
-                                        {this.neighbourhoodSpotted.map(n =>
-                                            <option className="form-control" key={n.value} value={n.value}>{n.display}</option>
-                                        )}
-                                    </select>
-                                    <div><label className="mt-3" style={{ color: "#642d3c" }}>Sort By:</label></div>
-                                    <select className="form-select form-control ms-2" name="sortBy"
-                                        value={this.state.sortBy} onChange={this.updateFormField}
-                                        style={{ width: "50%" }}>
-                                        {/* <option value="" key="placeHolder">--Select One--</option> */}
-                                        <option className="form-control" key="latest" value="latest">Latest</option>
-                                        <option className="form-control" key="alphebatically" value="alphebatically">Alphabetically</option>
-                                        <option className="form-control" key="birdFamily" value="birdFamily">Bird Family</option>
+                                            <div>
+                                                <Accordion defaultActiveKey="0" flush>
+                                                    <Accordion.Item eventKey="0">
+                                                        <Accordion.Header><span className="mt-2" style={{ color: "#642d3c" }}>Bird Colours</span></Accordion.Header>
+                                                        <Accordion.Body>
+                                                            <div>
+                                                                {this.birdColours.myArray.map(c =>
+                                                                    <span>
+                                                                        <label for={c} className="me-1">{c[0].toUpperCase() + c.substring(1)}</label>
+                                                                        <input type="checkbox" value={c} key={c} id={c}
+                                                                            onChange={this.updateFormField} className="me-3" name="searchColours"
+                                                                            checked={this.state.searchColours.includes(`${c}`)} />
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                        </Accordion.Body>
+                                                    </Accordion.Item>
+                                                </Accordion>
+                                            </div>
+                                            <div className="label mt-3" style={{ color: "#642d3c" }}>Neighbourhood Spotted</div>
+                                            <select className="form-select form-control ms-2" name="searchNeighbourhood"
+                                                value={this.state.searchNeighbourhood} onChange={this.updateFormField}
+                                                style={{ width: "80%" }}>
+                                                <option value="" key="placeHolder">--Select One--</option>
+                                                {this.neighbourhoodSpotted.map(n =>
+                                                    <option className="form-control" key={n.value} value={n.value}>{n.display}</option>
+                                                )}
+                                            </select>
+                                            <div><label className="mt-3" style={{ color: "#642d3c" }}>Sort By:</label></div>
+                                            <select className="form-select form-control ms-2" name="sortBy"
+                                                value={this.state.sortBy} onChange={this.updateFormField}
+                                                style={{ width: "50%" }}>
+                                                {/* <option value="" key="placeHolder">--Select One--</option> */}
+                                                <option className="form-control" key="latest" value="latest">Latest</option>
+                                                <option className="form-control" key="alphebatically" value="alphebatically">Alphabetically</option>
+                                                <option className="form-control" key="birdFamily" value="birdFamily">Bird Family</option>
+
+                                            </select>
+
+                                            <div>
+                                                <button className="btn mt-3" style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600", borderColor: "#282c34" }}
+                                                    onClick={
+                                                        () => {
+                                                            this.updateSearch()
+                                                        }
+                                                    }>Search</button>
+                                            </div>
+                                        </div>
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+
+
+                        </div>
+
+
+                        {/* Show Search Results */}
+
+                        <div className="col-lg-9">
+                            <div className="row">
+                                                    
+                            {
+                                this.state.searchResults.map(b => (
+                                    <React.Fragment key={b._id}>
                                         
-                                    </select>
+                                        <Card className="col-lg-4 px-0">
+                                            <Card.Header as="h5">{b.birdSpecies}</Card.Header>
+                                            <Card.Body>
+                                                <Card.Title>Image</Card.Title>
+                                                <Card.Text>
+                                                    <h5>Bird Size: {this.changeBirdSize(b.birdSize)}</h5>
+                                                    <h5>Neightbourhood Spotted: {b.neighbourhoodSpotted}</h5>
+                                                    <h5>Bird Colours: {b.birdColours.map(c => (<span>{c},&nbsp;</span>))}</h5>
+                                                </Card.Text>
+                                                <Button variant="primary" onClick={() => { this.handleModal(b._id) }}>More</Button>
+                                            </Card.Body>
+                                        </Card>
 
-                                    <div>
-                                        <button className="btn mt-3" style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600", borderColor: "#282c34" }}
-                                            onClick={
-                                                () => {
-                                                    this.updateSearch()
-                                                }
-                                            }>Search</button>
-                                    </div>
-                                </div>
-                            </Accordion.Body>
-                        </Accordion.Item>
-                    </Accordion>
+                                    </React.Fragment>
+                                ))
+                            }
+                        </div>
+                        </div>
+                    </div>
                 </div>
-
-                {/* Show Search Results */}
-
-                <div className="p-3 mx-3 my-4 col-sm col-md col-lg">
-                    {
-                        this.state.searchResults.map(b => (
-                            <React.Fragment key={b._id}>
-
-                                <Card className="mb-3">
-                                    <Card.Header as="h5">{b.birdSpecies}</Card.Header>
-                                    <Card.Body>
-                                        <Card.Title>Image</Card.Title>
-                                        <Card.Text>
-                                            <h5>Bird Size: {this.changeBirdSize(b.birdSize)}</h5>
-                                            <h5>Neightbourhood Spotted: {b.neighbourhoodSpotted}</h5>
-                                            <h5>Bird Colours: {b.birdColours.map(c => (<span>{c},&nbsp;</span>))}</h5>
-                                        </Card.Text>
-                                        <Button variant="primary" onClick={() => { this.handleModal(b._id) }}>More</Button>
-                                    </Card.Body>
-                                </Card>
-
-                            </React.Fragment>
-                        ))
-                    }
-                </div>
-
                 <Modal show={this.state.modal !== null} onHide={() => { this.closeModal() }} centered>
                     {this.state.searchResults.map(b => {
 

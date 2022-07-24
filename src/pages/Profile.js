@@ -7,10 +7,11 @@ import { Card, Badge, Alert, Container, Row, Col } from 'react-bootstrap';
 import Update from './Update.js'
 import logo from '../pictures/sgbirds-logo.png';
 
+
 export default class Profile extends React.Component {
 
-    // url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/";
-    url = "https://sgbirds.herokuapp.com/"
+    url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/";
+    // url = "https://sgbirds.herokuapp.com/"
     state = {
         loginData: [],
         modal: null,
@@ -77,9 +78,18 @@ export default class Profile extends React.Component {
         await axios.delete(this.url + `bird_sightings/${this.state.modal}`)
     }
 
-    backToProfile = () => {
+    backToProfile = async() => {
         this.setState({
             update: false
+        })
+        let response = await axios.get(this.url + `bird_sightings`, {
+            params: {
+                email: this.state.email
+            }
+        }
+        )
+        this.setState({
+            loginData: response.data
         })
     }
 
@@ -103,13 +113,26 @@ export default class Profile extends React.Component {
 
     postComment = async () => {
         this.setState({
-            submit: true
+            submit: true,
+            commentDisplayName : "",
+            commentDescription : ""
         })
 
         await axios.post(this.url + `bird_sightings/comments/${this.state.modal}`, {
             displayName: this.state.commentDisplayName,
             commentDescription: this.state.commentDescription
         })
+
+        let response = await axios.get(this.url + `bird_sightings`, {
+            params: {
+                email: this.state.email
+            }
+        }
+        )
+        this.setState({
+            loginData: response.data
+        })
+
     }
 
     render() {
@@ -223,16 +246,24 @@ export default class Profile extends React.Component {
                                                 <div>{b.displayName}</div>
                                                 <div>{b.datePosted.slice(0, 10)}</div>
                                                 <br />
+                                                <div style = {{color: "#642d3c"}}><h5>Comments</h5></div>
+                             
+                                                <hr></hr>
                                                 {b.comments !== undefined ? b.comments.map(c =>
                                                     <span>
 
                                                         <h6>{c.displayName}</h6>
                                                         <p>{c.commentDescription}</p>
-                                                        <p>{c.datePosted.slice(0, 9)}</p>
+                                                        <p>{c.datePosted.slice(0, 10)}</p>
                                                         <hr></hr>
                                                     </span>
                                                 )
-                                                    : <></>}
+                                                    : 
+                                                    <div>
+                                                        <p>There are no comments for this sighting</p>
+                                                        <hr></hr>
+                                                    </div>
+                                                    }
 
 
                                                 <h5 style={{ color: "#642d3c" }}>New Comment</h5>
