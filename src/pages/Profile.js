@@ -7,6 +7,7 @@ import { Card, Badge, Alert, Container, Row, Col } from 'react-bootstrap';
 import Update from './Update.js'
 import Swal from "sweetalert2";  
 import logo from '../pictures/sgbirds-logo.png';
+import BirdCard from './BirdCard';
 
 
 export default class Profile extends React.Component {
@@ -53,7 +54,6 @@ export default class Profile extends React.Component {
     closeModal = () => {
         this.setState({
             modal: null,
-            delete: false
         })
     }
 
@@ -295,18 +295,6 @@ export default class Profile extends React.Component {
 
                                                 <button className="btn btn-primary mt-3" onClick={this.postComment}>Post</button>
                                             </Modal.Body>
-
-                                            {/* Delete Alert */}
-
-                                            <Alert variant="danger" show={this.state.delete}>
-                                                <Alert.Heading>Are you sure you want to Delete {b.birdSpecies}?</Alert.Heading>
-                                                <button className="btn" onClick={this.deleteSighting}
-                                                    style={{ backgroundColor: "crimson", color: "#e8c6a2", fontWeight: "600", borderColor: "#642d3c" }}
-                                                >Delete</button>
-                                                <button className="btn btn-success ms-3" onClick={this.cancelDelete}
-                                                    style={{ backgroundColor: "39ff14", color: "#e8c6a2", fontWeight: "600", borderColor: "green" }}
-                                                >Cancel</button>
-                                            </Alert>
 
                                         </React.Fragment>)
                                 }

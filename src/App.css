@@ -24,6 +24,10 @@
 
 .landingPage {}
 
+.errorMessage {
+  color: crimson
+}
+
 .landingText {
   position: absolute;
   left: 25%;

@@ -261,18 +261,35 @@ export default class Explore extends React.Component {
                         <div className="col-lg-9">
                             <div className="row">
                                                     
-                            {
+                             {
                                 this.state.searchResults.map(b => (
                                     <React.Fragment key={b._id}>
-                                        
-                                        <Card className="col-lg-4 px-0">
-                                            <Card.Header as="h5">{b.birdSpecies}</Card.Header>
+
+                                        <Card className="col-lg-4 ">
+                                            <Card.Header >{b.birdSpecies}</Card.Header>
+                                            {/* <img src={b.imageUrl} style={{ width: "100%" }} /> */}
                                             <Card.Body>
-                                                <Card.Title>Image</Card.Title>
+                                                <Card.Title>
+
+                                                    {/* {b.birdSpecies} */}
+                                                    <img src={b.imageUrl} style={{ width: "100%" }} />
+                                                </Card.Title>
                                                 <Card.Text>
-                                                    <h5>Bird Size: {this.changeBirdSize(b.birdSize)}</h5>
-                                                    <h5>Neightbourhood Spotted: {b.neighbourhoodSpotted}</h5>
-                                                    <h5>Bird Colours: {b.birdColours.map(c => (<span>{c},&nbsp;</span>))}</h5>
+                                                    {/* <h5>Bird Size: {this.changeBirdSize(b.birdSize)}</h5> */}
+
+                                                    <div>The {b.birdSpecies} was spotted at {b.neighbourhoodSpotted} on {b.dateSpotted} .</div>
+                                                    <br />
+                                                    <div style={{display: 'flex'}}><h6>Family:&nbsp;</h6>{b.birdFamily[0].toUpperCase() + b.birdFamily.substring(1)}</div>
+                                                    <div><h6>Bird Colours:</h6></div>
+                                                    <div>{b.birdColours.map(c => (<span className="badge badge-pill me-2 mt-2"
+                                                        style={{ backgroundColor: `${c}`, color: "#e8c6a2", height: "25px", fontSize: "15px" }}>{c}&nbsp;</span>))}</div>
+                                                    <br />
+                                                    
+                                                    <div>Behaviour: </div>
+                                                    <div>Posted by:</div>
+                                                    <div>{b.displayName}</div>
+                                                    <div>{b.datePosted.slice(0, 10)}</div>
+
                                                 </Card.Text>
                                                 <Button variant="primary" onClick={() => { this.handleModal(b._id) }}>More</Button>
                                             </Card.Body>
@@ -285,57 +302,90 @@ export default class Explore extends React.Component {
                         </div>
                     </div>
                 </div>
-                <Modal show={this.state.modal !== null} onHide={() => { this.closeModal() }} centered>
-                    {this.state.searchResults.map(b => {
+                <Modal show={this.state.modal !== null} onHide={() => { this.closeModal() }} size="lg" centered>
 
-                        if (this.state.modal === b._id) {
-                            return (
-                                <React.Fragment key={b._id}>
+                            {this.state.searchResults.map(b => {
+
+                                if (this.state.modal === b._id) {
+                                    return (
+                                        <React.Fragment key={b._id}>
 
 
-                                    <Modal.Header closeButton >{b.birdSpecies}</Modal.Header>
-                                    <Modal.Body>
-                                        <h5>Bird Size: {this.changeBirdSize(b.birdSize)}</h5>
-                                        <h5>Neightbourhood Spotted: {b.neighbourhoodSpotted}</h5>
-                                        <h5>Bird Colours: {b.birdColours.map(c => (<span>{c},&nbsp;</span>))}</h5>
+                                            <Modal.Header closeButton>{b.birdSpecies}</Modal.Header>
+                                            <Modal.Body>
+                                                {/* <h5>Bird Size: {this.changeBirdSize(b.birdSize)}</h5>
+                                                <h5>Neightbourhood Spotted: {b.neighbourhoodSpotted}</h5>
+                                                <h5>Bird Colours: {b.birdColours.map(c => (<span>{c},&nbsp;</span>))}</h5>
 
-                                        <hr></hr>
-                                        <h5 style={{ color: "#642d3c" }} >Comments</h5>
-                                        <br />
-                                        {b.comments !== undefined ? b.comments.map(c =>
-                                            <span>
-
-                                                <h6>{c.displayName}</h6>
-                                                <p>{c.commentDescription}</p>
-                                                <p>{c.datePosted.slice(0, 9)}</p>
                                                 <hr></hr>
-                                            </span>
-                                        )
-                                            : <></>}
+                                                <h5 style={{ color: "#642d3c" }} >Comments</h5> */}
+                                                <img src={b.imageUrl} style={{ width: "100%" }} />
+                                                <div className="mt-3">The {b.birdSpecies} was spotted at {b.neighbourhoodSpotted} on {b.dateSpotted} .</div>
+                                                <br />
+                                                <div><h6>Family:</h6>{b.birdFamily}</div>
+                                                <div><h6>Bird Colours:</h6></div>
+                                                <div>{b.birdColours.map(c => (<span className="badge badge-pill me-2 mt-2"
+                                                    style={{ backgroundColor: `${c}`, color: "#e8c6a2", height: "25px", fontSize: "15px" }}>{c}&nbsp;</span>))}</div>
+                                                <div>Eating Habits: {b.character.eatingHabits.map(e => (<span className="badge badge-pill me-2 mt-2"
+                                                        style={{ backgroundColor: `#e8c6a2`, color: "#642d3c", height: "25px", fontSize: "15px" }}>{e}&nbsp;</span>))}</div>
+                                                <br />
+                                                <div>Behaviour: {b.character.behaviour.map(b => (<span className="badge badge-pill me-2 mt-2"
+                                                        style={{ backgroundColor: `#e8c6a2`, color: "#642d3c", height: "25px", fontSize: "15px" }}>{b}&nbsp;</span>))}</div>
+                                                <div>Posted by:</div>
+                                                <div>{b.displayName}</div>
+                                                <div>{b.datePosted.slice(0, 10)}</div>
+                                                <br />
+                                                <div style = {{color: "#642d3c"}}><h5>Comments</h5></div>
+                             
+                                                <hr></hr>
+                                                {b.comments !== undefined ? b.comments.map(c =>
+                                                    <span>
+
+                                                        <h6>{c.displayName}</h6>
+                                                        <p>{c.commentDescription}</p>
+                                                        <p>{c.datePosted.slice(0, 10)}</p>
+                                                        <hr></hr>
+                                                    </span>
+                                                )
+                                                    : 
+                                                    <div>
+                                                        <p>There are no comments for this sighting</p>
+                                                        <hr></hr>
+                                                    </div>
+                                                    }
 
 
-                                        <h5 style={{ color: "#642d3c" }}>New Comment</h5>
-                                        <label style={{ color: "#642d3c" }} >Display Name</label>
-                                        <input type="text" className="form-control" name="commentDisplayName"
-                                            onChange={this.updateFormField} value={this.state.commentDisplayName}></input>
-                                        <label style={{ color: "#642d3c" }} >Comment</label>
-                                        <textarea className="form-control" onChange={this.updateFormField}
-                                            name="commentDescription" value={this.state.commentDescription}></textarea>
-                                        <button className="btn btn-primary mt-3" onClick={this.postComment}>Post</button>
-                                    </Modal.Body>
+                                                <h5 style={{ color: "#642d3c" }}>New Comment</h5>
+                                                <label style={{ color: "#642d3c" }} >Display Name</label>
+                                                <input type="text" className="form-control" name="commentDisplayName"
+                                                    onChange={this.updateFormField} value={this.state.commentDisplayName}></input>
+                                                <label style={{ color: "#642d3c" }} >Comment</label>
+                                                <textarea className="form-control" onChange={this.updateFormField}
+                                                    name="commentDescription" value={this.state.commentDescription}></textarea>
 
-                                </React.Fragment>)
-                        }
+                                                <button className="btn btn-primary mt-3" onClick={this.postComment}>Post</button>
+                                            </Modal.Body>
 
-                    })
-                    }
+                                        </React.Fragment>)
+                                }
 
-                    <Modal.Footer><button className="btn btn-primary"
-                        onClick={() => { this.closeModal() }}>
-                        Close</button>
-                    </Modal.Footer>
+                            })
+                            }
 
-                </Modal>
+                            <Modal.Footer>
+                                {/* <button className="btn btn-primary"
+                                onClick={() => { this.closeModal() }}>
+                                Close</button> */}
+                                <button className="btn"
+                                    onClick={this.deleteAlert}
+                                    style={{ backgroundColor: "#e8c6a2", color: "#642d3c", fontWeight: "600", borderColor: "crimson" }}>
+                                    Delete</button>
+                                <button className="btn"
+                                    onClick={this.updateSighting}
+                                    style={{ backgroundColor: "#e8c6a2", color: "#642d3c", fontWeight: "600", borderColor: "green" }}>
+                                    Update</button>
+                            </Modal.Footer>
+                        </Modal>
 
 
                 <div style={{ height: "90px" }}></div>

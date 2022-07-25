@@ -10,7 +10,7 @@ import goose from '../pictures/goose.png'
 import kingFisher from '../pictures/addPageImg.jpeg'
 import logo from '../pictures/sgbirds-logo.png';
 import { IoCloseOutline } from "react-icons/io5";
-import Swal from "sweetalert2";  
+import Swal from "sweetalert2";
 import { render } from "react-dom";
 
 const ONEMAP_BASE_API_URL = 'https://developers.onemap.sg/'
@@ -75,23 +75,25 @@ export default class Add extends React.Component {
         email: "",
         locate: "geoLocate",
         submit: false,
-        addressDiv: false
+        addressDiv: false,
+        errorMsg: []
     }
 
     birdFamily = {
-        myArray: ["chicken", "eagle", "falcon", "hawk", "hornbills", "hummingbird", "kingfisher","owl", "pigeons", "sparrow", 
-        "storks", "waterfowl", "woodpeckers", "others"]
+        myArray: ["chicken", "eagle", "falcon", "hawk", "hornbills", "hummingbird", "kingfisher", "owl", "pigeons", "sparrow",
+            "storks", "waterfowl", "woodpeckers", "others"]
     }
 
     neighbourhoodSpotted = {
-        myArray : ["Aljunied", "Ang Mo Kio", "Balestier", "Bartley", "Bayfront", "Beach Road", "Beauty World", "Bedok", "Bishan", "Botanic Gardens", "Braddell", "Bras Basah", "Buangkok", "Bugis", "Bukit Batok", "Bukit Giombak", "Buki Timah",
-    "Buona Vista", "Changi", "Changi", "Choa Chu Kang", "City Hall", "Clementi", "Commonwealth", "Dhoby Ghaut", "Dover", "Downtown",
-    "East Coast", "Eunos", "Farrer Park", "Fort Canning", "Geylang", "Great World", "Harbourfront", "Holland Village", "Hougang",
-    "Jalan Besar", "Jalan Kayu", "Joo Chiat", "Jurong East", "Kallang", "Katong", "Kembangan", "Kent Ridge", "Khatib", "Kovan",
-    "Lavender", "Little India", "Macpherson", "Marina Bay", "Marine Parade", "Mountbatten", "Newton", "Novena", "Orchard", "Outram Park",
-    "Pasir Panjang", "Pasir Ris", "Paya Lebar", "Potong Pasir", "Punggol", "Queenstown", "Raffles Place", "Redhill", "Seletar", "Sembawang", 
-    "Sengkang", "Serangoon", "Siglap", "Simei",  "Somerset", "Tai Seng", "Tampines", "Tanah Mearh", "Tanjong Katong", "Tanjong Pagar",
-    "Thomson", "Tiong Bahru", "Toa Payoh", "Tuas", "West Coast", "Woodlands", "Yio Chu Kang", "Yishun"]}
+        myArray: ["Aljunied", "Ang Mo Kio", "Balestier", "Bartley", "Bayfront", "Beach Road", "Beauty World", "Bedok", "Bishan", "Botanic Gardens", "Braddell", "Bras Basah", "Buangkok", "Bugis", "Bukit Batok", "Bukit Giombak", "Buki Timah",
+            "Buona Vista", "Changi", "Changi", "Choa Chu Kang", "City Hall", "Clementi", "Commonwealth", "Dhoby Ghaut", "Dover", "Downtown",
+            "East Coast", "Eunos", "Farrer Park", "Fort Canning", "Geylang", "Great World", "Harbourfront", "Holland Village", "Hougang",
+            "Jalan Besar", "Jalan Kayu", "Joo Chiat", "Jurong East", "Kallang", "Katong", "Kembangan", "Kent Ridge", "Khatib", "Kovan",
+            "Lavender", "Little India", "Macpherson", "Marina Bay", "Marine Parade", "Mountbatten", "Newton", "Novena", "Orchard", "Outram Park",
+            "Pasir Panjang", "Pasir Ris", "Paya Lebar", "Potong Pasir", "Punggol", "Queenstown", "Raffles Place", "Redhill", "Seletar", "Sembawang",
+            "Sengkang", "Serangoon", "Siglap", "Simei", "Somerset", "Tai Seng", "Tampines", "Tanah Mearh", "Tanjong Katong", "Tanjong Pagar",
+            "Thomson", "Tiong Bahru", "Toa Payoh", "Tuas", "West Coast", "Woodlands", "Yio Chu Kang", "Yishun"]
+    }
 
     addressSearch = async (searchQuery) => {
         let response = await axios.get(ONEMAP_BASE_API_URL + `commonapi/search?searchVal=${searchQuery}&returnGeom=Y&getAddrDetails=Y&pageNum=1`)
@@ -144,10 +146,10 @@ export default class Add extends React.Component {
         if ((e.key === 'Enter' || e.code === 'Enter') && e.target.value.trim() !== "") {
             const newArray = [...this.state.eatingHabits]
             newArray.push(e.target.value.trim())
-            this.setState({ 
+            this.setState({
                 eatingHabits: newArray,
                 eatingTags: ""
-             })
+            })
         }
     }
 
@@ -155,65 +157,74 @@ export default class Add extends React.Component {
         if ((b.key === 'Enter' || b.code === 'Enter') && b.target.value.trim() !== "") {
             const newArray = [...this.state.behaviour]
             newArray.push(b.target.value.trim())
-            this.setState({ 
+            this.setState({
                 behaviour: newArray,
-                behaviourTags: "" 
+                behaviourTags: ""
             })
         }
     }
 
 
     newSighting = async () => {
-        let errorMsg= []
+        let errorMsg = []
+        let urlRegex = new RegExp(/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi)
+        //credit to 
 
-        if(this.state.birdSize.length !== 1){
+        if (this.state.birdSize.length !== 1) {
             errorMsg.push('birdSize')
         }
-        if (this.state.birdFamily === "") {
+        if (!this.state.birdFamily) {
             errorMsg.push('birdFamily')
         }
-        if (this.state.birdColours === []) {
+        if (!this.state.birdSpecies) {
+            errorMsg.push('birdSpecies')
+        }
+        if (this.state.birdColours.length === 0 || this.state.birdColours.length > 3) {
             errorMsg.push('birdColours')
         }
-        if (this.state.imageUrl === "" ) {
+        if (!this.state.imageUrl.match(urlRegex)) {
             errorMsg.push('imageUrl')
         }
-        if (this.state.neighbourhoodSpotted = "") {
+        if (!this.state.neighbourhoodSpotted) {
             errorMsg.push('neighbourhoodSpotted')
         }
-        if ( this.state.lat === "" ) {
-            errorMsg.push('lat')
+        if (!this.state.lat || !this.state.lng) {
+            errorMsg.push('latlng')
         }
-        if (this.state.dateSpotted === "") {
+        if (!this.state.dateSpotted) {
             errorMsg.push('dateSpotted')
         }
-        if (this.state.eatingHabits === []) {
-            errorMsg.push('eatingHabits')
-        }
-        if (this.state.behaviour === []) {
-            errorMsg.push('behaviour')
-        }
-        if (this.state.displayName === "") {
+        // if (this.state.eatingHabits.length === 0) {
+        //     errorMsg.push('eatingHabits')
+        // }
+        // if (this.state.behaviour.length === 0) {
+        //     errorMsg.push('behaviour')
+        // }
+        if (!this.state.displayName) {
             errorMsg.push('displayName')
         }
-        if (this.state.email === "") {
+        if (!this.state.email) {
             errorMsg.push('email')
-        } 
+        }
+
+        this.setState({
+            errorMsg
+        })
 
         console.log(errorMsg)
-        
-        if (errorMsg.length === 0) {    
-            Swal.fire({  
-                text: 'Bird Sighting Successfully Added',  
-                title: 'SUCCESS',  
-                imageUrl: `${this.state.imageUrl}` ,
+
+        if (errorMsg.length === 0) {
+            Swal.fire({
+                text: 'Bird Sighting Successfully Added',
+                title: 'SUCCESS',
+                imageUrl: `${this.state.imageUrl}`,
                 imageWidth: 300,
                 imageHeight: 200,
-                icon: 'success',   
+                icon: 'success',
                 // confirmButtonColor: '#3085d6',    
                 confirmButtonText: 'Back',
-                allowOutsideClick: false  
-              }).then((result)=>{
+                allowOutsideClick: false
+            }).then((result) => {
                 if (result.isConfirmed) {
                     this.setState({
                         birdSize: "",
@@ -239,11 +250,43 @@ export default class Add extends React.Component {
                         addressDiv: false
                     })
                 }
-              }) 
+            })
+
+            // let newColors = this.state.birdColours.map(c => c.value)
+
+            // await axios.post(this.url + 'bird_sightings', {
+            //     birdSize: parseInt(this.state.birdSize),
+            //     birdFamily: this.state.birdFamily,
+            //     birdSpecies: this.state.birdSpecies,
+            //     birdColours: newColors,
+            //     dateSpotted: this.state.dateSpotted,
+            //     neighbourhoodSpotted: this.state.neighbourhoodSpotted,
+            //     locationSpotted: {
+            //         lat: this.state.lat,
+            //         lng: this.state.lng
+            //     },
+            //     imageUrl: this.state.imageUrl,
+            //     character: {
+            //         eatingHabits: this.state.eatingHabits,
+            //         behaviour: this.state.behaviour,
+            //     },
+            //     displayName: this.state.displayName,
+            //     email: this.state.email
+            // })
+
+
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Error',
+                text: 'One or more of the fields has not been input correctly',
+                showConfirmButton: false,
+                timer: 1500
+            })
         }
-        // this.setState({
-        //     submit: true
-        // })
+        this.setState({
+            submit: true
+        })
 
         let newColors = this.state.birdColours.map(c => c.value)
 
@@ -267,7 +310,7 @@ export default class Add extends React.Component {
             email: this.state.email
         })
 
-        
+
 
     }
 
@@ -275,16 +318,16 @@ export default class Add extends React.Component {
     userLocation = () => {
         navigator.geolocation.getCurrentPosition(
             (position) => {
-              let lat = position.coords.latitude
-              let lng = position.coords.longitude
-              
-              this.setState({
-               
-                  lat: lat,
-                  lng: lng
-                
-              })
-            })   
+                let lat = position.coords.latitude
+                let lng = position.coords.longitude
+
+                this.setState({
+
+                    lat: lat,
+                    lng: lng
+
+                })
+            })
     }
 
     render() {
@@ -293,7 +336,7 @@ export default class Add extends React.Component {
 
         return (
             <React.Fragment>
-               
+
                 <div className="nonFixedHeader">
                     <img src={logo} alt="logo" height="90px" />
                 </div>
@@ -323,6 +366,9 @@ export default class Add extends React.Component {
                             <input type="radio" className="ms-4" name="birdSize" value="6" key="6" id="6" onChange={this.updateFormField} checked={this.state.birdSize === "6"} />
                             <input type="radio" className="ms-4" name="birdSize" value="7" key="7" id="7" onChange={this.updateFormField} checked={this.state.birdSize === "7"} />
                         </div>
+
+                        {this.state.errorMsg.includes('birdSize') ? <div className="errorMessage">Please indicate bird size</div> : null}
+
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Bird Family</div>
                             <select className="form-select form-control" name="birdFamily"
@@ -335,24 +381,32 @@ export default class Add extends React.Component {
                                 )}
                             </select>
                         </div>
+
+                        {this.state.errorMsg.includes('birdFamily') ? <div className="errorMessage">Bird family is required</div> : null}
+
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Bird Species</div>
                             <input type="text" className="form-control"
                                 name="birdSpecies" value={this.state.birdSpecies}
                                 onChange={this.updateFormField} />
                         </div>
-                        <div>
-                            <div className="App mt-3" >
-                                <label style={{ color: "#642d3c" }}>Bird Colours</label>
-                                <Select
-                                    isMulti={true}
-                                    value={birdColours}
-                                    onChange={this.handleChange}
-                                    options={options}
-                                    styles={colorStyles}
-                                />
-                            </div>
-                        
+
+                        {this.state.errorMsg.includes('birdFamily') ? <div className="errorMessage">Bird species is required</div> : null}
+
+
+                        <div className="App mt-3" >
+                            <label style={{ color: "#642d3c" }}>Bird Colours</label>
+                            <Select
+                                isMulti={true}
+                                value={birdColours}
+                                onChange={this.handleChange}
+                                options={options}
+                                styles={colorStyles}
+                            />
+                        </div>
+
+                        {this.state.errorMsg.includes('birdColours') ? <div className="errorMessage">Please select up to 3 bird colours</div> : null}
+
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Image Upload</div>
                             <input type="text" className="form-control"
@@ -361,15 +415,20 @@ export default class Add extends React.Component {
                                 onChange={this.updateFormField} />
                         </div>
 
-                            <div className="label mt-3" style={{ color: "#642d3c" }}>Neighbourhood Spotted</div>
-                            <select className="form-select form-control" name="neighbourhoodSpotted"
-                                value={this.state.neighbourhoodSpotted} onChange={this.updateFormField}>
-                                <option value="placeHolder" key="placeHolder">--Select One--</option>
-                                {this.neighbourhoodSpotted.myArray.map(n =>
-                                    <option key={n} value={n}>{n}</option>
-                                )}
-                            </select>
-                        </div>
+                        {this.state.errorMsg.includes('birdFamily') ? <div className="errorMessage">Image URL is required</div> : null}
+
+                        <div className="label mt-3" style={{ color: "#642d3c" }}>Neighbourhood Spotted</div>
+                        <select className="form-select form-control" name="neighbourhoodSpotted"
+                            value={this.state.neighbourhoodSpotted} onChange={this.updateFormField}>
+                            <option value="placeHolder" key="placeHolder">--Select One--</option>
+                            {this.neighbourhoodSpotted.myArray.map(n =>
+                                <option key={n} value={n}>{n}</option>
+                            )}
+                        </select>
+
+
+                        {this.state.errorMsg.includes('neighbourhoodSpotted') ? <div className="errorMessage">Please select a neighbourhood</div> : null}
+
                         <div>
                             <div>
                                 <div className="label mt-3" style={{ color: "#642d3c" }}>Location Spotted</div>
@@ -379,49 +438,55 @@ export default class Add extends React.Component {
                                 <input type="text" className="form-control mt-2" placeholder="Longitude"
                                     name="lng" value={this.state.lng}
                                     onChange={this.updateFormField} />
-                                
+
                                 <label className="mt-2" style={{ color: "#642d3c" }}>Retrieve latitude and longitude by :</label>
-                                <div><input type="radio" id="geoLocate" name="locate" value="geoLocate" onChange={this.updateFormField} checked={this.state.locate === "geoLocate"}/>
-                                <label for="geoLocate" className="ms-1 me-2">Current Location</label>
-                                <input type="radio" id="addressLocate" name="locate" value="addressLocate" onChange={this.updateFormField} checked={this.state.locate === "addressLocate"}/>
-                                <label for="addressLocate" className="ms-1 me-2">Address</label></div>
+                                <div><input type="radio" id="geoLocate" name="locate" value="geoLocate" onChange={this.updateFormField} checked={this.state.locate === "geoLocate"} />
+                                    <label for="geoLocate" className="ms-1 me-2">Current Location</label>
+                                    <input type="radio" id="addressLocate" name="locate" value="addressLocate" onChange={this.updateFormField} checked={this.state.locate === "addressLocate"} />
+                                    <label for="addressLocate" className="ms-1 me-2">Address</label></div>
 
-                            {this.state.locate === "addressLocate" ? 
-                            <div>
-                                <input type="text" className="form-control" placeholder="Address"
-                                    name="address" value={this.state.address}
-                                    onChange={this.updateFormField} onInput={() => { this.addressSearch(this.state.address) }}
-                                />
-                                
-                                <div style={{ backgroundColor: "white", opacity: "0.8", overflowY: "scroll", maxHeight: "200px", position: "relative" }}>
-                                    {
-                                        this.state.addressResults != null && this.state.address !== "" && this.state.addressDiv === true
-                                            ?
-                                            this.state.addressResults.map(a =>
-                                                <div syle={{ padding: "5px", position: "absolute" }} key={a.X}
-                                                    onClick={() => { this.chooseAddress(a.LATITUDE, a.LONGITUDE, a.SEARCHVAL) }}>
-                                                    {a.SEARCHVAL}</div>
-                                            )
-                                            :
-                                            null
-                                    }
+                                {this.state.locate === "addressLocate" ?
+                                    <div>
+                                        <input type="text" className="form-control" placeholder="Address"
+                                            name="address" value={this.state.address}
+                                            onChange={this.updateFormField} onInput={() => { this.addressSearch(this.state.address) }}
+                                        />
 
-                                </div>
-                                </div>
-                                :
-                                <div>
-                                    <button className="btn" style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600", padding: "5px", borderColor: "#642d3c" }}
-                                    onClick={this.userLocation}>Get My Location</button>
-                                </div>
-                                }       
+                                        <div style={{ backgroundColor: "white", opacity: "0.8", overflowY: "scroll", maxHeight: "200px", position: "relative" }}>
+                                            {
+                                                this.state.addressResults != null && this.state.address !== "" && this.state.addressDiv === true
+                                                    ?
+                                                    this.state.addressResults.map(a =>
+                                                        <div syle={{ padding: "5px", position: "absolute" }} key={a.X}
+                                                            onClick={() => { this.chooseAddress(a.LATITUDE, a.LONGITUDE, a.SEARCHVAL) }}>
+                                                            {a.SEARCHVAL}</div>
+                                                    )
+                                                    :
+                                                    null
+                                            }
+
+                                        </div>
+                                    </div>
+                                    :
+                                    <div>
+                                        <button className="btn" style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600", padding: "5px", borderColor: "#642d3c" }}
+                                            onClick={this.userLocation}>Get My Location</button>
+                                    </div>
+                                }
                             </div>
                         </div>
+                        
+                        {this.state.errorMsg.includes('latlng') ? <div className="errorMessage">Latitude and Longitude are required</div> : null}
+
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Date Spotted</div>
                             <input type="text" className="form-control" placeholder="YYYY-MM-DD"
                                 name="dateSpotted" value={this.state.dateSpotted}
                                 onChange={this.updateFormField} />
                         </div>
+
+                        {this.state.errorMsg.includes('dateSpotted') ? <div className="errorMessage">Date spotted is required</div> : null}
+
                         <div>
                             <label style={{ color: "#642d3c" }} className="mt-3">Eating Habits</label>
                             <div className="mb-2">
@@ -456,13 +521,18 @@ export default class Add extends React.Component {
                                 name="displayName" value={this.state.displayName}
                                 onChange={this.updateFormField} />
                         </div>
+
+                        {this.state.errorMsg.includes('displayName') ? <div className="errorMessage">Display name is required</div> : null}
+
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Email Address</div>
                             <input type="text" className="form-control" placeholder="Email address"
                                 name="email" value={this.state.email}
                                 onChange={this.updateFormField} />
                         </div>
-                        
+
+                        {this.state.errorMsg.includes('email') ? <div className="errorMessage">Email address is required</div> : null}
+
                         <div>
                             <button className="btn mt-3" style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600" }}
                                 onClick={this.newSighting}>Add New Sighting</button>
@@ -470,7 +540,7 @@ export default class Add extends React.Component {
                     </div>
                 </div>
                 <div className="addFooter"></div>
-                
+
             </React.Fragment>
         )
     }
