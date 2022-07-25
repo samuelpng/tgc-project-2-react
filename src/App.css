@@ -12,9 +12,41 @@
   background: #c8ccd9
 }  */
 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(84, 66, 66, 0.3);
+  mix-blend-mode: overlay;
+}
+
+.landingPage {}
+
+.landingText {
+  position: absolute;
+  left: 25%;
+  width: 50%;
+  height: 50vh;
+  padding: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #111;
+  transition: 0.5s;
+  z-index: 400000;
+  color: white;
+  text-shadow: 1px 0 0 rgb(178, 189, 57), 0 -1px 0 rgb(178, 189, 57), 0 1px 0 #000, -1px 0 0 #000;
+  background-color: rgba(112, 224, 226, 0.3);
+  padding: 30px;
+  border-radius: 20px;
+  top: 200px
+}
+
 .leaflet-container {
 
-  width: 100vw;
+  width: 99vw;
   height: 85vh;
   z-index: 1
 }
@@ -139,7 +171,7 @@
   transform: translateY(10px);
   font-size: 2.5em;
   transition: 0.2s;
-  color: #642d3c
+  color: #642d3c;
 }
 
 .icon-container .textInactive {
@@ -218,6 +250,11 @@
   color: #642d3c !important
 }
 
+.swal2-icon.swal2-warning {
+  border-color: #d12a2a !important;
+  color: #d12a2a !important
+}
+
 /* .container-fluid {
   padding: 0px  !important
 } */
@@ -272,7 +309,7 @@
   }
 
   .desktopPadding {
-    height: 90px
+    height: 87px
   }
 
 
@@ -298,7 +335,7 @@
   .pageActive {
     font-weight: 600;
   }
-  
+
   /* .addHeader {
     padding-left: 320px;
     padding-right: 320px

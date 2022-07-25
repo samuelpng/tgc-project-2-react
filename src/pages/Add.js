@@ -164,48 +164,86 @@ export default class Add extends React.Component {
 
 
     newSighting = async () => {
-        
-        Swal.fire({  
-            text: 'Bird Sighting Successfully Added',  
-            title: 'SUCCESS',  
-            imageUrl: `${this.state.imageUrl}` ,
-            imageWidth: 300,
-            imageHeight: 200,
-            icon: 'success',   
-            confirmButtonColor: '#3085d6',    
-            confirmButtonText: 'Back',
-            allowOutsideClick: false  
-          }).then((result)=>{
-            if (result.isConfirmed) {
-                this.setState({
-                    birdSize: "",
-                    birdFamily: "",
-                    birdSpecies: "",
-                    dateSpotted: "",
-                    neighbourhoodSpotted: "",
-                    lat: "",
-                    lng: "",
-                    address: "",
-                    addressResults: null,
-                    imageUrl: "",
-                    eatingHabits: [],
-                    eatingTags: "",
-                    behaviour: [],
-                    behaviourTags: "",
-                    description: "",
-                    birdColours: [],
-                    displayName: "",
-                    email: "",
-                    locate: "geoLocate",
-                    submit: false,
-                    addressDiv: false
-                })
-            }
-          }) 
+        let errorMsg= []
 
-        this.setState({
-            submit: true
-        })
+        if(this.state.birdSize.length !== 1){
+            errorMsg.push('birdSize')
+        }
+        if (this.state.birdFamily === "") {
+            errorMsg.push('birdFamily')
+        }
+        if (this.state.birdColours === []) {
+            errorMsg.push('birdColours')
+        }
+        if (this.state.imageUrl === "" ) {
+            errorMsg.push('imageUrl')
+        }
+        if (this.state.neighbourhoodSpotted = "") {
+            errorMsg.push('neighbourhoodSpotted')
+        }
+        if ( this.state.lat === "" ) {
+            errorMsg.push('lat')
+        }
+        if (this.state.dateSpotted === "") {
+            errorMsg.push('dateSpotted')
+        }
+        if (this.state.eatingHabits === []) {
+            errorMsg.push('eatingHabits')
+        }
+        if (this.state.behaviour === []) {
+            errorMsg.push('behaviour')
+        }
+        if (this.state.displayName === "") {
+            errorMsg.push('displayName')
+        }
+        if (this.state.email === "") {
+            errorMsg.push('email')
+        } 
+
+        console.log(errorMsg)
+        
+        if (errorMsg.length === 0) {    
+            Swal.fire({  
+                text: 'Bird Sighting Successfully Added',  
+                title: 'SUCCESS',  
+                imageUrl: `${this.state.imageUrl}` ,
+                imageWidth: 300,
+                imageHeight: 200,
+                icon: 'success',   
+                // confirmButtonColor: '#3085d6',    
+                confirmButtonText: 'Back',
+                allowOutsideClick: false  
+              }).then((result)=>{
+                if (result.isConfirmed) {
+                    this.setState({
+                        birdSize: "",
+                        birdFamily: "",
+                        birdSpecies: "",
+                        dateSpotted: "",
+                        neighbourhoodSpotted: "",
+                        lat: "",
+                        lng: "",
+                        address: "",
+                        addressResults: null,
+                        imageUrl: "",
+                        eatingHabits: [],
+                        eatingTags: "",
+                        behaviour: [],
+                        behaviourTags: "",
+                        description: "",
+                        birdColours: [],
+                        displayName: "",
+                        email: "",
+                        locate: "geoLocate",
+                        submit: false,
+                        addressDiv: false
+                    })
+                }
+              }) 
+        }
+        // this.setState({
+        //     submit: true
+        // })
 
         let newColors = this.state.birdColours.map(c => c.value)
 

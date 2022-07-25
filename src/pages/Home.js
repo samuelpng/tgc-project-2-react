@@ -4,6 +4,7 @@ import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import logo from '../pictures/sgbirds-logo.png';
+import landingVideo from '../pictures/landingVideo.mp4'
 import Modal from 'react-bootstrap/Modal';
 
 // import "bootstrap/dist/css/bootstrap.min.css"
@@ -33,14 +34,14 @@ export default class Home extends React.Component {
   // }
 
   // async componentDidMount() {
-	// 	let response = await axios.get(
-	// 		this.url + 'bird_sightings?sort=sortByDate&limit=3' 
-	// 	);
-		
-	// 	this.setState({
-	// 		data: response.data
-	// 	});
-	// }
+  // 	let response = await axios.get(
+  // 		this.url + 'bird_sightings?sort=sortByDate&limit=3' 
+  // 	);
+
+  // 	this.setState({
+  // 		data: response.data
+  // 	});
+  // }
 
   changeBirdSize = (s) => {
     if (s === 1) {
@@ -80,8 +81,27 @@ export default class Home extends React.Component {
         <div className="header">
           <img src={logo} alt="logo" height="90px" />
         </div>
-        <div style={{ height: "90px" }}></div>
-        <div className="p-3 mx-3 my-4 col-sm col-md col-lg">
+        {/* <div style={{ height: "87px" }}></div> */}
+
+        {/* <div style={{height: "50vh", backgroundImage:"url('https://i.imgur.com/y38iBXT.jpg')", 
+        backgroundSize: "cover", backgroundPosition: "center",backgroundRepeat:"no-repeat"}}>
+          
+
+        </div> */}
+        <div className="landingPage" style={{height: "100vh", width: "100vw", overflowX:"hidden", overflowY: "hidden"}}>
+          <video autoPlay muted loop id="myVideo" style={{height:"100%", width:"100%", objectFit:"cover"}}>
+            <source src={landingVideo} type="video/mp4" />
+          </video>
+          <div className="overlay"></div>
+          <div className="landingText">
+            Hello
+          </div>
+        </div>
+
+       
+          
+        
+        {/* <div className="p-3 mx-3 my-4 col-sm col-md col-lg">
           {
             this.state.data.map(b => (
               <React.Fragment key={b._id}>
@@ -137,9 +157,9 @@ export default class Home extends React.Component {
           <Modal.Footer><button className="btn btn-primary"
             onClick={() => { this.closeModal() }}>
             Close</button></Modal.Footer>
-        </Modal>
+        </Modal> */}
 
-        <div style={{ height: "90px" }}></div>
+        {/* <div style={{ height: "90px" }}></div> */}
 
       </React.Fragment>)
   }

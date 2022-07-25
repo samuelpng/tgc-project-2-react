@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Card, Badge, Alert, Container, Row, Col } from 'react-bootstrap';
 import Update from './Update.js'
+import Swal from "sweetalert2";  
 import logo from '../pictures/sgbirds-logo.png';
 
 
@@ -62,17 +63,35 @@ export default class Profile extends React.Component {
         })
     }
 
-    deleteAlert = () => {
-        this.setState({
-            delete: true
-        })
+    deleteAlert = async() => {
+        Swal.fire({  
+            text: 'This action is irreversible',  
+            title: 'Confirm Delete?',  
+            // imageUrl: `${this.state.imageUrl}` ,
+            imageWidth: 300,
+            imageHeight: 200,
+            icon: 'warning',   
+            showConfirmButton: false,
+            showDenyButton: true,
+            denyButtonText: "Delete",
+            showCancelButton: true,
+            allowOutsideClick: false  
+          }).then((result)=>{
+            if(result.isDenied){
+                Swal.fire('Deleted!', 'Your sighting has been deleted', 'success')
+                this.deleteSighting()
+            }
+          })
+        // this.setState({
+        //     delete: true
+        // })
     }
 
-    cancelDelete = () => {
-        this.setState({
-            delete: false
-        })
-    }
+    // cancelDelete = () => {
+    //     this.setState({
+    //         delete: false
+    //     })
+    // }
 
     deleteSighting = async () => {
         await axios.delete(this.url + `bird_sightings/${this.state.modal}`)
@@ -213,7 +232,7 @@ export default class Profile extends React.Component {
 
                         {/* Modal or each result */}
 
-                        <Modal show={this.state.modal !== null} onHide={() => { this.closeModal() }} centered>
+                        <Modal show={this.state.modal !== null} onHide={() => { this.closeModal() }} size="lg" centered>
 
                             {this.state.loginData.map(b => {
 

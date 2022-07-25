@@ -10,6 +10,7 @@ import crow from '../pictures/crow.png';
 import goose from '../pictures/goose.png'
 import kingFisher from '../pictures/addPageImg.jpeg'
 import logo from '../pictures/sgbirds-logo.png';
+import Swal from "sweetalert2";  
 import { IoCloseOutline } from "react-icons/io5";
 
 // const options = [
@@ -67,8 +68,7 @@ export default class Update extends React.Component {
         description: "",
         birdColours: [],
         displayName: "",
-        email: "",
-        submit: false
+        email: ""
     }
 
     options = [
@@ -179,9 +179,21 @@ export default class Update extends React.Component {
     }
 
     updateSighting = async () => {
-        this.setState({
-            submit: true
-        })
+        Swal.fire({  
+            text: 'Bird Sighting Successfully Updated',  
+            title: 'SUCCESS',  
+            imageUrl: `${this.state.imageUrl}` ,
+            imageWidth: 300,
+            imageHeight: 200,
+            icon: 'success',   
+            confirmButtonColor: '#3085d6',    
+            confirmButtonText: 'Back',
+            allowOutsideClick: false  
+          }).then((result)=>{
+            if (result.isConfirmed){
+                this.props.backToProfile()
+            }
+          })
 
         // let newColors = this.state.birdColours.map(c => c.value)
 
@@ -205,6 +217,10 @@ export default class Update extends React.Component {
             displayName: this.state.displayName,
             email: this.state.email
         })
+
+        // this.setState({
+        //     submit: true
+        // })
 
     }
 
@@ -382,7 +398,7 @@ export default class Update extends React.Component {
                 </div>
                 <div className="addFooter"></div>
 
-                <Modal show={this.state.submit} centered>
+                {/* <Modal show={this.state.submit} centered>
                     <Modal.Body>
                     <div style={{color: "#642d3c", display:"flex", justifyContent:"center"}}>
                     <h3>Update Successful</h3>
@@ -391,7 +407,7 @@ export default class Update extends React.Component {
                     <button className="btn btn-primary" onClick={this.props.backToProfile}>Back</button>
                     </div>
                     </Modal.Body>
-                </Modal>
+                </Modal> */}
 
             </React.Fragment>
 
