@@ -48,8 +48,8 @@ const colorStyles = {
 
 export default class Update extends React.Component {
 
-    url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/"
-    // url = "https://sgbirds.herokuapp.com/"
+    // url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/"
+    url = "https://sgbirds.herokuapp.com/"
 
     state = {
         data: [],
@@ -256,14 +256,12 @@ export default class Update extends React.Component {
                 <div className="nonFixedHeader">
                     <img src={logo} alt="logo" height="90px" />
                 </div>
-                {/* <div>
-                    <img src={kingFisher} className="addImg" alt="kingfisher" width="100%" height="225px" />
-                </div> */}
-                <div className="p-3 mx-3 my-4 col-sm col-md col-lg">
-                    <div className="addHeader">
+                <div className="desktopPadding"></div>
+                <div className="container">
+                    <div className="addHeader pt-5 pb-3 formPadding">
                         <h2 style={{ color: "#642d3c" }}>Update Sighting</h2>
                     </div>
-                    <div className="row">
+                    <div className="formPadding">
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Bird Size</div>
                             <div style={{ height: '52px' }}></div>

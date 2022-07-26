@@ -7,7 +7,7 @@ import sparrow from '../pictures/sparrow.png';
 import blackbird from '../pictures/blackbird.png';
 import crow from '../pictures/crow.png';
 import goose from '../pictures/goose.png'
-import kingFisher from '../pictures/addPageImg.jpeg'
+import kingFisher from '../pictures/addImg.jpg'
 import logo from '../pictures/sgbirds-logo.png';
 import { IoCloseOutline } from "react-icons/io5";
 import Swal from "sweetalert2";
@@ -336,7 +336,7 @@ export default class Add extends React.Component {
         const { birdColours } = this.state;
 
         return (
-            <React.Fragment>
+            <React.Fragment className="container">
 
                 <div className="nonFixedHeader">
                     <img src={logo} alt="logo" height="90px" />

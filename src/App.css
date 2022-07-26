@@ -16,7 +16,7 @@ body {
   background: #c8ccd9
 }  */
 
-.overlay {
+/* .overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -24,15 +24,77 @@ body {
   height: 100vh;
   background: rgba(84, 66, 66, 0.3);
   mix-blend-mode: overlay;
+} */
+
+.overlay2 { 
+  position:fixed;
+  height: 50vh;
+  width: 100%;
+  background-image: linear-gradient( rgba(0,0,0,0), beige);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 30px;
+  z-index: 5
 }
 
-/* .landingPage {} */
+.landingPage {
+  height: 0vh;
+  width: 100vw;
+  background-image: url(./pictures/gardensBay.jpg);
+  /* overflow-x: hidden;
+  overflow-y: hidden; */
+}
+
+.overlay {
+  position:fixed;
+  color: #804d17;
+  display: flex;
+  justify-content: center;
+  left: 25vw;
+  top: 130px;
+  height: 30vh;
+  width: 50vw;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(6.5px);
+  -webkit-backdrop-filter: blur(6.5px);
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.overlay2{
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(6.5px);
+  -webkit-backdrop-filter: blur(6.5px);
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.landingIcon {
+  display:flex;
+  justify-content: center;
+}
+
+.parrot {
+  position:fixed;
+  right: 0;
+  top: 200px;
+
+}
+
+.eagle {
+  position:fixed;
+  left: 10vw;
+  top: 180px
+}
 
 .errorMessage {
   color: crimson
 }
 
-.landingText {
+/* .landingText {
   position: absolute;
   left: 25%;
   width: 50%;
@@ -50,7 +112,8 @@ body {
   padding: 30px;
   border-radius: 20px;
   top: 200px
-}
+} */
+
 
 .leaflet-container {
 
@@ -304,8 +367,18 @@ body {
     padding-right: 320px
   } */
 
+ 
+
   .navigation {
     display: none
+  }
+
+  .landingBtn {
+    width: 30vw !important
+  }
+
+  .landingPadding {
+    height: 90px !important
   }
 
   .header {

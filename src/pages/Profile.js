@@ -12,8 +12,8 @@ import BirdCard from './BirdCard';
 
 export default class Profile extends React.Component {
 
-    url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/";
-    // url = "https://sgbirds.herokuapp.com/"
+    // url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/";
+    url = "https://sgbirds.herokuapp.com/"
     state = {
         loginData: [],
         modal: null,

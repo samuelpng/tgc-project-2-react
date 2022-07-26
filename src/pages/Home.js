@@ -5,6 +5,11 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import logo from '../pictures/sgbirds-logo.png';
 import landingImg from '../pictures/landingImg.jpg';
+import parrot from '../pictures/parrot.png';
+import eagle from '../pictures/eagle.png';
+import landingLogo from '../pictures/landing-logo.png';
+import gardensBay from '../pictures/gardensBay.jpg';
+import hornbill from '../pictures/hornbill.png';
 import landingVideo from '../pictures/landingVideo.mp4'
 import Modal from 'react-bootstrap/Modal';
 
@@ -79,9 +84,9 @@ export default class Home extends React.Component {
     return (
       <React.Fragment>
 
-        <div className="header">
+        {/* <div className="header">
           <img src={logo} alt="logo" height="90px" />
-        </div>
+        </div> */}
         {/* <div style={{ height: "87px" }}></div> */}
 
         {/* <div style={{height: "50vh", backgroundImage:"url('https://i.imgur.com/y38iBXT.jpg')", 
@@ -89,22 +94,89 @@ export default class Home extends React.Component {
           
 
         </div> */}
-        <div className="landingPage" style={{height: "100vh", width: "100vw", overflowX:"hidden", overflowY: "hidden", margin:"0px", padding: "0px"}}>
-           <video autoPlay muted loop id="myVideo" style={{height:"100vh", width:"100vw", backgroundImage:"cover", objectFit:"cover"}}>
-            <source src={landingVideo} type="video/mp4" />
-          </video> 
-          {/* <img src={landingImg} id="landingPic" style={{height:"40%", width: "100%", objectFit:"fit"}} /> */}
-            
-        
-          {/* <div className="overlay"></div> */}
-          {/* <div className="landingText"> */}
-            {/* Hello
+        <div className="landingPage">
+
+          <img src={gardensBay} style={{ height: "100vh", width: "100vw", backgroundImage: "cover", objectFit: "cover" }} />
+          {/* <div className="overlay2">
+          SG BIRDS
           </div> */}
         </div>
 
+        <div className="container-fluid" style={{ height: "80vh" }}>
+          <div className="landingPadding" style={{height: "30px"}}></div>
+          <div className="row">
+            
+            <div className="col-lg-12 landingIcon pt-3" style={{ color: '#642d3c' }}>
+              <img src={landingLogo} style={{ height: "50%" }} />
+            </div>
+ 
+            <div className="col-lg-12 landingIcon pt-2" style={{ color: '#fff2dd', textShadow: "2px 2px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",}}>
+              <h1 className="landingText">Welcome to SG Birds</h1>
+            </div>
+            <div className="col-lg-12 landingIcon pt-2" style={{ color: '#642d3c'}}>
+              <button className="btn btn-primary landingBtn" style={{width:"60vw", height:"50px", fontSize:"20px", fontWeight:"600", boxShadow:"0px 2px 5px 4px"}}>Explore</button>
+            </div>
+            <div className="col-lg-12 landingIcon pt-2" style={{ color: '#642d3c'}}>
+              <button className="btn btn-primary landingBtn" style={{width:"60vw", height:"50px", fontSize:"20px", fontWeight:"600", boxShadow:"0px 2px 5px 4px"}}>New Sighting</button>
+            </div>
+            <div className="col-lg-12 landingIcon pt-2" style={{ color: '#642d3c' }}>
+              <button className="btn btn-primary landingBtn" style={{width:"60vw", height:"50px", fontSize:"20px", fontWeight:"600", boxShadow:"0px 2px 5px 4px"}}>Map</button>
+            </div>
+            <div className="col-lg-12 landingIcon pt-2" style={{ color: '#642d3c' }}>
+              <button className="btn btn-primary landingBtn" style={{width:"60vw", height:"50px", fontSize:"20px", fontWeight:"600", boxShadow:"0px 2px 5px 4px"}}>Profile</button>
+            </div>
        
-          
+            {/* <div className="col-lg-4 landingIcon pt-3">
+              Browse
+              <img src={hornbill} style={{ height: "20vh" }} />
+            </div>
+            <div className="col-lg-4 landingIcon pt-3">
+              Browse
+              <img src={hornbill} style={{ height: "20vh" }} />
+            </div>
+            <div className="col-lg-4 landingIcon pt-3">
+              Browse
+              <img src={hornbill} style={{ height: "20vh" }} />
+            </div> */}
+          </div>
+        </div>
+
         
+
+
+
+        {/* 
+        <div className="overlay py-3">
+          <div className="container" >
+            <div className="row">
+              <div className="col-lg-12" style={{ display: "flex", justifyContent: "center",  }}>
+                <img src={landingLogo} style={{ height: "70%" }} />
+              </div>
+              <div className="col-lg-12" style={{ display: "flex", justifyContent: "center",  backgroundColor:'red'   }}>
+                <h1>Welcome to SG Birds.</h1>
+              </div>
+              <div className="col-lg-4" style={{ display: "flex", justifyContent: "center" }}>
+                <img src={iconKf} style={{ height: "50%" }} />
+              </div>
+              <div className="col-lg-4" style={{ display: "flex", justifyContent: "center",   }}>
+                <img src={iconKf} style={{ height: "50%" }} />
+              </div>
+              <div className="col-lg-4" style={{ display: "flex", justifyContent: "center",   }}>
+                <div className="col-lg-12" ></div>
+                <div className="col-lg-12" ><img src={iconKf} style={{ height: "50%" }} /></div>
+              </div>
+            </div>
+
+
+          </div>
+
+        </div> */}
+        {/* <div className="parrot"><img src={parrot} style={{ height: "30vh" }} /></div>
+        <div className="eagle"><img src={eagle} style={{ height: "35vh" }} /></div> */}
+
+
+
+
         {/* <div className="p-3 mx-3 my-4 col-sm col-md col-lg">
           {
             this.state.data.map(b => (

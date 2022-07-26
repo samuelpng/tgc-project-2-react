@@ -18,8 +18,8 @@ const markerIcon = new L.Icon({
 
 export default class Map extends React.Component {
 
-    url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/";
-    // url = "https://sgbirds.herokuapp.com/"
+    // url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/";
+    url = "https://sgbirds.herokuapp.com/"
 
     state = {
         birdMarkers: [],
@@ -28,27 +28,28 @@ export default class Map extends React.Component {
     }
 
     birdFamily = {
-        myArray: ["sparrow", "eagle", "raven"]
+        myArray: ["chicken", "eagle", "falcon", "hawk", "hornbills", "hummingbird", "kingfisher", "owl", "pigeons", "sparrow",
+            "storks", "waterfowl", "woodpeckers", "others"]
     }
 
-    // mapSearch = async () => {
-    //     let response = await axios.get(this.url + 'bird_sightings', {
-    //         params: {
-    //             birdFamily: this.state.birdFamily
-    //         }
-    //     })
-
-    //     this.setState({
-    //         birdMarkers: response.data
-    //     })
-    // }
-
     mapSearch = async () => {
-        let response = await axios.get(this.url + 'bird_sightings')
+        let response = await axios.get(this.url + 'bird_sightings', {
+            params: {
+                birdFamily: this.state.birdFamily
+            }
+        })
+
         this.setState({
             birdMarkers: response.data
         })
     }
+
+    // mapSearch = async () => {
+    //     let response = await axios.get(this.url + 'bird_sightings')
+    //     this.setState({
+    //         birdMarkers: response.data
+    //     })
+    // }
 
     updateFormField = (e) => {
         this.setState({
