@@ -1,70 +1,120 @@
-# Getting Started with Create React App
+# SG Birds
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Background
 
-## Available Scripts
+## Project Overview
 
-In the project directory, you can run:
+For bird enthusiasts in Singapore, their main concerns will be where they can find birds to watch or take photos of, and to update like-minded enthusiasts of where to find certain species of birds in Singapore.
 
-### `npm start`
+## The Five Planes UI/UX
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Strategy
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### Organisation's Goals
+To create a community for fellow birds watching and phototaking enthusiasts to communicate and help one another find find the birds they are looking for.
 
-### `npm test`
+#### User's Goals
+As a bird watcher using the website, I want to be able to share with fellow bird watching enthusiasts birds that I have spotted.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+As a bird watcher using the website, I want to be able to find location of birds that I am interested in, so I can go down and take photos of them.
 
-### `npm run build`
+As a bird watcher using the website, I want to find fellow bird watchers to communicate and share my experiences with.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Organisation**
+    - Objective: To have a centralised space to contribute and search for different birds in Singapore.
+    - Needs:
+        - To search for different bird species in Singapore
+        - To be able to contribute after spotting a bird
+    - Demographics and charactertistics:
+        - Teens and adults
+        - Enthusiastic about birds and/or photography
+        - Used to browsing the internet
+    - Pain point:
+        - Need to out about locations for a bird species that the user wants to watch or take photos of
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+User Stories | Acceptance Criteria(s)
+------------ | -------------
+As a bird watcher using the website, I want to be able to share with fellow bird watching enthusiasts birds that I have spotted. | Users should be able to easily share the location where they have spotted the birds at by the neighbourhood it was spoteted at and the latitude and longitude through usage of a map.
+As a bird watcher using the website, I want to be able to find location of birds that I am interested in, so I can go down and take photos of them. | Birds should be searchable by the bird family it belongs to and user should be able to find the location it was spotted at easily.
+As a bird watcher using the website, I want to find fellow bird watchers to communicate and exchange my experiences with.| Users should be able to comment on each others bird findings to encourage users to post and communicate with one another.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Scope
 
-### `npm run eject`
+####
+Database 
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+<figure>
+    <img src="./readme/erd.png" height="450" alt="Entity Relationship Diagram">
+</figure>
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+ERD is drawn up to demonstrate the different relationship between enitities for the site before proceeding to model the database in MongoDB.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### Content
+Content in the website will be crowd sourced from the public and therefore, clear presentation of data contributed by users is essential. A landing page is included as well to showcase our branding and allow users to understand hat our website is about at a glance.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### Functional
+- Search function against attributes such as bird family and tags.
+- Filter function of all sightings posted based on bird size, bird colours and neighbourhood spotted.
+- Create new sighting function
+- Edit and Delete function of each sighting
+- Commenting function of each sighting
+- Add and remove function of each sighting to user's favourites
+- Registration and verification on email is included for actions performed on sightings, favourites and commenting
 
-## Learn More
+#### Non-functional
+- Mobile responsiveness: Website should be mobile first and users should be able to navigate th webiste comfortably on their mobile devices.
+- Accesibility:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Structure
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<figure>
+    <img src="./readme/SiteMap.png" height="450" alt="Site Map template">
+</figure>
 
-### Code Splitting
+### Skeleton
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+<figure>
+    <img src="./readme/WireFrame1.png" height="450" alt="Wireframe">
+    <img src="./readme/WireFrame2.png" height="450" alt="Wireframe">
 
-### Analyzing the Bundle Size
+</figure>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+#### Colour Scheme
+A burgundy, greyish-blue cream colour scheme was used to match the logo and generated by colour palette.
+The colours chosen are warm to give the users a pleasant viewing experience.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Testing 
+Testing cases can be found [here](/readme/readme/Sgbirds-testcase.xlsx)
 
-### Advanced Configuration
+## Dependencies and Sources
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Backend
+| Tech  | Usage |
+| ------------- | ------------- |
+|1. [Express](https://expressjs.com/)| Framework for routing to project's endpoints.
+|2. [MongoDB Node Driver](https://www.mongodb.com/docs/drivers/node/current/)| To access database on MongoDB using their API
+|3. [cors](https://www.npmjs.com/package/cors)| Middleware to enable CORS
+|4. [dotenv](https://www.npmjs.com/package/dotenv)| To separate code from envrionment variables
 
-### Deployment
+### FrontEnd
+| Tech  | Usage |
+| ------------- | ------------- |
+|1. [React](https://reactjs.org/) | Frontend framework |
+|2. [Axios](https://axios-http.com/) | HTTP client to Express server endpoints|
+|3. [Bootstrap](https://getbootstrap.com/) | Served as base styles for React App|
+|4. [React-Bootstrap](https://react-bootstrap.github.io/)| Served as base styles for React App|
+|5. [Sweetalert2](https://sweetalert2.github.io/) | Base style for alert pop ups in React App|
+|6. [Leaflet](https://react-leaflet.js.org/) | Render map and map functions in React App|
+|9. [OneMap](https://www.onemap.gov.sg/) | To retrieve latitute and longitude from its API by address search|
+|8. [React-Select](https://react-select.com/home) | Styling of dropdown select dynamic adding
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Platforms and Software
+| Tech  | Usage |
+| ------------- | ------------- |
+|1. [Git](https://git-scm.com/)| For version control|
+|2. [GitHub](http://github.com)| For repository|
+|3. [Gitpod](https://gitpod.io/)| IDE for code editing|
+|4. [Heroku](https://www.heroku.com/)| Deployment of Express server|
+|5. [Netlify](https://www.netlify.com/)| Deployment of React app|
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

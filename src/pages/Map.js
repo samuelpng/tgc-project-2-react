@@ -18,8 +18,8 @@ const markerIcon = new L.Icon({
 
 export default class Map extends React.Component {
 
-    // url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/";
-    url = "https://sgbirds.herokuapp.com/"
+    url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/";
+    // url = "https://sgbirds.herokuapp.com/"
 
     state = {
         birdMarkers: [],
@@ -114,7 +114,7 @@ export default class Map extends React.Component {
                                     <Popup>
 
 
-                                        <Card className="col-lg-4 ">
+                                        <Card>
                                             <Card.Header >{b.birdSpecies}</Card.Header>
                                             {/* <img src={b.imageUrl} style={{ width: "100%" }} /> */}
                                             <Card.Body>

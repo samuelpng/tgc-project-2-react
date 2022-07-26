@@ -71,6 +71,7 @@ export default class Add extends React.Component {
         behaviourTags: "",
         description: "",
         birdColours: [],
+        description: "",
         displayName: "",
         email: "",
         locate: "geoLocate",
@@ -252,27 +253,27 @@ export default class Add extends React.Component {
                 }
             })
 
-            // let newColors = this.state.birdColours.map(c => c.value)
+            let newColors = this.state.birdColours.map(c => c.value)
 
-            // await axios.post(this.url + 'bird_sightings', {
-            //     birdSize: parseInt(this.state.birdSize),
-            //     birdFamily: this.state.birdFamily,
-            //     birdSpecies: this.state.birdSpecies,
-            //     birdColours: newColors,
-            //     dateSpotted: this.state.dateSpotted,
-            //     neighbourhoodSpotted: this.state.neighbourhoodSpotted,
-            //     locationSpotted: {
-            //         lat: this.state.lat,
-            //         lng: this.state.lng
-            //     },
-            //     imageUrl: this.state.imageUrl,
-            //     character: {
-            //         eatingHabits: this.state.eatingHabits,
-            //         behaviour: this.state.behaviour,
-            //     },
-            //     displayName: this.state.displayName,
-            //     email: this.state.email
-            // })
+            await axios.post(this.url + 'bird_sightings', {
+                birdSize: parseInt(this.state.birdSize),
+                birdFamily: this.state.birdFamily,
+                birdSpecies: this.state.birdSpecies,
+                birdColours: newColors,
+                dateSpotted: this.state.dateSpotted,
+                neighbourhoodSpotted: this.state.neighbourhoodSpotted,
+                locationSpotted: {
+                    lat: this.state.lat,
+                    lng: this.state.lng
+                },
+                imageUrl: this.state.imageUrl,
+                character: {
+                    eatingHabits: this.state.eatingHabits,
+                    behaviour: this.state.behaviour,
+                },
+                displayName: this.state.displayName,
+                email: this.state.email
+            })
 
 
         } else {
@@ -515,6 +516,15 @@ export default class Add extends React.Component {
                             <input type="text" className="form-control" name="behaviourTags" placeholder="Press Enter to add..." value={this.state.behaviourTags} onKeyDown={this.updateBehaviour} onChange={this.updateFormField}>
                             </input>
                         </div>
+
+                        <div>
+                            <div className="label mt-3" style={{ color: "#642d3c" }}>Description</div>
+                            <textarea className="form-control"
+                                name="description" value={this.state.description}
+                                placeholder="Brief description on where you saw the bird and what it was doing..."
+                                onChange={this.updateFormField} rows="3"/>
+                        </div>
+
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Display Name</div>
                             <input type="text" className="form-control" placeholder="Name you would like to be displayed..."

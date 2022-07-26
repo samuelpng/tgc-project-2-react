@@ -8,6 +8,10 @@
   background: #c8ccd9
 }
 
+body {
+  overflow-x: hidden !important;
+}
+
 /* body {
   background: #c8ccd9
 }  */
@@ -22,7 +26,7 @@
   mix-blend-mode: overlay;
 }
 
-.landingPage {}
+/* .landingPage {} */
 
 .errorMessage {
   color: crimson

@@ -4,6 +4,7 @@ import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import logo from '../pictures/sgbirds-logo.png';
+import landingImg from '../pictures/landingImg.jpg';
 import landingVideo from '../pictures/landingVideo.mp4'
 import Modal from 'react-bootstrap/Modal';
 
@@ -88,14 +89,17 @@ export default class Home extends React.Component {
           
 
         </div> */}
-        <div className="landingPage" style={{height: "100vh", width: "100vw", overflowX:"hidden", overflowY: "hidden"}}>
-          <video autoPlay muted loop id="myVideo" style={{height:"100%", width:"100%", objectFit:"cover"}}>
+        <div className="landingPage" style={{height: "100vh", width: "100vw", overflowX:"hidden", overflowY: "hidden", margin:"0px", padding: "0px"}}>
+           <video autoPlay muted loop id="myVideo" style={{height:"100vh", width:"100vw", backgroundImage:"cover", objectFit:"cover"}}>
             <source src={landingVideo} type="video/mp4" />
-          </video>
-          <div className="overlay"></div>
-          <div className="landingText">
-            Hello
-          </div>
+          </video> 
+          {/* <img src={landingImg} id="landingPic" style={{height:"40%", width: "100%", objectFit:"fit"}} /> */}
+            
+        
+          {/* <div className="overlay"></div> */}
+          {/* <div className="landingText"> */}
+            {/* Hello
+          </div> */}
         </div>
 
        
