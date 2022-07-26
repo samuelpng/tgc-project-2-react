@@ -46,6 +46,8 @@ const colorStyles = {
     }
 }
 
+const ONEMAP_BASE_API_URL = 'https://developers.onemap.sg/'
+
 export default class Update extends React.Component {
 
     // url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/"
@@ -60,7 +62,9 @@ export default class Update extends React.Component {
         neighbourhoodSpotted: "",
         lat: "",
         lng: "",
-        imageUrl: null,
+        address: "",
+        addressResults: null,
+        imageUrl: "",
         eatingHabits: [],
         eatingTags: "",
         behaviour: [],
@@ -68,7 +72,11 @@ export default class Update extends React.Component {
         description: "",
         birdColours: [],
         displayName: "",
-        email: ""
+        email: "",
+        locate: "geoLocate",
+        submit: false,
+        addressDiv: false,
+        errorMsg: []
     }
 
     options = [
@@ -214,6 +222,7 @@ export default class Update extends React.Component {
                 eatingHabits: this.state.eatingHabits,
                 behaviour: this.state.behaviour,
             },
+            description: this.state.description,
             displayName: this.state.displayName,
             email: this.state.email
         })
@@ -224,6 +233,41 @@ export default class Update extends React.Component {
 
     }
 
+    addressSearch = async (searchQuery) => {
+        let response = await axios.get(ONEMAP_BASE_API_URL + `commonapi/search?searchVal=${searchQuery}&returnGeom=Y&getAddrDetails=Y&pageNum=1`)
+        // this.setState({
+        //     addressDiv: false
+        // })
+        this.setState({
+            addressResults: "",
+            addressResults: response.data.results,
+            addressDiv: true
+        })
+    }
+
+    chooseAddress = (lat, lng, address) => {
+        this.setState({
+            address: address,
+            lat: lat,
+            lng: lng,
+            addressDiv: false
+        })
+    }
+
+    userLocation = () => {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                let lat = position.coords.latitude
+                let lng = position.coords.longitude
+
+                this.setState({
+
+                    lat: lat,
+                    lng: lng
+
+                })
+            })
+    }
 
     async componentDidMount() {
         let response = await axios.get(this.url + `bird_sightings/${this.props.modal}`)
@@ -239,6 +283,7 @@ export default class Update extends React.Component {
             imageUrl: response.data.imageUrl,
             eatingHabits: response.data.character.eatingHabits,
             behaviour: response.data.character.behaviour,
+            description: response.data.description,
             birdColours: response.data.birdColours,
             displayName: response.data.displayName,
             email: response.data.email
@@ -257,9 +302,10 @@ export default class Update extends React.Component {
                     <img src={logo} alt="logo" height="90px" />
                 </div>
                 <div className="desktopPadding"></div>
-                <div className="container">
+                <div className="container p-3">
                     <div className="addHeader pt-5 pb-3 formPadding">
                         <h2 style={{ color: "#642d3c" }}>Update Sighting</h2>
+                        <img src={this.state.imageUrl} alt="updateImg" style={{width: "100%", paddingTop: "10px"}}/>
                     </div>
                     <div className="formPadding">
                         <div>
@@ -319,6 +365,17 @@ export default class Update extends React.Component {
                                 </div>
                             </div>
                         </div>
+
+                        <div>
+                            <div className="label mt-3" style={{ color: "#642d3c" }}>Image Upload</div>
+                            <input type="text" className="form-control"
+                                name="imageUrl" value={this.state.imageUrl}
+                                placeholder="Insert Image URL..."
+                                onChange={this.updateFormField} />
+                        </div>
+
+                        {/* {this.state.errorMsg.includes('birdFamily') ? <div className="errorMessage">Image URL is required</div> : null} */}
+
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Neighbourhood Spotted</div>
                             <select className="form-select form-control" name="neighbourhoodSpotted"
@@ -338,8 +395,45 @@ export default class Update extends React.Component {
                                 <input type="text" className="form-control mt-2" placeholder="Longitude"
                                     name="lng" value={this.state.lng}
                                     onChange={this.updateFormField} />
+                                <label className="mt-2" style={{ color: "#642d3c" }}>Retrieve latitude and longitude by :</label>
+                                <div><input type="radio" id="geoLocate" name="locate" value="geoLocate" onChange={this.updateFormField} checked={this.state.locate === "geoLocate"} />
+                                    <label for="geoLocate" className="ms-1 me-2">Current Location</label>
+                                    <input type="radio" id="addressLocate" name="locate" value="addressLocate" onChange={this.updateFormField} checked={this.state.locate === "addressLocate"} />
+                                    <label for="addressLocate" className="ms-1 me-2">Address</label></div>
+                                    {this.state.locate === "addressLocate" ?
+                                    <div>
+                                        <input type="text" className="form-control" placeholder="Address"
+                                            name="address" value={this.state.address}
+                                            onChange={this.updateFormField} onInput={() => { this.addressSearch(this.state.address) }}
+                                        />
+
+                                        <div style={{ backgroundColor: "white", opacity: "0.8", overflowY: "scroll", maxHeight: "200px", position: "relative" }}>
+                                            {
+                                                this.state.addressResults != null && this.state.address !== "" && this.state.addressDiv === true
+                                                    ?
+                                                    this.state.addressResults.map(a =>
+                                                        <div syle={{ padding: "5px", position: "absolute" }} key={a.X}
+                                                            onClick={() => { this.chooseAddress(a.LATITUDE, a.LONGITUDE, a.SEARCHVAL) }}>
+                                                            {a.SEARCHVAL}</div>
+                                                    )
+                                                    :
+                                                    null
+                                            }
+
+                                        </div>
+                                    </div>
+                                    :
+                                    <div>
+                                        <button className="btn" style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600", padding: "5px", borderColor: "#642d3c" }}
+                                            onClick={this.userLocation}>Get My Location</button>
+                                    </div>
+                                }
+                                    
                             </div>
                         </div>
+
+
+
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Date Spotted</div>
                             <input type="text" className="form-control" placeholder="YYYY-MM-DD"
@@ -374,6 +468,15 @@ export default class Update extends React.Component {
                             <input type="text" className="form-control" name="behaviourTags" placeholder="Press Enter to add..." value={this.state.behaviourTags} onKeyDown={this.updateBehaviour} onChange={this.updateFormField}>
                             </input>
                         </div>
+
+                        <div>
+                            <div className="label mt-3" style={{ color: "#642d3c" }}>Description</div>
+                            <textarea className="form-control"
+                                name="description" value={this.state.description}
+                                placeholder="Brief description on where you saw the bird and what it was doing..."
+                                onChange={this.updateFormField} rows="3"/>
+                        </div>
+                        
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Display Name</div>
                             <input type="text" className="form-control" placeholder="Name you would like to be displayed..."

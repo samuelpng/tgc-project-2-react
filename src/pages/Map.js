@@ -5,7 +5,7 @@ import logo from '../pictures/sgbirds-logo.png';
 import marker from '../pictures/marker.png';
 import axios from "axios";
 import L from 'leaflet';
-import { Card, Button, Modal } from "react-bootstrap";
+import { Card, Button, Modal, Accordion } from "react-bootstrap";
 
 
 const markerIcon = new L.Icon({
@@ -23,7 +23,8 @@ export default class Map extends React.Component {
 
     state = {
         birdMarkers: [],
-        birdFamily: "sparrow",
+        birdFamily: "",
+        email: "",
         modal: null
     }
 
@@ -35,6 +36,7 @@ export default class Map extends React.Component {
     mapSearch = async () => {
         let response = await axios.get(this.url + 'bird_sightings', {
             params: {
+                email: this.state.email,
                 birdFamily: this.state.birdFamily
             }
         })
@@ -62,7 +64,7 @@ export default class Map extends React.Component {
             modal: birdId
         })
     }
-    
+
     closeModal = () => {
         this.setState({
             modal: null,
@@ -81,20 +83,31 @@ export default class Map extends React.Component {
                 </div>
 
                 <div className="mapFilter">
-                    <div className="label ms-3" style={{ color: "#642d3c" }}><h6>Bird Family</h6></div>
-                    <div style={{ display: "flex" }}>
-                        <select className="form-select form-control ms-3" name="birdFamily"
-                            value={this.state.birdFamily} onChange={this.updateFormField}
-                            style={{ width: "60%" }}>
-                            <option name="birdFamily" key="placeHolder">--Select One--</option>
-                            {this.birdFamily.myArray.map(f =>
-                                <option name="birdFamily" key={f} value={f} >
-                                    {f[0].toUpperCase() + f.substring(1)}
-                                </option>
-                            )}
-                        </select>
-                        <button className="btn btn-primary ms-3" onClick={this.mapSearch}>Go</button>
-                    </div>
+                    <Accordion>
+                        <Accordion.Item>
+                            <Accordion.Header>Search</Accordion.Header>
+                            <Accordion.Body>
+                                <div className="label"><h6 style={{ color: "#642d3c" }}>View My Sightings</h6></div>
+                                <input type="text" className="form-control" placeholder="Your email address..."></input>
+                                <div className="label pt-2" style={{ color: "#642d3c" }}><h6>Bird Family</h6></div>
+                                <div style={{ display: "flex" }}>
+                                    <select className="form-select form-control" name="birdFamily"
+                                        value={this.state.birdFamily} onChange={this.updateFormField}
+                                    >
+                                        <option name="birdFamily" key="placeHolder" value="">--Select One--</option>
+                                        {this.birdFamily.myArray.map(f =>
+                                            <option name="birdFamily" key={f} value={f} >
+                                                {f[0].toUpperCase() + f.substring(1)}
+                                            </option>
+                                        )}
+                                    </select>
+
+                                </div>
+                                <div><button className="btn btn-primary" style={{ width: "100%" }} onClick={this.mapSearch}>Go</button></div>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
+
                 </div>
 
                 <div style={{ height: "90px" }}></div>

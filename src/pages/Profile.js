@@ -23,8 +23,11 @@ export default class Profile extends React.Component {
         commentDisplayName: "",
         commentDescription: "",
         update: false,
-        delete: false
+        delete: false,
+        errorMsg: false,
+        noResultMsg :false
     }
+
 
     updateFormField = (e) => {
         this.setState({
@@ -33,15 +36,33 @@ export default class Profile extends React.Component {
     }
 
     retrieveSightings = async () => {
-        let response = await axios.get(this.url + `bird_sightings`, {
-            params: {
-                email: this.state.email
+        let emailRegex = new RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+        if (!this.state.email.match(emailRegex)){
+            this.setState({
+                errorMsg : true,
+                loginData: []
+            })
+        } else {
+            let response = await axios.get(this.url + `bird_sightings`, {
+                params: {
+                    email: this.state.email
+                }
+            }
+            )
+            this.setState({
+                loginData: response.data,
+                errorMsg: false,
+                noResultMsg: false
+            })
+
+            if (response.data.length === 0) {
+                this.setState({
+                    noResultMsg :true
+                })
             }
         }
-        )
-        this.setState({
-            loginData: response.data
-        })
+
+      
     }
     //havent done express for this
 
@@ -95,6 +116,12 @@ export default class Profile extends React.Component {
 
     deleteSighting = async () => {
         await axios.delete(this.url + `bird_sightings/${this.state.modal}`)
+        
+        this.retrieveSightings()
+
+        this.setState({
+            modal:null
+        })
     }
 
     backToProfile = async() => {
@@ -184,7 +211,10 @@ export default class Profile extends React.Component {
                                 <button className="btn mt-2 mb-3" onClick={this.retrieveSightings}
                                     style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600" }}
                                 >Retrieve</button>
+                                 {this.state.errorMsg ? <Alert variant="danger" style={{display:"flex", justifyContent:"center"}}> Please enter a valid email address </Alert>: null}
+                                 {this.state.noResultMsg ? <Alert variant="dark" style={{display:"flex", justifyContent:"center"}}> No Results found </Alert>: null}
                             </div>
+                           
 
 
                             {/* Result Cards */}

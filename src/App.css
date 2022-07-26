@@ -158,10 +158,10 @@ body {
 }
 
 .mapFilter {
-  height: 75px;
-  width: 250px;
+  height: 50px;
+  width: 280px;
   top: 100px;
-  right: 5px;
+  right: 5vw;
   position: fixed;
   background: #fff2dd;
   z-index: 2;

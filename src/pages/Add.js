@@ -7,7 +7,7 @@ import sparrow from '../pictures/sparrow.png';
 import blackbird from '../pictures/blackbird.png';
 import crow from '../pictures/crow.png';
 import goose from '../pictures/goose.png'
-import kingFisher from '../pictures/addImg.jpg'
+import kingFisher from '../pictures/addPageImg.jpeg'
 import logo from '../pictures/sgbirds-logo.png';
 import { IoCloseOutline } from "react-icons/io5";
 import Swal from "sweetalert2";
@@ -195,12 +195,6 @@ export default class Add extends React.Component {
         if (!this.state.dateSpotted) {
             errorMsg.push('dateSpotted')
         }
-        // if (this.state.eatingHabits.length === 0) {
-        //     errorMsg.push('eatingHabits')
-        // }
-        // if (this.state.behaviour.length === 0) {
-        //     errorMsg.push('behaviour')
-        // }
         if (!this.state.displayName) {
             errorMsg.push('displayName')
         }
@@ -271,6 +265,7 @@ export default class Add extends React.Component {
                     eatingHabits: this.state.eatingHabits,
                     behaviour: this.state.behaviour,
                 },
+                description: this.state.description,
                 displayName: this.state.displayName,
                 email: this.state.email
             })
@@ -409,6 +404,7 @@ export default class Add extends React.Component {
                         {this.state.errorMsg.includes('birdColours') ? <div className="errorMessage">Please select up to 3 bird colours</div> : null}
 
                         <div>
+                        <div><img className="p-3" src={this.state.imageUrl} style={{width:"50%"}} /></div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Image Upload</div>
                             <input type="text" className="form-control"
                                 name="imageUrl" value={this.state.imageUrl}

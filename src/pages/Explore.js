@@ -158,7 +158,7 @@ export default class Explore extends React.Component {
                                 <h2 style={{ color: "#642d3c" }} className="mb-3">Explore</h2>
                             </div>
                             <Accordion>
-                                <Accordion.Item eventKey="0">
+                                <Accordion.Item>
                                     <Accordion.Header><span style={{ color: "#642d3c", fontWeight: "500" }}>Search</span></Accordion.Header>
                                     <Accordion.Body>
                                         <div className="row search-form">
