@@ -169,7 +169,7 @@ export default class Add extends React.Component {
     newSighting = async () => {
         let errorMsg = []
         let urlRegex = new RegExp(/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi)
-        //credit to 
+        
 
         if (this.state.birdSize.length !== 1) {
             errorMsg.push('birdSize')
@@ -206,7 +206,7 @@ export default class Add extends React.Component {
             errorMsg
         })
 
-        console.log(errorMsg)
+  
 
         if (errorMsg.length === 0) {
             Swal.fire({
@@ -216,7 +216,6 @@ export default class Add extends React.Component {
                 imageWidth: 300,
                 imageHeight: 200,
                 icon: 'success',
-                // confirmButtonColor: '#3085d6',    
                 confirmButtonText: 'Back',
                 allowOutsideClick: false
             }).then((result) => {
@@ -283,30 +282,6 @@ export default class Add extends React.Component {
         this.setState({
             submit: true
         })
-
-        let newColors = this.state.birdColours.map(c => c.value)
-
-        await axios.post(this.url + 'bird_sightings', {
-            birdSize: parseInt(this.state.birdSize),
-            birdFamily: this.state.birdFamily,
-            birdSpecies: this.state.birdSpecies,
-            birdColours: newColors,
-            dateSpotted: this.state.dateSpotted,
-            neighbourhoodSpotted: this.state.neighbourhoodSpotted,
-            locationSpotted: {
-                lat: this.state.lat,
-                lng: this.state.lng
-            },
-            imageUrl: this.state.imageUrl,
-            character: {
-                eatingHabits: this.state.eatingHabits,
-                behaviour: this.state.behaviour,
-            },
-            displayName: this.state.displayName,
-            email: this.state.email
-        })
-
-
 
     }
 
@@ -412,7 +387,7 @@ export default class Add extends React.Component {
                                 onChange={this.updateFormField} />
                         </div>
 
-                        {this.state.errorMsg.includes('birdFamily') ? <div className="errorMessage">Image URL is required</div> : null}
+                        {this.state.errorMsg.includes('imageUrl') ? <div className="errorMessage">Image URL is required</div> : null}
 
                         <div className="label mt-3" style={{ color: "#642d3c" }}>Neighbourhood Spotted</div>
                         <select className="form-select form-control" name="neighbourhoodSpotted"

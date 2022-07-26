@@ -13,17 +13,6 @@ import logo from '../pictures/sgbirds-logo.png';
 import Swal from "sweetalert2";  
 import { IoCloseOutline } from "react-icons/io5";
 
-// const options = [
-//     { value: 'black', label: 'Black', color: 'black' },
-//     { value: 'grey', label: 'Grey', color: 'grey' },
-//     { value: 'white', label: 'White', color: 'lightgrey' },
-//     { value: 'brown', label: 'Brown', color: 'brown' },
-//     { value: 'red', label: 'Red', color: 'crimson' },
-//     { value: 'blue', label: 'Blue', color: 'blue' },
-//     { value: 'green', label: 'Green', color: 'green' },
-//     { value: 'yellow', label: 'Yellow', color: 'goldenrod' },
-//     { value: 'orange', label: 'Orange', color: 'orange' }
-// ];
 
 const colorStyles = {
     control: (styles) => ({ ...styles, backgroundColor: "white" }),
@@ -106,15 +95,6 @@ export default class Update extends React.Component {
     "Sengkang", "Serangoon", "Siglap", "Simei",  "Somerset", "Tai Seng", "Tampines", "Tanah Mearh", "Tanjong Katong", "Tanjong Pagar",
     "Thomson", "Tiong Bahru", "Toa Payoh", "Tuas", "West Coast", "Woodlands", "Yio Chu Kang", "Yishun"]}
 
-    // birdSize = {
-    //     myArray: [1, 2, 3, 4, 5]
-    // }
-
-    // updateFormField = (event) => {
-    //     this.setState({
-    //         [event.target.name]: event.target.value
-    //     })
-    // }
 
     birdColours = {
         myArray: ['black', 'grey', 'white', 'brown', 'red',
@@ -187,49 +167,92 @@ export default class Update extends React.Component {
     }
 
     updateSighting = async () => {
-        Swal.fire({  
-            text: 'Bird Sighting Successfully Updated',  
-            title: 'SUCCESS',  
-            imageUrl: `${this.state.imageUrl}` ,
-            imageWidth: 300,
-            imageHeight: 200,
-            icon: 'success',   
-            confirmButtonColor: '#3085d6',    
-            confirmButtonText: 'Back',
-            allowOutsideClick: false  
-          }).then((result)=>{
-            if (result.isConfirmed){
-                this.props.backToProfile()
-            }
-          })
+        let errorMsg = []
+        let urlRegex = new RegExp(/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi)
 
-        // let newColors = this.state.birdColours.map(c => c.value)
+        if (this.state.birdSize.length !== 1) {
+            errorMsg.push('birdSize')
+        }
+        if (!this.state.birdFamily) {
+            errorMsg.push('birdFamily')
+        }
+        if (!this.state.birdSpecies) {
+            errorMsg.push('birdSpecies')
+        }
+        if (this.state.birdColours.length === 0 || this.state.birdColours.length > 3) {
+            errorMsg.push('birdColours')
+        }
+        if (!this.state.imageUrl.match(urlRegex)) {
+            errorMsg.push('imageUrl')
+        }
+        if (!this.state.neighbourhoodSpotted) {
+            errorMsg.push('neighbourhoodSpotted')
+        }
+        if (!this.state.lat || !this.state.lng) {
+            errorMsg.push('latlng')
+        }
+        if (!this.state.dateSpotted) {
+            errorMsg.push('dateSpotted')
+        }
+        if (!this.state.displayName) {
+            errorMsg.push('displayName')
+        }
+        if (!this.state.email) {
+            errorMsg.push('email')
+        }
 
-        await axios.put(this.url + `bird_sightings/${this.props.modal}`, {
-            birdSize: parseInt(this.state.birdSize),
-            birdFamily: this.state.birdFamily,
-            birdSpecies: this.state.birdSpecies,
-            // birdColours: newColors,
-            birdColours: this.state.birdColours,
-            dateSpotted: this.state.dateSpotted,
-            neighbourhoodSpotted: this.state.neighbourhoodSpotted,
-            locationSpotted: {
-                lat: this.state.lat,
-                lng: this.state.lng
-            },
-            imageUrl: this.state.imageUrl,
-            character: {
-                eatingHabits: this.state.eatingHabits,
-                behaviour: this.state.behaviour,
-            },
-            description: this.state.description,
-            displayName: this.state.displayName,
-            email: this.state.email
+        this.setState({
+            errorMsg
         })
 
-        // this.setState({
-        //     submit: true
-        // })
+        if (errorMsg.length === 0) {
+            Swal.fire({  
+                text: 'Bird Sighting Successfully Updated',  
+                title: 'SUCCESS',  
+                imageUrl: `${this.state.imageUrl}` ,
+                imageWidth: 300,
+                imageHeight: 200,
+                icon: 'success',   
+                confirmButtonColor: '#3085d6',    
+                confirmButtonText: 'Back',
+                allowOutsideClick: false  
+              }).then((result)=>{
+                if (result.isConfirmed){
+                    this.props.backToProfile()
+                }
+              })
+
+              await axios.put(this.url + `bird_sightings/${this.props.modal}`, {
+                birdSize: parseInt(this.state.birdSize),
+                birdFamily: this.state.birdFamily,
+                birdSpecies: this.state.birdSpecies,
+                // birdColours: newColors,
+                birdColours: this.state.birdColours,
+                dateSpotted: this.state.dateSpotted,
+                neighbourhoodSpotted: this.state.neighbourhoodSpotted,
+                locationSpotted: {
+                    lat: this.state.lat,
+                    lng: this.state.lng
+                },
+                imageUrl: this.state.imageUrl,
+                character: {
+                    eatingHabits: this.state.eatingHabits,
+                    behaviour: this.state.behaviour,
+                },
+                description: this.state.description,
+                displayName: this.state.displayName,
+                email: this.state.email
+            })
+
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Error',
+                text: 'One or more of the fields has not been input correctly',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
 
     }
 
@@ -325,6 +348,9 @@ export default class Update extends React.Component {
                             <input type="radio" className="ms-4" name="birdSize" value="6" key="6" id="6" onChange={this.updateFormField} checked={this.state.birdSize === "6"} />
                             <input type="radio" className="ms-4" name="birdSize" value="7" key="7" id="7" onChange={this.updateFormField} checked={this.state.birdSize === "7"} />
                         </div>
+
+                        {this.state.errorMsg.includes('birdSize') ? <div className="errorMessage">Please indicate bird size</div> : null}
+                        
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Bird Family</div>
                             <select className="form-select form-control" name="birdFamily"
@@ -337,12 +363,18 @@ export default class Update extends React.Component {
                                 )}
                             </select>
                         </div>
+
+                        {this.state.errorMsg.includes('birdFamily') ? <div className="errorMessage">Bird family is required</div> : null}
+
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Bird Species</div>
                             <input type="text" className="form-control"
                                 name="birdSpecies" value={this.state.birdSpecies}
                                 onChange={this.updateFormField} />
                         </div>
+
+                        {this.state.errorMsg.includes('birdFamily') ? <div className="errorMessage">Bird species is required</div> : null}
+
                         <div>
                             <div className="App mt-3" >
                                 <label style={{ color: "#642d3c" }}>Bird Colours</label>
@@ -366,6 +398,8 @@ export default class Update extends React.Component {
                             </div>
                         </div>
 
+                        {this.state.errorMsg.includes('birdColours') ? <div className="errorMessage">Please select up to 3 bird colours</div> : null}
+
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Image Upload</div>
                             <input type="text" className="form-control"
@@ -374,7 +408,7 @@ export default class Update extends React.Component {
                                 onChange={this.updateFormField} />
                         </div>
 
-                        {/* {this.state.errorMsg.includes('birdFamily') ? <div className="errorMessage">Image URL is required</div> : null} */}
+                        {this.state.errorMsg.includes('imageUrl') ? <div className="errorMessage">Image URL is required</div> : null}
 
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Neighbourhood Spotted</div>
@@ -386,6 +420,9 @@ export default class Update extends React.Component {
                                 )}
                             </select>
                         </div>
+
+                        {this.state.errorMsg.includes('neighbourhoodSpotted') ? <div className="errorMessage">Please select a neighbourhood</div> : null}
+
                         <div>
                             <div>
                                 <div className="label mt-3" style={{ color: "#642d3c" }}>Location Spotted</div>
@@ -432,7 +469,7 @@ export default class Update extends React.Component {
                             </div>
                         </div>
 
-
+                        {this.state.errorMsg.includes('latlng') ? <div className="errorMessage">Latitude and Longitude are required</div> : null}
 
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Date Spotted</div>
@@ -440,6 +477,9 @@ export default class Update extends React.Component {
                                 name="dateSpotted" value={this.state.dateSpotted}
                                 onChange={this.updateFormField} />
                         </div>
+
+                        {this.state.errorMsg.includes('dateSpotted') ? <div className="errorMessage">Date spotted is required</div> : null}
+
                         <div>
                             <label style={{ color: "#642d3c" }} className="mt-3">Eating Habits</label>
                             <div className="mb-2">
@@ -483,12 +523,19 @@ export default class Update extends React.Component {
                                 name="displayName" value={this.state.displayName}
                                 onChange={this.updateFormField} />
                         </div>
+
+                        {this.state.errorMsg.includes('displayName') ? <div className="errorMessage">Display name is required</div> : null}
+
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Email Address</div>
                             <input type="text" className="form-control" placeholder="Email address"
                                 name="email" value={this.state.email}
                                 onChange={this.updateFormField} />
                         </div>
+
+                        {this.state.errorMsg.includes('email') ? <div className="errorMessage">Email address is required</div> : null}
+
+
                         <div>
                             <button className="btn mt-4" style={{ backgroundColor: "#fff2dd", color: "#642d3c", fontWeight: "600", borderColor: "green" }}
                                 onClick={this.updateSighting}>Update</button>

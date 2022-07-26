@@ -65,7 +65,7 @@ export default class App extends React.Component {
 
   pageToRender = () => {
     if (this.state.home) {
-      return (<Home />)
+      return (<Home explore={this.exploreIcon} add={this.addIcon} map={this.mapIcon} profile={this.profileIcon}/>)
     } else if (this.state.explore) {
       return (<Explore />)
     } else if (this.state.add) {

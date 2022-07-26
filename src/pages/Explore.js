@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import '../App.css';
-import { Card, Button, Modal, Dropdown } from 'react-bootstrap';
+import { Card, Button, Modal, Dropdown, Alert } from 'react-bootstrap';
 import logo from '../pictures/sgbirds-logo.png';
 import Accordion from 'react-bootstrap/Accordion';
 import sparrow from '../pictures/sparrow.png';
@@ -25,7 +25,8 @@ export default class Explore extends React.Component {
         sortBy: "latest",
         modal: null,
         commentDisplayName: "",
-        commentDescription: ""
+        commentDescription: "",
+        noResult : false
     }
 
     birdSize = {
@@ -37,20 +38,16 @@ export default class Explore extends React.Component {
             'blue', 'green', 'yellow', 'orange'],
     }
 
-    neighbourhoodSpotted = [
-        {
-            display: "Ang Mo Kio",
-            value: "angmokio"
-        },
-        {
-            display: "Tampines",
-            value: "tampines"
-        },
-        {
-            display: "Punggol",
-            value: "punggol"
-        }
-    ]
+    neighbourhoodSpotted = {
+        myArray: ["Aljunied", "Ang Mo Kio", "Balestier", "Bartley", "Bayfront", "Beach Road", "Beauty World", "Bedok", "Bishan", "Botanic Gardens", "Braddell", "Bras Basah", "Buangkok", "Bugis", "Bukit Batok", "Bukit Giombak", "Buki Timah",
+            "Buona Vista", "Changi", "Changi", "Choa Chu Kang", "City Hall", "Clementi", "Commonwealth", "Dhoby Ghaut", "Dover", "Downtown",
+            "East Coast", "Eunos", "Farrer Park", "Fort Canning", "Geylang", "Great World", "Harbourfront", "Holland Village", "Hougang",
+            "Jalan Besar", "Jalan Kayu", "Joo Chiat", "Jurong East", "Kallang", "Katong", "Kembangan", "Kent Ridge", "Khatib", "Kovan",
+            "Lavender", "Little India", "Macpherson", "Marina Bay", "Marine Parade", "Mountbatten", "Newton", "Novena", "Orchard", "Outram Park",
+            "Pasir Panjang", "Pasir Ris", "Paya Lebar", "Potong Pasir", "Punggol", "Queenstown", "Raffles Place", "Redhill", "Seletar", "Sembawang",
+            "Sengkang", "Serangoon", "Siglap", "Simei", "Somerset", "Tai Seng", "Tampines", "Tanah Mearh", "Tanjong Katong", "Tanjong Pagar",
+            "Thomson", "Tiong Bahru", "Toa Payoh", "Tuas", "West Coast", "Woodlands", "Yio Chu Kang", "Yishun"]
+    }
 
     changeBirdSize = (s) => {
         if (s === 1) {
@@ -133,8 +130,15 @@ export default class Explore extends React.Component {
         })
 
         this.setState({
-            searchResults: response.data
+            searchResults: response.data,
+            noResult: false
         })
+
+        if (response.data.length === 0){
+            this.setState({
+                noResult: true
+            })
+        }
     }
 
 
@@ -148,15 +152,12 @@ export default class Explore extends React.Component {
 
                 <div className="container-fluid p-3">
                     <div className="row">
-                        {/* <div>
-                    <img src={eagle} className="addImg" alt="eagle" width="100%" height="225px" />
-                </div> */}
-                        <div className="col-lg-3">
+                       
+                        <div className="col-md-5 col-lg-3">
 
-                            {/* p-3 mx-3 my-4 col-sm col-md col-lg */}
-                            <div >
+                            {/* <div >
                                 <h2 style={{ color: "#642d3c" }} className="mb-3">Explore</h2>
-                            </div>
+                            </div> */}
                             <Accordion>
                                 <Accordion.Item>
                                     <Accordion.Header><span style={{ color: "#642d3c", fontWeight: "500" }}>Search</span></Accordion.Header>
@@ -207,12 +208,12 @@ export default class Explore extends React.Component {
                                                         <Accordion.Body>
                                                             <div>
                                                                 {this.birdColours.myArray.map(c =>
-                                                                    <span>
-                                                                        <label for={c} className="me-1">{c[0].toUpperCase() + c.substring(1)}</label>
+                                                                    <div>       
                                                                         <input type="checkbox" value={c} key={c} id={c}
                                                                             onChange={this.updateFormField} className="me-3" name="searchColours"
                                                                             checked={this.state.searchColours.includes(`${c}`)} />
-                                                                    </span>
+                                                                             <label for={c} className="me-1">{c[0].toUpperCase() + c.substring(1)}</label>
+                                                                    </div>
                                                                 )}
                                                             </div>
                                                         </Accordion.Body>
@@ -224,8 +225,8 @@ export default class Explore extends React.Component {
                                                 value={this.state.searchNeighbourhood} onChange={this.updateFormField}
                                                 style={{ width: "80%" }}>
                                                 <option value="" key="placeHolder">--Select One--</option>
-                                                {this.neighbourhoodSpotted.map(n =>
-                                                    <option className="form-control" key={n.value} value={n.value}>{n.display}</option>
+                                                {this.neighbourhoodSpotted.myArray.map(n =>
+                                                    <option className="form-control" key={n} value={n}>{n}</option>
                                                 )}
                                             </select>
                                             <div><label className="mt-3" style={{ color: "#642d3c" }}>Sort By:</label></div>
@@ -258,14 +259,14 @@ export default class Explore extends React.Component {
 
                         {/* Show Search Results */}
 
-                        <div className="col-lg-9">
+                        <div className="col-md-7 col-lg-9">
                             <div className="row">
-                                                    
+                            {this.state.noResult ? <Alert variant="dark" style={{display: 'flex', justifyContent:'center'}}>No Results Found</Alert>: null}
                              {
                                 this.state.searchResults.map(b => (
                                     <React.Fragment key={b._id}>
 
-                                        <Card className="col-lg-4 ">
+                                        <Card className="col-lg-4 col-md-6 ">
                                             <Card.Header >{b.birdSpecies}</Card.Header>
                                             {/* <img src={b.imageUrl} style={{ width: "100%" }} /> */}
                                             <Card.Body>
