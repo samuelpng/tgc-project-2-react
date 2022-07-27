@@ -1,14 +1,16 @@
 # SG Birds
 
-A brief layout of project work in different screen version
+A brief layout of project work in different screen versions
 
 <img src="./readme/sgbirds-mockup.png" height="450" alt="Site Map template">
 
-The website can be accessed [here](https://sgbirds.netlify.app/)
+The live demo site can be accessed [here](https://sgbirds.netlify.app/)
 
 Use the email 'howudoing@gmail.com' to test out the profile page of the website.
 
 ## Background
+
+There are many bird watching lovers in Singapore who likes to watch birds, and also take photos of birds in their natural habitat. This website aims to give them a platform to share their photos and sightins of these birds with fellow bird watching enthusiasts and also help the users find more birds in Singapore in areas they may not know of.
 
 ## Project Overview
 
@@ -93,7 +95,7 @@ A burgundy, greyish-blue cream colour scheme was used to match the logo and gene
 The colours chosen are warm to give the users a pleasant viewing experience.
 
 ## Testing 
-Testing cases can be found [here](/readme/readme/Sgbirds-testcase.xlsx)
+Testing cases can be found [here](https://github.com/samuelpng/tgc-project-2-react/blob/main/readme/Sgbirds-testcase.xlsx)
 
 ## Dependencies and Sources
 
@@ -126,4 +128,9 @@ Testing cases can be found [here](/readme/readme/Sgbirds-testcase.xlsx)
 |3. [Gitpod](https://gitpod.io/)| IDE for code editing|
 |4. [Heroku](https://www.heroku.com/)| Deployment of Express server|
 |5. [Netlify](https://www.netlify.com/)| Deployment of React app|
+
+## Logos and Images
+1. Photos are taken from from Vincent Png and Pexels
+2. Icons are taken from from React-Icons
+3. Brand Logo is from Canva
 
