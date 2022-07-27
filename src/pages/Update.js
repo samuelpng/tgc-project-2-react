@@ -49,24 +49,6 @@ export default class Update extends React.Component {
         birdColoursArray: []
     }
 
-    options = [
-        { value: 'black', label: 'Black', color: 'black' },
-        { value: 'grey', label: 'Grey', color: 'grey' },
-        { value: 'white', label: 'White', color: 'lightgrey' },
-        { value: 'brown', label: 'Brown', color: 'brown' },
-        { value: 'red', label: 'Red', color: 'crimson' },
-        { value: 'blue', label: 'Blue', color: 'blue' },
-        { value: 'green', label: 'Green', color: 'green' },
-        { value: 'yellow', label: 'Yellow', color: 'goldenrod' },
-        { value: 'orange', label: 'Orange', color: 'orange' }
-    ];
-
-    
-
-    birdColours = {
-        myArray: ['black', 'grey', 'white', 'brown', 'red',
-            'blue', 'green', 'yellow', 'orange'],
-    }
 
     updateFormField = (e) => {
         if (e.target.type === 'checkbox') {
@@ -518,16 +500,6 @@ export default class Update extends React.Component {
                 </div>
                 <div className="addFooter"></div>
 
-                {/* <Modal show={this.state.submit} centered>
-                    <Modal.Body>
-                    <div style={{color: "#642d3c", display:"flex", justifyContent:"center"}}>
-                    <h3>Update Successful</h3>
-                    </div>
-                    <div style={{display:"flex", justifyContent:"center"}} className="mt-3">
-                    <button className="btn btn-primary" onClick={this.props.backToProfile}>Back</button>
-                    </div>
-                    </Modal.Body>
-                </Modal> */}
 
             </React.Fragment>
 
