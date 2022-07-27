@@ -33,10 +33,10 @@ export default class Home extends React.Component {
     return (
       <React.Fragment>
 
-     
+        {/* <div className="desktopPadding"></div> */}
         <div className="landingPage">
 
-          <img src={gardensBay} style={{ height: "100vh", width: "100vw", backgroundImage: "cover", objectFit: "cover" }} />
+          <img src={gardensBay} style={{ height: "100vh", width: "100vw", backgroundImage: "cover", objectFit: "fit" }} />
    
         </div>
 
@@ -60,9 +60,9 @@ export default class Home extends React.Component {
             <div className="col-lg-12 landingIcon pt-2" style={{ color: '#642d3c' }}>
               <button onClick={this.props.map} className="btn btn-primary landingBtn" style={{width:"60vw", height:"50px", fontSize:"20px", fontWeight:"600", boxShadow:"0px 2px 5px 4px"}}>Map</button>
             </div>
-            <div className="col-lg-12 landingIcon pt-2" style={{ color: '#642d3c' }}>
+            {/* <div className="col-lg-12 landingIcon pt-2" style={{ color: '#642d3c' }}>
               <button onClick={this.props.profile} className="btn btn-primary landingBtn" style={{width:"60vw", height:"50px", fontSize:"20px", fontWeight:"600", boxShadow:"0px 2px 5px 4px"}}>Profile</button>
-            </div>
+            </div> */}
 
           </div>
         </div>
