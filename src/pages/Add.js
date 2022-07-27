@@ -78,31 +78,18 @@ export default class Add extends React.Component {
         submit: false,
         addressDiv: false,
         errorMsg: [],
-        neighbourhoodArray: []
+        neighbourhoodArray: [],
+        birdFamilyArray: []
     }
 
-    birdFamily = {
-        myArray: ["chicken", "eagle", "falcon", "hawk", "hornbills", "hummingbird", "kingfisher", "owl", "pigeons", "sparrow",
-            "storks", "waterfowl", "woodpeckers", "others"]
-    }
-
-    neighbourhoodSpotted = {
-        myArray: ["Aljunied", "Ang Mo Kio", "Balestier", "Bartley", "Bayfront", "Beach Road", "Beauty World", "Bedok", "Bishan", "Botanic Gardens", "Braddell", "Bras Basah", "Buangkok", "Bugis", "Bukit Batok", "Bukit Giombak", "Buki Timah",
-            "Buona Vista", "Changi", "Changi", "Choa Chu Kang", "City Hall", "Clementi", "Commonwealth", "Dhoby Ghaut", "Dover", "Downtown",
-            "East Coast", "Eunos", "Farrer Park", "Fort Canning", "Geylang", "Great World", "Harbourfront", "Holland Village", "Hougang",
-            "Jalan Besar", "Jalan Kayu", "Joo Chiat", "Jurong East", "Kallang", "Katong", "Kembangan", "Kent Ridge", "Khatib", "Kovan",
-            "Lavender", "Little India", "Macpherson", "Marina Bay", "Marine Parade", "Mountbatten", "Newton", "Novena", "Orchard", "Outram Park",
-            "Pasir Panjang", "Pasir Ris", "Paya Lebar", "Potong Pasir", "Punggol", "Queenstown", "Raffles Place", "Redhill", "Seletar", "Sembawang",
-            "Sengkang", "Serangoon", "Siglap", "Simei", "Somerset", "Tai Seng", "Tampines", "Tanah Mearh", "Tanjong Katong", "Tanjong Pagar",
-            "Thomson", "Tiong Bahru", "Toa Payoh", "Tuas", "West Coast", "Woodlands", "Yio Chu Kang", "Yishun"]
-    }
-
+    
     async componentDidMount() {
         console.log('hi')
         let response = await axios.get('/data.json')
         console.log(response.data)
         this.setState({
-            neighbourhoodArray: response.data.neighbourhoodSpotted
+            neighbourhoodArray: response.data.neighbourhoodSpotted,
+            birdFamilyArray: response.data.birdFamily
         })
     }
 
@@ -356,7 +343,7 @@ export default class Add extends React.Component {
                             <select className="form-select form-control" name="birdFamily"
                                 value={this.state.birdFamily} onChange={this.updateFormField}>
                                 <option name="birdFamily" key="placeHolder">--Select One--</option>
-                                {this.birdFamily.myArray.map(f =>
+                                {this.state.birdFamilyArray.map(f =>
                                     <option name="birdFamily" key={f} value={f} >
                                         {f[0].toUpperCase() + f.substring(1)}
                                     </option>
@@ -404,7 +391,7 @@ export default class Add extends React.Component {
                         <select className="form-select form-control" name="neighbourhoodSpotted"
                             value={this.state.neighbourhoodSpotted} onChange={this.updateFormField}>
                             <option value="placeHolder" key="placeHolder">--Select One--</option>
-                            {this.neighbourhoodSpotted.myArray.map(n =>
+                            {this.state.neighbourhoodArray.map(n =>
                                 <option key={n} value={n}>{n}</option>
                             )}
                         </select>
