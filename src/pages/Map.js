@@ -27,7 +27,8 @@ export default class Map extends React.Component {
         email: "",
         modal: null,
         commentDisplayName: "",
-        commentDescription: ""
+        commentDescription: "",
+        contentLoaded: true
     }
 
     birdFamily = {
@@ -36,6 +37,10 @@ export default class Map extends React.Component {
     }
 
     mapSearch = async () => {
+        this.setState({
+            contentLoaded: false
+        })
+
         let response = await axios.get(this.url + 'bird_sightings', {
             params: {
                 email: this.state.email,
@@ -44,7 +49,8 @@ export default class Map extends React.Component {
         })
 
         this.setState({
-            birdMarkers: response.data
+            birdMarkers: response.data,
+            contentLoaded: true
         })
     }
 
@@ -108,6 +114,7 @@ export default class Map extends React.Component {
                     <img src={logo} alt="logo" height="90px" />
                 </div>
 
+                {this.state.contentLoaded ? null : <div class="loader" style={{left:"50vw", zIndex:10}}></div>}
                 <div className="mapFilter">
                     <Accordion>
                         <Accordion.Item>
