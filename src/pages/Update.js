@@ -2,12 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import '../App.css';
 import Select from 'react-select';
-import { Modal } from 'react-bootstrap';
 import sparrow from '../pictures/sparrow.png';
 import blackbird from '../pictures/blackbird.png';
 import crow from '../pictures/crow.png';
 import goose from '../pictures/goose.png'
-import kingFisher from '../pictures/addPageImg.jpeg'
 import logo from '../pictures/sgbirds-logo.png';
 import Swal from "sweetalert2";  
 import { IoCloseOutline } from "react-icons/io5";
@@ -45,7 +43,10 @@ export default class Update extends React.Component {
         locate: "geoLocate",
         submit: false,
         addressDiv: false,
-        errorMsg: []
+        errorMsg: [],
+        neighbourhoodArray: [],
+        birdFamilyArray: [],
+        birdColoursArray: []
     }
 
     options = [
@@ -60,21 +61,7 @@ export default class Update extends React.Component {
         { value: 'orange', label: 'Orange', color: 'orange' }
     ];
 
-    birdFamily = {
-        myArray: ["chicken", "eagle", "falcon", "hawk", "hornbills", "hummingbird", "kingfisher","owl", "pigeons", "sparrow", 
-        "storks", "waterfowl", "woodpeckers", "others"]
-    }
-
-    neighbourhoodSpotted = {
-        myArray : ["Aljunied", "Ang Mo Kio", "Balestier", "Bartley", "Bayfront", "Beach Road", "Beauty World", "Bedok", "Bishan", "Botanic Gardens", "Braddell", "Bras Basah", "Buangkok", "Bugis", "Bukit Batok", "Bukit Giombak", "Buki Timah",
-    "Buona Vista", "Changi", "Changi", "Choa Chu Kang", "City Hall", "Clementi", "Commonwealth", "Dhoby Ghaut", "Dover", "Downtown",
-    "East Coast", "Eunos", "Farrer Park", "Fort Canning", "Geylang", "Great World", "Harbourfront", "Holland Village", "Hougang",
-    "Jalan Besar", "Jalan Kayu", "Joo Chiat", "Jurong East", "Kallang", "Katong", "Kembangan", "Kent Ridge", "Khatib", "Kovan",
-    "Lavender", "Little India", "Macpherson", "Marina Bay", "Marine Parade", "Mountbatten", "Newton", "Novena", "Orchard", "Outram Park",
-    "Pasir Panjang", "Pasir Ris", "Paya Lebar", "Potong Pasir", "Punggol", "Queenstown", "Raffles Place", "Redhill", "Seletar", "Sembawang", 
-    "Sengkang", "Serangoon", "Siglap", "Simei",  "Somerset", "Tai Seng", "Tampines", "Tanah Mearh", "Tanjong Katong", "Tanjong Pagar",
-    "Thomson", "Tiong Bahru", "Toa Payoh", "Tuas", "West Coast", "Woodlands", "Yio Chu Kang", "Yishun"]}
-
+    
 
     birdColours = {
         myArray: ['black', 'grey', 'white', 'brown', 'red',
@@ -132,8 +119,8 @@ export default class Update extends React.Component {
         if ((e.key === 'Enter' || e.code === 'Enter') && e.target.value.trim() !== "") {
             const newArray = [...this.state.eatingHabits]
             newArray.push(e.target.value.trim())
-            this.setState({ eatingHabits: newArray })
-            // this.setState({ eatingInput: "" })
+            this.setState({ eatingHabits: newArray, eatingInput: "" })
+       
         }
     }
 
@@ -141,8 +128,7 @@ export default class Update extends React.Component {
         if ((b.key === 'Enter' || b.code === 'Enter') && b.target.value.trim() !== "") {
             const newArray = [...this.state.behaviour]
             newArray.push(b.target.value.trim())
-            this.setState({ behaviour: newArray })
-            this.setState({ behaviourInput: "" })
+            this.setState({ behaviour: newArray, behaviourInput: "" })
         }
     }
 
@@ -294,7 +280,16 @@ export default class Update extends React.Component {
             displayName: response.data.displayName,
             email: response.data.email
         })
+
+        let data = await axios.get('/data.json')
+        this.setState({
+            neighbourhoodArray: data.data.neighbourhoodSpotted,
+            birdFamilyArray: data.data.birdFamily,
+            birdColoursArray: data.data.birdColours
+        })
     }
+
+
 
 
     render() {
@@ -339,7 +334,7 @@ export default class Update extends React.Component {
                             <select className="form-select form-control" name="birdFamily"
                                 value={this.state.birdFamily} onChange={this.updateFormField}>
                                 <option name="birdFamily" key="placeHolder">--Select One--</option>
-                                {this.birdFamily.myArray.map(f =>
+                                {this.state.birdFamilyArray.map(f =>
                                     <option name="birdFamily" key={f} value={f} >
                                         {f[0].toUpperCase() + f.substring(1)}
                                     </option>
@@ -356,14 +351,14 @@ export default class Update extends React.Component {
                                 onChange={this.updateFormField} />
                         </div>
 
-                        {this.state.errorMsg.includes('birdFamily') ? <div className="errorMessage">Bird species is required</div> : null}
+                        {this.state.errorMsg.includes('birdSpecies') ? <div className="errorMessage">Bird species is required</div> : null}
 
                         <div>
                             <div className="App mt-3" >
                                 <label style={{ color: "#642d3c" }}>Bird Colours</label>
                                 
                                 <div>
-                                {this.birdColours.myArray.map(c =>
+                                {this.state.birdColoursArray.map(c =>
                                     <span>
                                         <label for={c} className="me-1" style={{color:`${c}`}}>{c[0].toUpperCase() + c.substring(1)}</label>
                                         <input type="checkbox" value={c} key={c} id={c}
@@ -392,7 +387,7 @@ export default class Update extends React.Component {
                             <select className="form-select form-control" name="neighbourhoodSpotted"
                                 value={this.state.neighbourhoodSpotted} onChange={this.updateFormField}>
                                 <option value="placeHolder" key="placeHolder">--Select One--</option>
-                                {this.neighbourhoodSpotted.myArray.map(n =>
+                                {this.state.neighbourhoodArray.map(n =>
                                     <option key={n} value={n}>{n}</option>
                                 )}
                             </select>

@@ -11,7 +11,7 @@ import kingFisher from '../pictures/addPageImg.jpeg'
 import logo from '../pictures/sgbirds-logo.png';
 import { IoCloseOutline } from "react-icons/io5";
 import Swal from "sweetalert2";
-import { render } from "react-dom";
+
 
 const ONEMAP_BASE_API_URL = 'https://developers.onemap.sg/'
 
@@ -86,7 +86,7 @@ export default class Add extends React.Component {
     async componentDidMount() {
         console.log('hi')
         let response = await axios.get('/data.json')
-        console.log(response.data)
+  
         this.setState({
             neighbourhoodArray: response.data.neighbourhoodSpotted,
             birdFamilyArray: response.data.birdFamily

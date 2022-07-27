@@ -9,6 +9,8 @@
         "Thomson", "Tiong Bahru", "Toa Payoh", "Tuas", "West Coast", "Woodlands", "Yio Chu Kang", "Yishun"],
         
         "birdFamily": ["chicken", "eagle", "falcon", "hawk", "hornbills", "hummingbird", "kingfisher", "owl", "pigeons", "sparrow",
-        "storks", "waterfowl", "woodpeckers", "others"]
+        "storks", "waterfowl", "woodpeckers", "others"],
+
+        "birdColours": ["black", "grey", "white", "brown", "red", "blue", "green", "yellow", "orange"]
 
 }
