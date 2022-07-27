@@ -182,9 +182,6 @@ export default class Explore extends React.Component {
 
                         <div className="col-md-5 col-lg-3">
 
-                            {/* <div >
-                                <h2 style={{ color: "#642d3c" }} className="mb-3">Explore</h2>
-                            </div> */}
                             <Accordion>
                                 <Accordion.Item>
                                     <Accordion.Header><span style={{ color: "#642d3c", fontWeight: "500" }}>Search</span></Accordion.Header>
@@ -252,7 +249,7 @@ export default class Explore extends React.Component {
                                                 style={{ width: "50%" }}>
                                                 {/* <option value="" key="placeHolder">--Select One--</option> */}
                                                 <option className="form-control" key="latest" value="latest">Latest</option>
-                                                <option className="form-control" key="alphebatically" value="alphebatically">Alphabetically</option>
+                                                <option className="form-control" key="alphabetically" value="alphabetically">Alphabetically</option>
                                                 <option className="form-control" key="birdFamily" value="birdFamily">Bird Family</option>
 
                                             </select>
@@ -285,7 +282,7 @@ export default class Explore extends React.Component {
 
                                             <Card className="col-lg-4 col-md-6 ">
                                                 <Card.Header >{b.birdSpecies}</Card.Header>
-                                                {/* <img src={b.imageUrl} style={{ width: "100%" }} /> */}
+                                                
                                                 <Card.Body>
                                                     <Card.Title>
 

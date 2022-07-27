@@ -77,7 +77,8 @@ export default class Add extends React.Component {
         locate: "geoLocate",
         submit: false,
         addressDiv: false,
-        errorMsg: []
+        errorMsg: [],
+        neighbourhoodArray: []
     }
 
     birdFamily = {
@@ -94,6 +95,15 @@ export default class Add extends React.Component {
             "Pasir Panjang", "Pasir Ris", "Paya Lebar", "Potong Pasir", "Punggol", "Queenstown", "Raffles Place", "Redhill", "Seletar", "Sembawang",
             "Sengkang", "Serangoon", "Siglap", "Simei", "Somerset", "Tai Seng", "Tampines", "Tanah Mearh", "Tanjong Katong", "Tanjong Pagar",
             "Thomson", "Tiong Bahru", "Toa Payoh", "Tuas", "West Coast", "Woodlands", "Yio Chu Kang", "Yishun"]
+    }
+
+    async componentDidMount() {
+        console.log('hi')
+        let response = await axios.get('/data.json')
+        console.log(response.data)
+        this.setState({
+            neighbourhoodArray: response.data.neighbourhoodSpotted
+        })
     }
 
     addressSearch = async (searchQuery) => {

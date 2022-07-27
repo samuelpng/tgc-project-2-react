@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css';
 import { BiSearchAlt, BiPlusCircle, BiMap } from "react-icons/bi";
-import { IoHomeOutline, IoPersonOutline } from "react-icons/io5";
+import { IoPersonOutline } from "react-icons/io5";
 import {AiOutlineHome} from "react-icons/ai"
 import Home from './pages/Home';
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -11,9 +11,8 @@ import Profile from './pages/Profile';
 import Map from './pages/Map';
 import logo from './pictures/sgbirds-logo.png';
 import { Nav, Navbar, Container } from 'react-bootstrap';
-import Update from './pages/Update';
 
-// import NavBar from './pages/NavBar';
+
 
 export default class App extends React.Component {
 
@@ -23,8 +22,6 @@ export default class App extends React.Component {
     add: false,
     map: false,
     profile: false
-    // update: false,
-    // modal: null
   }
 
   homeIcon = () => {
@@ -65,7 +62,7 @@ export default class App extends React.Component {
 
   pageToRender = () => {
     if (this.state.home) {
-      return (<Home explore={this.exploreIcon} add={this.addIcon} map={this.mapIcon} profile={this.profileIcon}/>)
+      return (<Home explore={this.exploreIcon} add={this.addIcon} map={this.mapIcon}/>)
     } else if (this.state.explore) {
       return (<Explore />)
     } else if (this.state.add) {
@@ -74,11 +71,7 @@ export default class App extends React.Component {
       return (<h1><Map /></h1>)
     } else if (this.state.profile) {
       return (<Profile />)
-      // updateSighting={this.updateSighting} />)
     }
-    // else if (this.state.update) {
-    //   return (<Update />)
-    // }
   }
 
   render() {

@@ -1,0 +1,14 @@
+{
+    "neighbourhoodSpotted": ["Aljunied", "Ang Mo Kio", "Balestier", "Bartley", "Bayfront", "Beach Road", "Beauty World", "Bedok", "Bishan", "Botanic Gardens", "Braddell", "Bras Basah", "Buangkok", "Bugis", "Bukit Batok", "Bukit Gombak", "Bukit Timah",
+        "Buona Vista", "Changi", "Choa Chu Kang", "City Hall", "Clementi", "Commonwealth", "Dhoby Ghaut", "Dover", "Downtown",
+        "East Coast", "Eunos", "Farrer Park", "Fort Canning", "Geylang", "Great World", "Harbourfront", "Holland Village", "Hougang",
+        "Jalan Besar", "Jalan Kayu", "Joo Chiat", "Jurong East", "Kallang", "Katong", "Kembangan", "Kent Ridge", "Khatib", "Kovan",
+        "Lavender", "Little India", "Macpherson", "Marina Bay", "Marine Parade", "Mountbatten", "Newton", "Novena", "Orchard", "Outram Park",
+        "Pasir Panjang", "Pasir Ris", "Paya Lebar", "Potong Pasir", "Punggol", "Queenstown", "Raffles Place", "Redhill", "Seletar", "Sembawang",
+        "Sengkang", "Serangoon", "Siglap", "Simei", "Somerset", "Tai Seng", "Tampines", "Tanah Merah", "Tanjong Katong", "Tanjong Pagar",
+        "Thomson", "Tiong Bahru", "Toa Payoh", "Tuas", "West Coast", "Woodlands", "Yio Chu Kang", "Yishun"],
+        
+        "birdSize": ["chicken", "eagle", "falcon", "hawk", "hornbills", "hummingbird", "kingfisher", "owl", "pigeons", "sparrow",
+        "storks", "waterfowl", "woodpeckers", "others"]
+
+}

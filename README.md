@@ -116,7 +116,7 @@ Testing cases can be found [here](/readme/readme/Sgbirds-testcase.xlsx)
 |6. [Leaflet](https://react-leaflet.js.org/) | Render map and map functions in React App|
 |9. [OneMap](https://www.onemap.gov.sg/) | To retrieve latitute and longitude from its API by address search|
 |8. [React-Select](https://react-select.com/home) | Styling of dropdown select dynamic adding|
-|10.[Dynamic-Adding]| referred to xunne899 to assist in completing it
+|10.[Dynamic-Adding](github.com/)| referred to xunne899 to assist in completing it
 
 ### Platforms and Software
 | Tech  | Usage |
