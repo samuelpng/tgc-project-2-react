@@ -11,8 +11,8 @@ import goose from '../pictures/goose.png'
 
 export default class Explore extends React.Component {
 
-    url= "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us56.gitpod.io/"
-    // url = "https://sgbirds.herokuapp.com/"
+  
+    url = "https://sgbirds.herokuapp.com/"
 
     state = {
         data: [],
@@ -212,22 +212,12 @@ export default class Explore extends React.Component {
                                                 </div>
                                                 {this.birdSize.myArray.map(s =>
                                                     <input type="checkbox" value={s} key={s} id={s}
-                                                        onChange={this.updateFormField} className="me-4" name="searchSize"
+                                                        onChange={this.updateFormField} 
+                                                        style={{margin:"11px"}}
+                                                        name="searchSize"
                                                         checked={this.state.searchSize.includes(`${s}`)} />)}
                                             </div>
-                                            {/* <div>
-                                        <label className="mt-2" style={{ color: "#642d3c" }}>Bird Colours</label>
-                                        <div>
-                                            {this.birdColours.myArray.map(c =>
-                                                <span>
-                                                    <label for={c} className="me-2">{c[0].toUpperCase() + c.substring(1)}</label>
-                                                    <input type="checkbox" value={c} key={c} id={c}
-                                                        onChange={this.updatebirdSize} className="me-4"
-                                                        checked={this.state.birdSize.includes(`${c}`)} />
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div> */}
+                                           
                                             <div>
                                                 <Accordion defaultActiveKey="0" flush>
                                                     <Accordion.Item eventKey="0">
