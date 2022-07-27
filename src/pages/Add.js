@@ -51,7 +51,7 @@ const colorStyles = {
 
 export default class Add extends React.Component {
 
-    url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/"
+    url = "https://sgbirds.herokuapp.com/"
 
     state = {
         data: [],
@@ -200,6 +200,9 @@ export default class Add extends React.Component {
         }
         if (!this.state.email) {
             errorMsg.push('email')
+        }
+        if (!this.state.description) {
+            errorMsg.push('description')
         }
 
         this.setState({
@@ -495,6 +498,8 @@ export default class Add extends React.Component {
                                 placeholder="Brief description on where you saw the bird and what it was doing..."
                                 onChange={this.updateFormField} rows="3"/>
                         </div>
+
+                        {this.state.errorMsg.includes('description') ? <div className="errorMessage">Description is required</div> : null}
 
                         <div>
                             <div className="label mt-3" style={{ color: "#642d3c" }}>Display Name</div>

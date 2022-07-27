@@ -200,6 +200,9 @@ export default class Update extends React.Component {
         if (!this.state.email) {
             errorMsg.push('email')
         }
+        if (!this.state.description) {
+            errorMsg.push('description')
+        }
 
         this.setState({
             errorMsg

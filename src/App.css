@@ -46,31 +46,41 @@ body {
   overflow-y: hidden; */
 }
 
-.overlay {
-  position:fixed;
-  color: #804d17;
-  display: flex;
-  justify-content: center;
-  left: 25vw;
-  top: 130px;
-  height: 30vh;
-  width: 50vw;
-  background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(6.5px);
-  -webkit-backdrop-filter: blur(6.5px);
-  border-radius: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+.loader {
+  position: fixed;
+  top:40vh;
+  left:70vh;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 4px solid #FFF;
+  border-right: 4px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
 }
+.loader::after {
+  content: '';  
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border-bottom: 4px solid #FF3D00;
+  border-left: 4px solid transparent;
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
 
-.overlay2{
-  background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(6.5px);
-  -webkit-backdrop-filter: blur(6.5px);
-  border-radius: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-}
+
 
 .landingIcon {
   display:flex;
@@ -94,25 +104,9 @@ body {
   color: crimson
 }
 
-/* .landingText {
-  position: absolute;
-  left: 25%;
-  width: 50%;
-  height: 50vh;
-  padding: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #111;
-  transition: 0.5s;
-  z-index: 400000;
-  color: white;
-  text-shadow: 1px 0 0 rgb(178, 189, 57), 0 -1px 0 rgb(178, 189, 57), 0 1px 0 #000, -1px 0 0 #000;
-  background-color: rgba(112, 224, 226, 0.3);
-  padding: 30px;
-  border-radius: 20px;
-  top: 200px
-} */
+.leaflet-popup-content-wrapper {
+  background-color: #fff2dd !important;
+}
 
 
 .leaflet-container {

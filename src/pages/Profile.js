@@ -25,7 +25,8 @@ export default class Profile extends React.Component {
         update: false,
         delete: false,
         errorMsg: false,
-        noResultMsg: false
+        noResultMsg: false,
+        contentLoaded: true
     }
 
 
@@ -35,6 +36,7 @@ export default class Profile extends React.Component {
         })
     }
 
+
     retrieveSightings = async () => {
         let emailRegex = new RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
         if (!this.state.email.match(emailRegex)) {
@@ -43,6 +45,11 @@ export default class Profile extends React.Component {
                 loginData: []
             })
         } else {
+
+            this.setState({
+                contentLoaded: false
+            })
+
             let response = await axios.get(this.url + `bird_sightings`, {
                 params: {
                     email: this.state.email
@@ -52,7 +59,8 @@ export default class Profile extends React.Component {
             this.setState({
                 loginData: response.data,
                 errorMsg: false,
-                noResultMsg: false
+                noResultMsg: false,
+                contentLoaded: true
             })
 
             if (response.data.length === 0) {
@@ -196,7 +204,7 @@ export default class Profile extends React.Component {
                         </div>
                         <div style={{ height: "90px" }}></div>
 
-
+                        {this.state.contentLoaded ? null : <div class="loader" style={{left:"50vw"}}></div>}
 
                         <div className="container p-4">
                             <div className="row">
@@ -233,7 +241,7 @@ export default class Profile extends React.Component {
                                                             <img src={b.imageUrl} style={{ width: "100%" }} />
                                                         </Card.Title>
                                                         <Card.Text>
-                                                            {/* <h5>Bird Size: {this.changeBirdSize(b.birdSize)}</h5> */}
+                                                       
                                                             <div>{b.description}</div>
                                                             <br />
                                                             <div>The {b.birdSpecies} was spotted at {b.neighbourhoodSpotted} on {b.dateSpotted} .</div>

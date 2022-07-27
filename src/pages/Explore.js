@@ -26,7 +26,8 @@ export default class Explore extends React.Component {
         modal: null,
         commentDisplayName: "",
         commentDescription: "",
-        noResult : false
+        noResult: false,
+        contentLoaded: false
     }
 
     birdSize = {
@@ -69,13 +70,30 @@ export default class Explore extends React.Component {
 
     postComment = async () => {
         this.setState({
-            submit: true
+            submit: true,
+            commentDisplayName: "",
+            commentDescription: ""
         })
 
         await axios.post(this.url + `bird_sightings/comments/${this.state.modal}`, {
             displayName: this.state.commentDisplayName,
             commentDescription: this.state.commentDescription
         })
+
+        let response = await axios.get(this.url + 'bird_sightings', {
+            params: {
+                searchQuery: this.state.searchInput,
+                birdSize: this.state.searchSize,
+                birdColours: this.state.searchColours,
+                neighbourhoodSpotted: this.state.searchNeighbourhood,
+                sort: this.state.sortBy
+            }
+
+        })
+        this.setState({
+            searchResults : response.data
+        })
+
     }
 
     updateFormField = (e) => {
@@ -117,6 +135,14 @@ export default class Explore extends React.Component {
         })
     }
 
+    async componentDidMount() {
+        let response = await axios.get(this.url + 'bird_sightings')
+        this.setState({
+            searchResults: response.data,
+            contentLoaded: true
+        })
+    }
+
     updateSearch = async () => {
         let response = await axios.get(this.url + 'bird_sightings', {
             params: {
@@ -134,7 +160,7 @@ export default class Explore extends React.Component {
             noResult: false
         })
 
-        if (response.data.length === 0){
+        if (response.data.length === 0) {
             this.setState({
                 noResult: true
             })
@@ -150,9 +176,10 @@ export default class Explore extends React.Component {
                 </div>
                 <div className="desktopPadding"></div>
 
+                {this.state.contentLoaded ? null : <div class="loader"></div>}
                 <div className="container-fluid p-3">
                     <div className="row">
-                       
+
                         <div className="col-md-5 col-lg-3">
 
                             {/* <div >
@@ -208,11 +235,11 @@ export default class Explore extends React.Component {
                                                         <Accordion.Body>
                                                             <div>
                                                                 {this.birdColours.myArray.map(c =>
-                                                                    <div>       
+                                                                    <div>
                                                                         <input type="checkbox" value={c} key={c} id={c}
                                                                             onChange={this.updateFormField} className="me-3" name="searchColours"
                                                                             checked={this.state.searchColours.includes(`${c}`)} />
-                                                                             <label for={c} className="me-1">{c[0].toUpperCase() + c.substring(1)}</label>
+                                                                        <label for={c} className="me-1">{c[0].toUpperCase() + c.substring(1)}</label>
                                                                     </div>
                                                                 )}
                                                             </div>
@@ -261,132 +288,125 @@ export default class Explore extends React.Component {
 
                         <div className="col-md-7 col-lg-9">
                             <div className="row">
-                            {this.state.noResult ? <Alert variant="dark" style={{display: 'flex', justifyContent:'center'}}>No Results Found</Alert>: null}
-                             {
-                                this.state.searchResults.map(b => (
-                                    <React.Fragment key={b._id}>
+                                {this.state.noResult ? <Alert variant="dark" style={{ display: 'flex', justifyContent: 'center' }}>No Results Found</Alert> : null}
+                                {
+                                    this.state.searchResults.map(b => (
+                                        <React.Fragment key={b._id}>
 
-                                        <Card className="col-lg-4 col-md-6 ">
-                                            <Card.Header >{b.birdSpecies}</Card.Header>
-                                            {/* <img src={b.imageUrl} style={{ width: "100%" }} /> */}
-                                            <Card.Body>
-                                                <Card.Title>
+                                            <Card className="col-lg-4 col-md-6 ">
+                                                <Card.Header >{b.birdSpecies}</Card.Header>
+                                                {/* <img src={b.imageUrl} style={{ width: "100%" }} /> */}
+                                                <Card.Body>
+                                                    <Card.Title>
 
-                                                    {/* {b.birdSpecies} */}
-                                                    <img src={b.imageUrl} style={{ width: "100%" }} />
-                                                </Card.Title>
-                                                <Card.Text>
-                                                    {/* <h5>Bird Size: {this.changeBirdSize(b.birdSize)}</h5> */}
+                                                        {/* {b.birdSpecies} */}
+                                                        <img src={b.imageUrl} style={{ width: "100%" }} />
+                                                    </Card.Title>
+                                                    <Card.Text>
+                                                        <div>{b.description}</div>
+                                                        <br />
+                                                        <div>The {b.birdSpecies} was spotted at {b.neighbourhoodSpotted} on {b.dateSpotted} .</div>
+                                                        <br />
+                                                        <div style={{ display: 'flex' }}><h6>Family:&nbsp;</h6>{b.birdFamily[0].toUpperCase() + b.birdFamily.substring(1)}</div>
+                                                        <div><h6>Bird Colours:</h6></div>
+                                                        <div>{b.birdColours.map(c => (<span className="badge badge-pill me-2 mt-2"
+                                                            style={{ backgroundColor: `${c}`, color: "#e8c6a2", height: "25px", fontSize: "15px" }}>{c}&nbsp;</span>))}</div>
+                                                        <br />
 
-                                                    <div>The {b.birdSpecies} was spotted at {b.neighbourhoodSpotted} on {b.dateSpotted} .</div>
-                                                    <br />
-                                                    <div style={{display: 'flex'}}><h6>Family:&nbsp;</h6>{b.birdFamily[0].toUpperCase() + b.birdFamily.substring(1)}</div>
-                                                    <div><h6>Bird Colours:</h6></div>
-                                                    <div>{b.birdColours.map(c => (<span className="badge badge-pill me-2 mt-2"
-                                                        style={{ backgroundColor: `${c}`, color: "#e8c6a2", height: "25px", fontSize: "15px" }}>{c}&nbsp;</span>))}</div>
-                                                    <br />
-                                                    
-                                                    <div>Behaviour: </div>
-                                                    <div>Posted by:</div>
-                                                    <div>{b.displayName}</div>
-                                                    <div>{b.datePosted.slice(0, 10)}</div>
 
-                                                </Card.Text>
-                                                <Button variant="primary" onClick={() => { this.handleModal(b._id) }}>More</Button>
-                                            </Card.Body>
-                                        </Card>
+                                                        <div><h6>Posted By:</h6></div>
+                                                        <div>{b.displayName}</div>
+                                                        <div>{b.datePosted.slice(0, 10)}</div>
 
-                                    </React.Fragment>
-                                ))
-                            }
-                        </div>
+                                                    </Card.Text>
+                                                    <Button variant="primary" onClick={() => { this.handleModal(b._id) }}>More</Button>
+                                                </Card.Body>
+                                            </Card>
+
+                                        </React.Fragment>
+                                    ))
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 <Modal show={this.state.modal !== null} onHide={() => { this.closeModal() }} size="lg" centered>
 
-                            {this.state.searchResults.map(b => {
+                    {this.state.searchResults.map(b => {
 
-                                if (this.state.modal === b._id) {
-                                    return (
-                                        <React.Fragment key={b._id}>
+                        if (this.state.modal === b._id) {
+                            return (
+                                <React.Fragment key={b._id}>
 
 
-                                            <Modal.Header closeButton>{b.birdSpecies}</Modal.Header>
-                                            <Modal.Body>
-                                                {/* <h5>Bird Size: {this.changeBirdSize(b.birdSize)}</h5>
-                                                <h5>Neightbourhood Spotted: {b.neighbourhoodSpotted}</h5>
-                                                <h5>Bird Colours: {b.birdColours.map(c => (<span>{c},&nbsp;</span>))}</h5>
-
-                                                <hr></hr>
-                                                <h5 style={{ color: "#642d3c" }} >Comments</h5> */}
-                                                <img src={b.imageUrl} style={{ width: "100%" }} />
-                                                <div className="mt-3">The {b.birdSpecies} was spotted at {b.neighbourhoodSpotted} on {b.dateSpotted} .</div>
-                                                <br />
-                                                <div><h6>Family:</h6>{b.birdFamily}</div>
-                                                <div><h6>Bird Colours:</h6></div>
-                                                <div>{b.birdColours.map(c => (<span className="badge badge-pill me-2 mt-2"
-                                                    style={{ backgroundColor: `${c}`, color: "#e8c6a2", height: "25px", fontSize: "15px" }}>{c}&nbsp;</span>))}</div>
-                                                <div>Eating Habits: {b.character.eatingHabits.map(e => (<span className="badge badge-pill me-2 mt-2"
+                                    <Modal.Header closeButton>{b.birdSpecies}</Modal.Header>
+                                    <Modal.Body>
+                                       
+                                    <img src={b.imageUrl} style={{ width: "100%" }} />
+                                                    <div className="mt-3">{b.description}</div>
+                                                    <div className="mt-3">The {b.birdSpecies} was spotted at {b.neighbourhoodSpotted} on {b.dateSpotted} .</div>
+                                                    <br />
+                                                    <div><h6>Family:</h6>{b.birdFamily}</div>
+                                                    <div><h6>Bird Colours:</h6></div>
+                                                    <div>{b.birdColours.map(c => (<span className="badge badge-pill me-2 mt-2"
+                                                        style={{ backgroundColor: `${c}`, color: "#e8c6a2", height: "25px", fontSize: "15px" }}>{c}&nbsp;</span>))}</div>
+                                                    <div><h6>Eating Habits:</h6> </div>
+                                                    <div>  {b.character.eatingHabits.map(e => (<span className="badge badge-pill me-2 mt-2"
                                                         style={{ backgroundColor: `#e8c6a2`, color: "#642d3c", height: "25px", fontSize: "15px" }}>{e}&nbsp;</span>))}</div>
-                                                <br />
-                                                <div>Behaviour: {b.character.behaviour.map(b => (<span className="badge badge-pill me-2 mt-2"
+                                                    <br />
+                                                    <div><h6>Behaviour:</h6> </div>
+                                                    <div>{b.character.behaviour.map(b => (<span className="badge badge-pill me-2 mt-2"
                                                         style={{ backgroundColor: `#e8c6a2`, color: "#642d3c", height: "25px", fontSize: "15px" }}>{b}&nbsp;</span>))}</div>
-                                                <div>Posted by:</div>
-                                                <div>{b.displayName}</div>
-                                                <div>{b.datePosted.slice(0, 10)}</div>
-                                                <br />
-                                                <div style = {{color: "#642d3c"}}><h5>Comments</h5></div>
-                             
-                                                <hr></hr>
-                                                {b.comments !== undefined ? b.comments.map(c =>
-                                                    <span>
+                                                    <br />
+                                                    <div><h6>Posted by:</h6></div>
+                                                    <div>{b.displayName}</div>
+                                                    <div>{b.datePosted.slice(0, 10)}</div>
+                                                    <br />
+                                                    <div style={{ color: "#642d3c" }}><h5>Comments</h5></div>
 
-                                                        <h6>{c.displayName}</h6>
-                                                        <p>{c.commentDescription}</p>
-                                                        <p>{c.datePosted.slice(0, 10)}</p>
-                                                        <hr></hr>
-                                                    </span>
-                                                )
-                                                    : 
-                                                    <div>
-                                                        <p>There are no comments for this sighting</p>
-                                                        <hr></hr>
-                                                    </div>
+                                                    <hr></hr>
+                                                    {b.comments !== undefined ? b.comments.map(c =>
+                                                        <span>
+
+                                                            <h6>{c.displayName}</h6>
+                                                            <p>{c.commentDescription}</p>
+                                                            <p>{c.datePosted.slice(0, 10)}</p>
+                                                            <hr></hr>
+                                                        </span>
+                                                    )
+                                                        :
+                                                        <div>
+                                                            <p>There are no comments for this sighting</p>
+                                                            <hr></hr>
+                                                        </div>
                                                     }
 
 
-                                                <h5 style={{ color: "#642d3c" }}>New Comment</h5>
-                                                <label style={{ color: "#642d3c" }} >Display Name</label>
-                                                <input type="text" className="form-control" name="commentDisplayName"
-                                                    onChange={this.updateFormField} value={this.state.commentDisplayName}></input>
-                                                <label style={{ color: "#642d3c" }} >Comment</label>
-                                                <textarea className="form-control" onChange={this.updateFormField}
-                                                    name="commentDescription" value={this.state.commentDescription}></textarea>
+                                                    <h5 style={{ color: "#642d3c" }}>New Comment</h5>
+                                                    <label style={{ color: "#642d3c" }} >Display Name</label>
+                                                    <input type="text" className="form-control" name="commentDisplayName"
+                                                        onChange={this.updateFormField} value={this.state.commentDisplayName}></input>
+                                                    <label style={{ color: "#642d3c" }} >Comment</label>
+                                                    <textarea className="form-control" onChange={this.updateFormField}
+                                                        name="commentDescription" value={this.state.commentDescription}></textarea>
 
-                                                <button className="btn btn-primary mt-3" onClick={this.postComment}>Post</button>
-                                            </Modal.Body>
+                                                    <button className="btn btn-primary mt-3" onClick={this.postComment}>Post</button>
+                                    </Modal.Body>
 
-                                        </React.Fragment>)
-                                }
+                                </React.Fragment>)
+                        }
 
-                            })
-                            }
+                    })
+                    }
 
-                            <Modal.Footer>
-                                {/* <button className="btn btn-primary"
+                    <Modal.Footer>
+                        <button className="btn btn-primary"
                                 onClick={() => { this.closeModal() }}>
-                                Close</button> */}
-                                <button className="btn"
-                                    onClick={this.deleteAlert}
-                                    style={{ backgroundColor: "#e8c6a2", color: "#642d3c", fontWeight: "600", borderColor: "crimson" }}>
-                                    Delete</button>
-                                <button className="btn"
-                                    onClick={this.updateSighting}
-                                    style={{ backgroundColor: "#e8c6a2", color: "#642d3c", fontWeight: "600", borderColor: "green" }}>
-                                    Update</button>
-                            </Modal.Footer>
-                        </Modal>
+                                Close</button>
+                        
+                    </Modal.Footer>
+                </Modal>
 
 
                 <div style={{ height: "90px" }}></div>
