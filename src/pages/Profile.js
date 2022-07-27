@@ -7,12 +7,12 @@ import { Card, Badge, Alert, Container, Row, Col } from 'react-bootstrap';
 import Update from './Update.js'
 import Swal from "sweetalert2";
 import logo from '../pictures/sgbirds-logo.png';
-import BirdCard from './BirdCard';
+
 
 
 export default class Profile extends React.Component {
 
-    // url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/";
+
     url = "https://sgbirds.herokuapp.com/"
     state = {
         loginData: [],
@@ -111,16 +111,10 @@ export default class Profile extends React.Component {
                 this.deleteSighting()
             }
         })
-        // this.setState({
-        //     delete: true
-        // })
+
     }
 
-    // cancelDelete = () => {
-    //     this.setState({
-    //         delete: false
-    //     })
-    // }
+
 
     deleteSighting = async () => {
         await axios.delete(this.url + `bird_sightings/${this.state.modal}`)
@@ -208,7 +202,7 @@ export default class Profile extends React.Component {
 
                         <div className="container p-4">
                             <div className="row">
-                                {/* p-3 mx-3 my-4 col-sm col-md col-lg */}
+                           
                                 {/* email validation */}
                                 <div className="profileBar">
                                     <h5 style={{ color: "#642d3c" }}>View My Sightings</h5>
@@ -341,9 +335,7 @@ export default class Profile extends React.Component {
                                 }
 
                                 <Modal.Footer>
-                                    {/* <button className="btn btn-primary"
-                                onClick={() => { this.closeModal() }}>
-                                Close</button> */}
+                                  
                                     <button className="btn"
                                         onClick={this.deleteAlert}
                                         style={{ backgroundColor: "#e8c6a2", color: "#642d3c", fontWeight: "600", borderColor: "crimson" }}>

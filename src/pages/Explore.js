@@ -8,10 +8,10 @@ import sparrow from '../pictures/sparrow.png';
 import blackbird from '../pictures/blackbird.png';
 import crow from '../pictures/crow.png';
 import goose from '../pictures/goose.png'
-// import eagle from '../pictures/exploreImg.jpeg';
+
 export default class Explore extends React.Component {
 
-    // url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/";
+
     url = "https://sgbirds.herokuapp.com/"
 
     state = {

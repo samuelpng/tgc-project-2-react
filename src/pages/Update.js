@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-// import DatePicker from "react-datepicker";
 import '../App.css';
 import Select from 'react-select';
 import { Modal } from 'react-bootstrap';
@@ -14,32 +13,13 @@ import Swal from "sweetalert2";
 import { IoCloseOutline } from "react-icons/io5";
 
 
-const colorStyles = {
-    control: (styles) => ({ ...styles, backgroundColor: "white" }),
-    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-        return { ...styles, color: data.color }
-    },
-    multiValue: (styles, { data }) => {
-        return {
-            ...styles,
-            backgroundColor: data.color,
-            color: 'white'
-        }
-    },
-    multiValueLabel: (styles, { data }) => {
-        return {
-            ...styles,
-            backgroundColor: data.color,
-            color: 'white'
-        }
-    }
-}
+
 
 const ONEMAP_BASE_API_URL = 'https://developers.onemap.sg/'
 
 export default class Update extends React.Component {
 
-    // url = "https://8000-samuelpng-tgc18project2-vk174li0pel.ws-us54.gitpod.io/"
+
     url = "https://sgbirds.herokuapp.com/"
 
     state = {
@@ -381,13 +361,7 @@ export default class Update extends React.Component {
                         <div>
                             <div className="App mt-3" >
                                 <label style={{ color: "#642d3c" }}>Bird Colours</label>
-                                {/* <Select
-                                    isMulti={true}
-                                    value={this.state.birdColours}
-                                    onChange={this.handleChange}
-                                    options={this.options}
-                                    styles={colorStyles}
-                                /> */}
+                                
                                 <div>
                                 {this.birdColours.myArray.map(c =>
                                     <span>

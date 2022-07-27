@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-// import DatePicker from "react-datepicker";
+
 import '../App.css';
 import Select from 'react-select';
 import sparrow from '../pictures/sparrow.png';
@@ -98,9 +98,7 @@ export default class Add extends React.Component {
 
     addressSearch = async (searchQuery) => {
         let response = await axios.get(ONEMAP_BASE_API_URL + `commonapi/search?searchVal=${searchQuery}&returnGeom=Y&getAddrDetails=Y&pageNum=1`)
-        // this.setState({
-        //     addressDiv: false
-        // })
+    
         this.setState({
             addressResults: "",
             addressResults: response.data.results,
