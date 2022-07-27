@@ -49,7 +49,7 @@ export default class Home extends React.Component {
             </div>
  
             <div className="col-lg-12 landingIcon pt-2" style={{ color: '#fff2dd', textShadow: "2px 2px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",}}>
-              <h1 className="landingText">Welcome to SG Birds</h1>
+              <h1 className="landingText">Are You Ready for a Bird's Eye View</h1>
             </div>
             <div className="col-lg-12 landingIcon pt-2" style={{ color: '#642d3c'}}>
               <button onClick={this.props.explore} className="btn btn-primary landingBtn" style={{width:"60vw", height:"50px", fontSize:"20px", fontWeight:"600", boxShadow:"0px 2px 5px 4px"}}>Explore</button>
