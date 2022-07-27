@@ -6,6 +6,8 @@ A brief layout of project work in different screen version
 
 The website can be accessed [here](https://sgbirds.netlify.app/)
 
+Use the email 'howudoing@gmail.com' to test out the profile page of the website.
+
 ## Background
 
 ## Project Overview
