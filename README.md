@@ -1,5 +1,11 @@
 # SG Birds
 
+A brief layout of project work in different screen version
+
+<img src="./readme/sgbirds-mockup.png" height="450" alt="Site Map template">
+
+The website can be accessed [here](https://sgbirds.netlify.app/)
+
 ## Background
 
 ## Project Overview
@@ -107,7 +113,8 @@ Testing cases can be found [here](/readme/readme/Sgbirds-testcase.xlsx)
 |5. [Sweetalert2](https://sweetalert2.github.io/) | Base style for alert pop ups in React App|
 |6. [Leaflet](https://react-leaflet.js.org/) | Render map and map functions in React App|
 |9. [OneMap](https://www.onemap.gov.sg/) | To retrieve latitute and longitude from its API by address search|
-|8. [React-Select](https://react-select.com/home) | Styling of dropdown select dynamic adding
+|8. [React-Select](https://react-select.com/home) | Styling of dropdown select dynamic adding|
+|10.[Dynamic-Adding]| referred to xunne899 to assist in completing it
 
 ### Platforms and Software
 | Tech  | Usage |
