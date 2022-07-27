@@ -10,7 +10,7 @@ Use the email 'howudoing@gmail.com' to test out the profile page of the website.
 
 ## Background
 
-There are many bird watching lovers in Singapore who likes to watch birds, and also take photos of birds in their natural habitat. This website aims to give them a platform to share their photos and sightins of these birds with fellow bird watching enthusiasts and also help the users find more birds in Singapore in areas they may not know of.
+There are many bird watching lovers in Singapore who likes to watch birds, and also take photos of birds in their natural habitat. This website aims to give them a platform to share their photos and sightings of these birds with fellow bird watching enthusiasts and also help the users find more birds in Singapore in areas they may not know of.
 
 ## Project Overview
 
