@@ -27,12 +27,17 @@ export default class Map extends React.Component {
         modal: null,
         commentDisplayName: "",
         commentDescription: "",
+        birdFamilyArray: [],
         contentLoaded: true
     }
 
-    birdFamily = {
-        myArray: ["chicken", "eagle", "falcon", "hawk", "hornbills", "hummingbird", "kingfisher", "owl", "pigeons", "sparrow",
-            "storks", "waterfowl", "woodpeckers", "others"]
+    async componentDidMount() {
+     
+        let response = await axios.get('/data.json')
+  
+        this.setState({
+            birdFamilyArray: response.data.birdFamily
+        })
     }
 
     mapSearch = async () => {
@@ -108,11 +113,11 @@ export default class Map extends React.Component {
                     <img src={logo} alt="logo" height="90px" />
                 </div>
 
-                {this.state.contentLoaded ? null : <div class="loader" style={{left:"50vw", zIndex:10}}></div>}
+                {this.state.contentLoaded ? null : <div class="loader" style={{zIndex:10}}></div>}
                 <div className="mapFilter">
                     <Accordion>
                         <Accordion.Item>
-                            <Accordion.Header>Search</Accordion.Header>
+                            <Accordion.Header>Filter</Accordion.Header>
                             <Accordion.Body>
                                 <div className="label"><h6 style={{ color: "#642d3c" }}>View My Sightings</h6></div>
                                 <input type="text" className="form-control" placeholder="Your email address..."></input>
@@ -122,7 +127,7 @@ export default class Map extends React.Component {
                                         value={this.state.birdFamily} onChange={this.updateFormField}
                                     >
                                         <option name="birdFamily" key="placeHolder" value="">--Select One--</option>
-                                        {this.birdFamily.myArray.map(f =>
+                                        {this.state.birdFamilyArray.map(f =>
                                             <option name="birdFamily" key={f} value={f} >
                                                 {f[0].toUpperCase() + f.substring(1)}
                                             </option>
@@ -130,7 +135,7 @@ export default class Map extends React.Component {
                                     </select>
 
                                 </div>
-                                <div><button className="btn btn-primary" style={{ width: "100%" }} onClick={this.mapSearch}>Go</button></div>
+                                <div><button className="btn btn-primary mt-2" style={{ width: "100%" }} onClick={this.mapSearch}>Go</button></div>
                             </Accordion.Body>
                         </Accordion.Item>
                     </Accordion>

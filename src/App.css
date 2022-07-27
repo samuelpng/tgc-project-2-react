@@ -22,10 +22,10 @@ body {
 
 .loader {
   position: fixed;
-  top:40vh;
-  left:50vw;
-  width: 100px;
-  height: 100px;
+  top:45vh;
+  left: 35vw;
+  width: 30vw;
+  height: 30vw;
   border-radius: 50%;
   display: inline-block;
   border-top: 4px solid #FFF;
@@ -39,8 +39,8 @@ body {
   position: absolute;
   left: 0;
   top: 0;
-  width: 100px;
-  height: 100px;
+  width: 30vw;
+  height: 30vw;
   border-radius: 50%;
   border-bottom: 4px solid #FF3D00;
   border-left: 4px solid transparent;
@@ -418,5 +418,18 @@ body {
     z-index: 1
   }
 
+  .loader {
+  
+    left:42vw;
+    width: 15vw;
+    height: 15vw;
+   
+  }
+  .loader::after {
+
+    width: 15vw;
+    height: 15vw;
+ 
+  }
 
 }

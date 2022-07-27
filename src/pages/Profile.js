@@ -3,7 +3,7 @@ import '../App.css';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { Card, Badge, Alert, Container, Row, Col } from 'react-bootstrap';
+import { Card, Alert} from 'react-bootstrap';
 import Update from './Update.js'
 import Swal from "sweetalert2";
 import logo from '../pictures/sgbirds-logo.png';
@@ -198,7 +198,7 @@ export default class Profile extends React.Component {
                         </div>
                         <div style={{ height: "90px" }}></div>
 
-                        {this.state.contentLoaded ? null : <div class="loader" style={{left:"50vw"}}></div>}
+                        {this.state.contentLoaded ? null : <div class="loader"></div>}
 
                         <div className="container p-4">
                             <div className="row">

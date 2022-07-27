@@ -1,6 +1,6 @@
 import React from 'react'
 import '../App.css'
-import axios from 'axios';
+
 
 import landingLogo from '../pictures/landing-logo.png';
 import gardensBay from '../pictures/gardensBay.jpg';
@@ -8,16 +8,10 @@ import gardensBay from '../pictures/gardensBay.jpg';
 
 
 
-export default class Home extends React.Component {
-
-  url = "https://sgbirds.herokuapp.com/"
+export default function Home(props) {
 
 
 
-
-
-
-  render() {
     return (
       <React.Fragment>
 
@@ -39,13 +33,13 @@ export default class Home extends React.Component {
               <h1 className="landingText">Are You Ready for a Bird's Eye View</h1>
             </div>
             <div className="col-lg-12 landingIcon pt-2" style={{ color: '#642d3c'}}>
-              <button onClick={this.props.explore} className="btn btn-primary landingBtn" style={{width:"60vw", height:"50px", fontSize:"20px", fontWeight:"600", boxShadow:"0px 2px 5px 4px"}}>Explore</button>
+              <button onClick={props.explore} className="btn btn-primary landingBtn" style={{width:"60vw", height:"50px", fontSize:"20px", fontWeight:"600", boxShadow:"0px 2px 5px 4px"}}>Explore</button>
             </div>
             <div className="col-lg-12 landingIcon pt-2" style={{ color: '#642d3c'}}>
-              <button onClick={this.props.add} className="btn btn-primary landingBtn" style={{width:"60vw", height:"50px", fontSize:"20px", fontWeight:"600", boxShadow:"0px 2px 5px 4px"}}>New Sighting</button>
+              <button onClick={props.add} className="btn btn-primary landingBtn" style={{width:"60vw", height:"50px", fontSize:"20px", fontWeight:"600", boxShadow:"0px 2px 5px 4px"}}>New Sighting</button>
             </div>
             <div className="col-lg-12 landingIcon pt-2" style={{ color: '#642d3c' }}>
-              <button onClick={this.props.map} className="btn btn-primary landingBtn" style={{width:"60vw", height:"50px", fontSize:"20px", fontWeight:"600", boxShadow:"0px 2px 5px 4px"}}>Map</button>
+              <button onClick={props.map} className="btn btn-primary landingBtn" style={{width:"60vw", height:"50px", fontSize:"20px", fontWeight:"600", boxShadow:"0px 2px 5px 4px"}}>Map</button>
             </div>
 
           </div>
@@ -53,5 +47,5 @@ export default class Home extends React.Component {
 
 
       </React.Fragment>)
-  }
+  
 }

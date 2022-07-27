@@ -84,7 +84,7 @@ export default class Add extends React.Component {
 
     
     async componentDidMount() {
-        console.log('hi')
+     
         let response = await axios.get('/data.json')
   
         this.setState({
@@ -164,6 +164,7 @@ export default class Add extends React.Component {
     newSighting = async () => {
         let errorMsg = []
         let urlRegex = new RegExp(/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi)
+        let emailRegex = new RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
         
 
         if (this.state.birdSize.length !== 1) {
@@ -193,7 +194,7 @@ export default class Add extends React.Component {
         if (!this.state.displayName) {
             errorMsg.push('displayName')
         }
-        if (!this.state.email) {
+        if (!this.state.email.match(emailRegex)) {
             errorMsg.push('email')
         }
         if (!this.state.description) {

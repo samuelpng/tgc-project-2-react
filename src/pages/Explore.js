@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import '../App.css';
-import { Card, Button, Modal, Dropdown, Alert } from 'react-bootstrap';
+import { Card, Button, Modal, Dropdown, Alert, DropdownButton } from 'react-bootstrap';
 import logo from '../pictures/sgbirds-logo.png';
 import Accordion from 'react-bootstrap/Accordion';
 import sparrow from '../pictures/sparrow.png';
@@ -11,7 +11,7 @@ import goose from '../pictures/goose.png'
 
 export default class Explore extends React.Component {
 
-  
+
     url = "https://sgbirds.herokuapp.com/"
 
     state = {
@@ -22,6 +22,8 @@ export default class Explore extends React.Component {
         searchNeighbourhood: [],
         searchColours: [],
         searchResults: [],
+        neighbourhoodArray: [],
+        birdColoursArray: [],
         sortBy: "latest",
         modal: null,
         commentDisplayName: "",
@@ -32,40 +34,6 @@ export default class Explore extends React.Component {
 
     birdSize = {
         myArray: ["1", "2", "3", "4", "5", "6", "7"]
-    }
-
-    birdColours = {
-        myArray: ['black', 'grey', 'white', 'brown', 'red',
-            'blue', 'green', 'yellow', 'orange'],
-    }
-
-    neighbourhoodSpotted = {
-        myArray: ["Aljunied", "Ang Mo Kio", "Balestier", "Bartley", "Bayfront", "Beach Road", "Beauty World", "Bedok", "Bishan", "Botanic Gardens", "Braddell", "Bras Basah", "Buangkok", "Bugis", "Bukit Batok", "Bukit Giombak", "Buki Timah",
-            "Buona Vista", "Changi", "Changi", "Choa Chu Kang", "City Hall", "Clementi", "Commonwealth", "Dhoby Ghaut", "Dover", "Downtown",
-            "East Coast", "Eunos", "Farrer Park", "Fort Canning", "Geylang", "Great World", "Harbourfront", "Holland Village", "Hougang",
-            "Jalan Besar", "Jalan Kayu", "Joo Chiat", "Jurong East", "Kallang", "Katong", "Kembangan", "Kent Ridge", "Khatib", "Kovan",
-            "Lavender", "Little India", "Macpherson", "Marina Bay", "Marine Parade", "Mountbatten", "Newton", "Novena", "Orchard", "Outram Park",
-            "Pasir Panjang", "Pasir Ris", "Paya Lebar", "Potong Pasir", "Punggol", "Queenstown", "Raffles Place", "Redhill", "Seletar", "Sembawang",
-            "Sengkang", "Serangoon", "Siglap", "Simei", "Somerset", "Tai Seng", "Tampines", "Tanah Mearh", "Tanjong Katong", "Tanjong Pagar",
-            "Thomson", "Tiong Bahru", "Toa Payoh", "Tuas", "West Coast", "Woodlands", "Yio Chu Kang", "Yishun"]
-    }
-
-    changeBirdSize = (s) => {
-        if (s === 1) {
-            return "Sparrow size"
-        } else if (s === 2) {
-            return "Between Sparrow and Blackbird size"
-        } else if (s === 3) {
-            return "Blackbird size"
-        } else if (s === 4) {
-            return "Between Blackbird and Crow Size"
-        } else if (s === 5) {
-            return "Crow Size"
-        } else if (s === 6) {
-            return "Between Crow and Goose size"
-        } else {
-            return "Goose size"
-        }
     }
 
     postComment = async () => {
@@ -91,7 +59,7 @@ export default class Explore extends React.Component {
 
         })
         this.setState({
-            searchResults : response.data
+            searchResults: response.data
         })
 
     }
@@ -141,7 +109,16 @@ export default class Explore extends React.Component {
             searchResults: response.data,
             contentLoaded: true
         })
+
+        let data = await axios.get('/data.json')
+
+        this.setState({
+            neighbourhoodArray: data.data.neighbourhoodSpotted,
+            birdColoursArray: data.data.birdColours,
+        })
     }
+
+
 
     updateSearch = async () => {
         let response = await axios.get(this.url + 'bird_sightings', {
@@ -209,41 +186,44 @@ export default class Explore extends React.Component {
                                                 </div>
                                                 {this.birdSize.myArray.map(s =>
                                                     <input type="checkbox" value={s} key={s} id={s}
-                                                        onChange={this.updateFormField} 
-                                                        style={{margin:"11px"}}
+                                                        onChange={this.updateFormField}
+                                                        style={{ margin: "11px" }}
                                                         name="searchSize"
                                                         checked={this.state.searchSize.includes(`${s}`)} />)}
                                             </div>
-                                           
+
                                             <div>
                                                 <Accordion defaultActiveKey="0" flush>
                                                     <Accordion.Item eventKey="0">
                                                         <Accordion.Header><span className="mt-2" style={{ color: "#642d3c" }}>Bird Colours</span></Accordion.Header>
                                                         <Accordion.Body>
-                                                            <div>
-                                                                {this.birdColours.myArray.map(c =>
-                                                                    <div>
+                                                            <div className='container-fluid p-0'>
+                                                                <div className='row'>
+                                                                {this.state.birdColoursArray.map(c =>
+                                                                    <div className="col-6 p-0">
                                                                         <input type="checkbox" value={c} key={c} id={c}
                                                                             onChange={this.updateFormField} className="me-3" name="searchColours"
                                                                             checked={this.state.searchColours.includes(`${c}`)} />
                                                                         <label for={c} className="me-1">{c[0].toUpperCase() + c.substring(1)}</label>
                                                                     </div>
                                                                 )}
+                                                                </div>
                                                             </div>
                                                         </Accordion.Body>
                                                     </Accordion.Item>
                                                 </Accordion>
                                             </div>
-                                            <div className="label mt-3" style={{ color: "#642d3c" }}>Neighbourhood Spotted</div>
+
+                                            <div className="label" style={{ color: "#642d3c" }}>Neighbourhood Spotted</div>
                                             <select className="form-select form-control ms-2" name="searchNeighbourhood"
                                                 value={this.state.searchNeighbourhood} onChange={this.updateFormField}
                                                 style={{ width: "80%" }}>
                                                 <option value="" key="placeHolder">--Select One--</option>
-                                                {this.neighbourhoodSpotted.myArray.map(n =>
+                                                {this.state.neighbourhoodArray.map(n =>
                                                     <option className="form-control" key={n} value={n}>{n}</option>
                                                 )}
                                             </select>
-                                            <div><label className="mt-3" style={{ color: "#642d3c" }}>Sort By:</label></div>
+                                            <div><label className="mt-1" style={{ color: "#642d3c" }}>Sort By:</label></div>
                                             <select className="form-select form-control ms-2" name="sortBy"
                                                 value={this.state.sortBy} onChange={this.updateFormField}
                                                 style={{ width: "50%" }}>
@@ -282,7 +262,7 @@ export default class Explore extends React.Component {
 
                                             <Card className="col-lg-4 col-md-6 ">
                                                 <Card.Header >{b.birdSpecies}</Card.Header>
-                                                
+
                                                 <Card.Body>
                                                     <Card.Title>
 
@@ -329,56 +309,56 @@ export default class Explore extends React.Component {
 
                                     <Modal.Header closeButton>{b.birdSpecies}</Modal.Header>
                                     <Modal.Body>
-                                       
-                                    <img src={b.imageUrl} style={{ width: "100%" }} />
-                                                    <div className="mt-3">{b.description}</div>
-                                                    <div className="mt-3">The {b.birdSpecies} was spotted at {b.neighbourhoodSpotted} on {b.dateSpotted} .</div>
-                                                    <br />
-                                                    <div><h6>Family:</h6>{b.birdFamily}</div>
-                                                    <div><h6>Bird Colours:</h6></div>
-                                                    <div>{b.birdColours.map(c => (<span className="badge badge-pill me-2 mt-2"
-                                                        style={{ backgroundColor: `${c}`, color: "#e8c6a2", height: "25px", fontSize: "15px" }}>{c}&nbsp;</span>))}</div>
-                                                    <div><h6>Eating Habits:</h6> </div>
-                                                    <div>  {b.character.eatingHabits.map(e => (<span className="badge badge-pill me-2 mt-2"
-                                                        style={{ backgroundColor: `#e8c6a2`, color: "#642d3c", height: "25px", fontSize: "15px" }}>{e}&nbsp;</span>))}</div>
-                                                    <br />
-                                                    <div><h6>Behaviour:</h6> </div>
-                                                    <div>{b.character.behaviour.map(b => (<span className="badge badge-pill me-2 mt-2"
-                                                        style={{ backgroundColor: `#e8c6a2`, color: "#642d3c", height: "25px", fontSize: "15px" }}>{b}&nbsp;</span>))}</div>
-                                                    <br />
-                                                    <div><h6>Posted by:</h6></div>
-                                                    <div>{b.displayName}</div>
-                                                    <div>{b.datePosted.slice(0, 10)}</div>
-                                                    <br />
-                                                    <div style={{ color: "#642d3c" }}><h5>Comments</h5></div>
 
-                                                    <hr></hr>
-                                                    {b.comments !== undefined ? b.comments.map(c =>
-                                                        <span>
+                                        <img src={b.imageUrl} style={{ width: "100%" }} />
+                                        <div className="mt-3">{b.description}</div>
+                                        <div className="mt-3">The {b.birdSpecies} was spotted at {b.neighbourhoodSpotted} on {b.dateSpotted} .</div>
+                                        <br />
+                                        <div><h6>Family:</h6>{b.birdFamily}</div>
+                                        <div><h6>Bird Colours:</h6></div>
+                                        <div>{b.birdColours.map(c => (<span className="badge badge-pill me-2 mt-2"
+                                            style={{ backgroundColor: `${c}`, color: "#e8c6a2", height: "25px", fontSize: "15px" }}>{c}&nbsp;</span>))}</div>
+                                        <div><h6>Eating Habits:</h6> </div>
+                                        <div>  {b.character.eatingHabits.map(e => (<span className="badge badge-pill me-2 mt-2"
+                                            style={{ backgroundColor: `#e8c6a2`, color: "#642d3c", height: "25px", fontSize: "15px" }}>{e}&nbsp;</span>))}</div>
+                                        <br />
+                                        <div><h6>Behaviour:</h6> </div>
+                                        <div>{b.character.behaviour.map(b => (<span className="badge badge-pill me-2 mt-2"
+                                            style={{ backgroundColor: `#e8c6a2`, color: "#642d3c", height: "25px", fontSize: "15px" }}>{b}&nbsp;</span>))}</div>
+                                        <br />
+                                        <div><h6>Posted by:</h6></div>
+                                        <div>{b.displayName}</div>
+                                        <div>{b.datePosted.slice(0, 10)}</div>
+                                        <br />
+                                        <div style={{ color: "#642d3c" }}><h5>Comments</h5></div>
 
-                                                            <h6>{c.displayName}</h6>
-                                                            <p>{c.commentDescription}</p>
-                                                            <p>{c.datePosted.slice(0, 10)}</p>
-                                                            <hr></hr>
-                                                        </span>
-                                                    )
-                                                        :
-                                                        <div>
-                                                            <p>There are no comments for this sighting</p>
-                                                            <hr></hr>
-                                                        </div>
-                                                    }
+                                        <hr></hr>
+                                        {b.comments !== undefined ? b.comments.map(c =>
+                                            <span>
+
+                                                <h6>{c.displayName}</h6>
+                                                <p>{c.commentDescription}</p>
+                                                <p>{c.datePosted.slice(0, 10)}</p>
+                                                <hr></hr>
+                                            </span>
+                                        )
+                                            :
+                                            <div>
+                                                <p>There are no comments for this sighting</p>
+                                                <hr></hr>
+                                            </div>
+                                        }
 
 
-                                                    <h5 style={{ color: "#642d3c" }}>New Comment</h5>
-                                                    <label style={{ color: "#642d3c" }} >Display Name</label>
-                                                    <input type="text" className="form-control" name="commentDisplayName"
-                                                        onChange={this.updateFormField} value={this.state.commentDisplayName}></input>
-                                                    <label style={{ color: "#642d3c" }} >Comment</label>
-                                                    <textarea className="form-control" onChange={this.updateFormField}
-                                                        name="commentDescription" value={this.state.commentDescription}></textarea>
+                                        <h5 style={{ color: "#642d3c" }}>New Comment</h5>
+                                        <label style={{ color: "#642d3c" }} >Display Name</label>
+                                        <input type="text" className="form-control" name="commentDisplayName"
+                                            onChange={this.updateFormField} value={this.state.commentDisplayName}></input>
+                                        <label style={{ color: "#642d3c" }} >Comment</label>
+                                        <textarea className="form-control" onChange={this.updateFormField}
+                                            name="commentDescription" value={this.state.commentDescription}></textarea>
 
-                                                    <button className="btn btn-primary mt-3" onClick={this.postComment}>Post</button>
+                                        <button className="btn btn-primary mt-3" onClick={this.postComment}>Post</button>
                                     </Modal.Body>
 
                                 </React.Fragment>)
@@ -389,9 +369,9 @@ export default class Explore extends React.Component {
 
                     <Modal.Footer>
                         <button className="btn btn-primary"
-                                onClick={() => { this.closeModal() }}>
-                                Close</button>
-                        
+                            onClick={() => { this.closeModal() }}>
+                            Close</button>
+
                     </Modal.Footer>
                 </Modal>
 
